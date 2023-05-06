@@ -1,6 +1,6 @@
-namespace FacilitiesRequisition.Models.Faculty;
+namespace FacilitiesRequisition.Models.Administrators; 
 
-public class Faculty {
+public class Administrator {
     public int Id { get; set; }
     public string FirstName { get; set; }
     public string? MiddleName { get; set; }

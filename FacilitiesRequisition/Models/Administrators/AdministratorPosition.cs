@@ -1,4 +1,4 @@
-namespace FacilitiesRequisition.Models.Admin; 
+namespace FacilitiesRequisition.Models.Administrators;
 
 public enum AdministratorPosition {
     AssistantDean,

@@ -1,4 +1,4 @@
-namespace FacilitiesRequisition.Models.Faculty; 
+namespace FacilitiesRequisition.Models.Faculties;
 
 public class FacultyRole {
     public int Id { get; set; }

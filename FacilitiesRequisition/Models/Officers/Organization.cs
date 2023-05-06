@@ -1,6 +1,6 @@
-using FacilitiesRequisition.Models.Admin;
+using FacilitiesRequisition.Models.Administrators;
 
-namespace FacilitiesRequisition.Models; 
+namespace FacilitiesRequisition.Models.Officers;
 
 public class Organization {
     public int Id { get; set; }

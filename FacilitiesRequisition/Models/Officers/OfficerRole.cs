@@ -1,4 +1,4 @@
-namespace FacilitiesRequisition.Models; 
+namespace FacilitiesRequisition.Models.Officers;
 
 public class OfficerRole {
     public int Id { get; set; }
