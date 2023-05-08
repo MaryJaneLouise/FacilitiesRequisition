@@ -18,4 +18,10 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages\Users\Administrators\" />
+      <Folder Include="Pages\Users\Faculties\" />
+      <Folder Include="Pages\Users\Students\" />
+    </ItemGroup>
+
 </Project>
