@@ -94,6 +94,47 @@ public class DatabaseContext : DbContext {
         return changesSaved > 0;
     }
 
+    public List<Faculty> GetFaculties() {
+        return Faculties.ToList();
+    }
+
+    public Faculty? GetFaculty(int id) {
+        return Faculties.FirstOrDefault(x => x.Id == id);
+    }
+
+    public bool AddFaculty(Faculty faculty) {
+        Faculties.Add(faculty);
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
+    public List<FacultyRole> GetFacultyRoles(Faculty faculty) {
+        return FacultyRoles.Where(x => x.Faculty == faculty).ToList();
+    }
+
+    public FacultyRole? GetFacultyRole(int id) {
+        return FacultyRoles.FirstOrDefault(x => x.Id == id);
+    }
+
+    public bool AddFacultyRole(FacultyRole facultyRole) {
+        FacultyRoles.Add(facultyRole);
+        var changeSaved = SaveChanges();
+        return changeSaved > 0;
+    }
+
+    public List<College> GetColleges() {
+        return Colleges.ToList();
+    }
+
+    public College? GetCollege(int id) {
+        return Colleges.FirstOrDefault(x => x.Id == id);
+    }
+
+    public bool AddCollege(College college) {
+        Colleges.Add(college);
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
+    
     public SchoolTag? GetSchoolTag() {
         return SchoolTags.LastOrDefault();
     }
