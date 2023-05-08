@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -37,15 +40,16 @@ public class IndexModel : PageModel {
     public string Password { get; set; }
 
     public async Task<IActionResult> OnPostAsync() {
-        if (!ModelState.IsValid) {
+        var isUsernameDuplicate = _databaseContext.GetUsers().Any(x => x.Username == Username);
+        
+        if (!ModelState.IsValid || isUsernameDuplicate) {
             return Page();
         }
 
         var passwordSalt = PasswordHash.GenerateSalt();
         var passwordHash = Password.ComputeHash(passwordSalt);
         
-        var superAdmin = new Administrator()
-        {
+        var superAdmin = new Administrator() {
             FirstName = FirstName,
             MiddleName = MiddleName,
             LastName = LastName,
@@ -55,17 +59,43 @@ public class IndexModel : PageModel {
         };
         
         _databaseContext.AddAdministrator(superAdmin);
-
-        var superAdminRole = new AdministratorRole()
-        {
+        await _databaseContext.SaveChangesAsync();
+        
+        var superAdminRole = new AdministratorRole() {
             Administrator = superAdmin,
             Position = AdministratorPosition.SuperAdmin
         };
         
         _databaseContext.AddAdministratorRole(superAdminRole);
-        
         await _databaseContext.SaveChangesAsync();
-        
-        return RedirectToPage("./Index");
+
+        if (superAdmin.PasswordHash == passwordHash) {
+            var claims = new List<Claim> {
+                new("UserId", superAdmin.Id.ToString())
+            };
+            
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            var authProperties = new AuthenticationProperties {
+                AllowRefresh = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1440),
+                IsPersistent = true,
+                IssuedUtc = DateTimeOffset.UtcNow,
+                //RedirectUri = <string>
+                // The full path or absolute URI to be used as an http 
+                // redirect response value.
+            };
+            
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
+            HttpContext.Session.SetInt32(SessionUser.UserIdKey, superAdmin.Id);
+
+            return RedirectToPage("../Dashboard/Index");
+        }
+        return Page();
     }
 }

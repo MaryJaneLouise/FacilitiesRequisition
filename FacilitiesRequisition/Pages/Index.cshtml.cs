@@ -1,5 +1,7 @@
 ﻿using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,12 +16,18 @@ public class IndexModel : PageModel {
         _context = context;
     }
 
-    public IActionResult OnGet() {
+    public async Task<IActionResult> OnGetAsync() {
         if (!_context.HasSuperAdministrator()) {
             return RedirectToPage("./CreateUsers/Administrators/Index");
         }
+        
+        await HttpContext.SignOutAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme);
 
-        return RedirectToPage("./Login/Index");
+        var userId = HttpContext.Session.GetInt32(SessionUser.UserIdKey);
+        if (userId == null) return RedirectToPage("./Login/Index");
+        var user = _context.GetUser((int)userId);
+        if (user == null) return RedirectToPage("./Login/Index");
+        return RedirectToPage("./Dashboard/Index");
     }
-    
 }

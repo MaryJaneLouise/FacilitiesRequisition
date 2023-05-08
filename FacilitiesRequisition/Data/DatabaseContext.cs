@@ -36,8 +36,14 @@ public class DatabaseContext : DbContext {
         var faculties = Faculties.Select(x => x as User).ToList();
         
         users.AddRange(officers);
+        users.AddRange(faculties);
         return users;
     }
+
+    public User? GetUser(int id) {
+        return GetUsers().FirstOrDefault(x => x.Id == id);
+    } 
+    
     public List<Administrator> GetAdministrators() {
         return Administrators.ToList();
     }

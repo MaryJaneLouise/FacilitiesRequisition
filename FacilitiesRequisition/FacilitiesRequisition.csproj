@@ -19,6 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\CreateUsers\Faculties\" />
+      <Folder Include="Pages\CreateUsers\Students\" />
       <Folder Include="Pages\Users\Administrators\" />
       <Folder Include="Pages\Users\Faculties\" />
       <Folder Include="Pages\Users\Students\" />
