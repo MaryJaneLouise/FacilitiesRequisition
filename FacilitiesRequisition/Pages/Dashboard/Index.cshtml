@@ -40,13 +40,14 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <span class="navbar-text">
-          <text>@Model.Name | @Model.UserType</text>
-        </span>
       </ul>
       
       <form method="post">
         <div class="form-group">
+          <span class="navbar-text">
+            <text>@Model.Name | @Model.UserType | </text>
+            <text id="time" class="vertical-line"></text>
+          </span>
           @if (Model.UserType == "Administrator") {
             <input type="submit" value="Create new account" class="btn btn-outline-primary" asp-page-handler="CreateAccount"/>
           }
