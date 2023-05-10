@@ -24,15 +24,18 @@ public class IndexModel : PageModel  {
     public string Name { get; set; }
 
     public string UserType { get; set; }
+    public string IsSuperAdmin { get; set; }
 
     public IActionResult OnGet()  {
         var user = HttpContext.Session.GetLoggedInUser(_context);
-        var userType = user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Student Leader";
+        //var isSuperAdmin = user is AdministratorRole ? "Super Admin" : UserType;
+        var userType = user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Organization Officer";
         switch (user) {
             case null:
                 return RedirectToPage("../Login/Index");
             default:
                 Name = $"{user.FirstName} {user.LastName}";
+                //IsSuperAdmin = $"{isSuperAdmin}";
                 UserType = $"{userType}";
                 return Page();
         }
