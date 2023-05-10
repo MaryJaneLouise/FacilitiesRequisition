@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FacilitiesRequisition.Pages.Dashboard; 
 
-[Authorize]
 public class IndexModel : PageModel  {
     private readonly DatabaseContext _context;
 
@@ -23,20 +22,23 @@ public class IndexModel : PageModel  {
     [BindProperty]
     public string Name { get; set; }
 
-    public void OnGet()  {
-        var userId = HttpContext.Session.GetInt32(SessionUser.UserIdKey);
-        if (userId == null) return;
-        var user = _context.GetUser((int)userId);
-        if (user == null) return;
-        Name = $"{user.FirstName} {user.LastName}";
+    public IActionResult OnGet()  {
+        var user = HttpContext.Session.GetLoggedInUser(_context);
+        switch (user) {
+            case null:
+                return RedirectToPage("../Login/Index");
+            default:
+                Name = $"{user.FirstName} {user.LastName}";
+                return Page();
+        }
     }
     
-    public async Task<IActionResult> OnPostAsync()  {
-        await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme);
-        
-        HttpContext.Session.SetInt32(SessionUser.UserIdKey, -1);
-
-        return RedirectToPage("../Index");
+    public async Task<IActionResult> OnPostCreateAccount()  {
+        return RedirectToPage("../CreateUsers/Index");
+    }
+    
+    public async Task<IActionResult> OnPostLogout() {
+        HttpContext.Session.Logout();
+        return RedirectToPage("../Login/Index");
     }
 }

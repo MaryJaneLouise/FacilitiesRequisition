@@ -16,18 +16,11 @@ public class IndexModel : PageModel {
         _context = context;
     }
 
-    public async Task<IActionResult> OnGetAsync() {
-        if (!_context.HasSuperAdministrator()) {
-            return RedirectToPage("./CreateUsers/Administrators/Index");
-        }
-        
-        await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme);
-
-        var userId = HttpContext.Session.GetInt32(SessionUser.UserIdKey);
-        if (userId == null) return RedirectToPage("./Login/Index");
-        var user = _context.GetUser((int)userId);
-        if (user == null) return RedirectToPage("./Login/Index");
-        return RedirectToPage("./Dashboard/Index");
+    public IActionResult OnGetAsync() {
+        return RedirectToPage(!_context.HasSuperAdministrator()
+            ? "./CreateUsers/Index"
+            : HttpContext.Session.IsLoggedIn()
+                ? "./Dashboard/Index"
+                : "./Login/Index");
     }
 }

@@ -42,7 +42,24 @@ public class DatabaseContext : DbContext {
 
     public User? GetUser(int id) {
         return GetUsers().FirstOrDefault(x => x.Id == id);
-    } 
+    }
+
+    public bool AddUser(User user) {
+        switch (user) {
+            case Administrator administrator:
+                Administrators.Add(administrator);
+                break;
+            case Officer officer:
+                Officers.Add(officer);
+                break;
+            case Faculty faculty:
+                Faculties.Add(faculty);
+                break;
+        }
+
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
     
     public List<Administrator> GetAdministrators() {
         return Administrators.ToList();
