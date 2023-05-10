@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
+using FacilitiesRequisition.Models.Faculties;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -22,13 +23,17 @@ public class IndexModel : PageModel  {
     [BindProperty]
     public string Name { get; set; }
 
+    public string UserType { get; set; }
+
     public IActionResult OnGet()  {
         var user = HttpContext.Session.GetLoggedInUser(_context);
+        var userType = user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Student Leader";
         switch (user) {
             case null:
                 return RedirectToPage("../Login/Index");
             default:
                 Name = $"{user.FirstName} {user.LastName}";
+                UserType = $"{userType}";
                 return Page();
         }
     }
