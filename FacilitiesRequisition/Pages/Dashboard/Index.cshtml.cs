@@ -28,15 +28,13 @@ public class IndexModel : PageModel  {
 
     public IActionResult OnGet()  {
         var user = HttpContext.Session.GetLoggedInUser(_context);
-        
-        var userType = user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Organization Officer";
+        bool isSuperAdmin = user is Administrator administrator && _context.GetAdministratorRoles(administrator).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+        var userType = isSuperAdmin ? "Super Administrator" : user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Organization Officer";
         switch (user) {
             case null:
                 return RedirectToPage("../Login/Index");
             default:
                 Name = $"{user.FirstName} {user.LastName}";
-                /*if (user is not Administrator administrator || _context.GetAdministratorRoles(administrator).All(x => x.Position == AdministratorPosition.SuperAdmin))
-                    IsSuperAdmin = $"Super Administrator";*/
                 UserType = $"{userType}";
                 return Page();
         }

@@ -48,7 +48,7 @@
             <text>@Model.Name | @Model.UserType | </text>
             <text id="time" class="vertical-line"></text>
           </span>
-          @if (Model.UserType == "Administrator") {
+          @if (Model.UserType == "Super Administrator") {
             <input type="submit" value="Create new account" class="btn btn-outline-primary" asp-page-handler="CreateAccount"/>
           }
           <input type="submit" value="Logout" class="btn btn-primary" asp-page-handler="Logout"/>
