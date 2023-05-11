@@ -63,7 +63,7 @@ public class IndexModel : PageModel {
                 return RedirectToPage("../Dashboard/Index");
         }
 
-        PageTitle = !HasSuperAdmin ? "Create super admin" : "Create user";
+        PageTitle = !HasSuperAdmin ? "Create super administrator" : "Create user";
         return Page();
     }
 
