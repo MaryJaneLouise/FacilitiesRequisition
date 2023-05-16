@@ -28,23 +28,21 @@ public class IndexModel : PageModel  {
 
     public IActionResult OnGet()  {
         var user = HttpContext.Session.GetLoggedInUser(_context);
-        bool isSuperAdmin = user is Administrator administrator && _context.GetAdministratorRoles(administrator).Any(x => x.Position == AdministratorPosition.SuperAdmin);
-        var userType = isSuperAdmin ? "Super Administrator" : user is Administrator ? "Administrator" : user is Faculty ? "Faculty" : "Organization Officer";
         switch (user) {
             case null:
                 return RedirectToPage("../Login/Index");
             default:
                 Name = $"{user.FirstName} {user.LastName}";
-                UserType = $"{userType}";
+                UserType = $"{user.Type}";
                 return Page();
         }
     }
     
-    public async Task<IActionResult> OnPostCreateAccount()  {
+    public IActionResult OnPostCreateAccount()  {
         return RedirectToPage("../CreateUsers/Index");
     }
     
-    public async Task<IActionResult> OnPostLogout() {
+    public IActionResult OnPostLogout() {
         HttpContext.Session.Logout();
         return RedirectToPage("../Login/Index");
     }

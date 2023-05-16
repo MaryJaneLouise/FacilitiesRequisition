@@ -51,15 +51,15 @@ public class IndexModel : PageModel {
     [BindProperty] public string? UserType { get; set; }
 
 
-    public IActionResult OnGetAsync() {
+    public IActionResult OnGet() {
         HasSuperAdmin = _databaseContext.HasSuperAdministrator();
 
         if (HasSuperAdmin) {
             var user = HttpContext.Session.GetLoggedInUser(_databaseContext);
             if (user == null) return RedirectToPage("../Login/Index");
 
-            if (user is not Administrator admin ||
-                _databaseContext.GetAdministratorRoles(admin).All(x => x.Position != AdministratorPosition.SuperAdmin))
+            if (user.Type != Models.UserType.Administrator ||
+                _databaseContext.GetAdministratorRoles(user).All(x => x.Position != AdministratorPosition.SuperAdmin))
                 return RedirectToPage("../Dashboard/Index");
         }
 
@@ -67,7 +67,7 @@ public class IndexModel : PageModel {
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync() {
+    public IActionResult OnPost() {
         var isUsernameDuplicate = _databaseContext.GetUsers().Any(x => x.Username == Username);
         HasSuperAdmin = _databaseContext.HasSuperAdministrator();
         
@@ -78,44 +78,27 @@ public class IndexModel : PageModel {
         var passwordSalt = PasswordHash.GenerateSalt();
         var passwordHash = Password.ComputeHash(passwordSalt);
 
-        var user = UserType == "admin" || !HasSuperAdmin
-            ? new Administrator {
-                FirstName = FirstName,
-                MiddleName = MiddleName,
-                LastName = LastName,
-                Username = Username,
-                PasswordHash = passwordHash,
-                PasswordSalt = Convert.ToBase64String(passwordSalt)
-            }
-            : UserType == "faculty"
-                ? new Faculty {
-                    FirstName = FirstName,
-                    MiddleName = MiddleName,
-                    LastName = LastName,
-                    Username = Username,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = Convert.ToBase64String(passwordSalt)
-                }
-                : new Officer {
-                    FirstName = FirstName,
-                    MiddleName = MiddleName,
-                    LastName = LastName,
-                    Username = Username,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = Convert.ToBase64String(passwordSalt)
-                } as User;
+        var user = new User {
+            Type = UserType == "admin" || !HasSuperAdmin ? Models.UserType.Administrator : UserType == "officer" ? Models.UserType.Officer : Models.UserType.Faculty,
+            FirstName = FirstName,
+            MiddleName = MiddleName,
+            LastName = LastName,
+            Username = Username,
+            PasswordHash = passwordHash,
+            PasswordSalt = Convert.ToBase64String(passwordSalt)
+        };
 
         _databaseContext.AddUser(user);
 
         if (!HasSuperAdmin) {
             var superAdminRole = new AdministratorRole {
-                Administrator = (user as Administrator)!,
+                Administrator = user,
                 Position = AdministratorPosition.SuperAdmin
             };
             _databaseContext.AddAdministratorRole(superAdminRole);
         }
 
-        await _databaseContext.SaveChangesAsync();
+        _databaseContext.SaveChanges();
 
         var isNotLoggedIn = !HttpContext.Session.IsLoggedIn();
         if (isNotLoggedIn) {

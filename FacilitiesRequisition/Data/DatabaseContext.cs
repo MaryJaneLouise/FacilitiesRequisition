@@ -3,6 +3,7 @@ using FacilitiesRequisition.Models.Officers;
 using FacilitiesRequisition.Models.Faculties;
 using FacilitiesRequisition.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
 
 namespace FacilitiesRequisition.Data; 
 
@@ -13,14 +14,13 @@ public class DatabaseContext : DbContext {
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {
         
     }
-    private DbSet<Administrator> Administrators { get; set; }
+    
+    private DbSet<User> Users { get; set; }
     private DbSet<AdministratorRole> AdministratorRoles { get; set; }
     
-    private DbSet<Officer> Officers { get; set; }
     private DbSet<OfficerRole> OfficerRoles { get; set; }
     private DbSet<Organization> Organizations { get; set; }
     
-    private DbSet<Faculty> Faculties { get; set; }
     private DbSet<FacultyRole> FacultyRoles { get; set; }
     private DbSet<College> Colleges { get; set; }
     
@@ -30,13 +30,8 @@ public class DatabaseContext : DbContext {
         optionsBuilder.UseSqlServer(CONNECTION_STRING);
     }
 
-    public List<User> GetUsers() {
-        var users = Administrators.Select(x => x as User).ToList();
-        var officers = Officers.Select(x => x as User).ToList();
-        var faculties = Faculties.Select(x => x as User).ToList();
-        
-        users.AddRange(officers);
-        users.AddRange(faculties);
+    public IEnumerable<User> GetUsers() {
+        var users = Users.ToList();
         return users;
     }
 
@@ -45,37 +40,16 @@ public class DatabaseContext : DbContext {
     }
 
     public bool AddUser(User user) {
-        switch (user) {
-            case Administrator administrator:
-                Administrators.Add(administrator);
-                break;
-            case Officer officer:
-                Officers.Add(officer);
-                break;
-            case Faculty faculty:
-                Faculties.Add(faculty);
-                break;
-        }
-
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-    
-    public List<Administrator> GetAdministrators() {
-        return Administrators.ToList();
-    }
-
-    public Administrator? GetAdministrator(int Id) {
-        return Administrators.FirstOrDefault(x => x.Id == Id);
-    }
-
-    public bool AddAdministrator(Administrator administrator) {
-        Administrators.Add(administrator);
+        Users.Add(user);
         var changesSaved = SaveChanges();
         return changesSaved > 0;
     }
 
-    public List<AdministratorRole> GetAdministratorRoles(Administrator administrator) {
+    public List<User> GetAdministrators() {
+        return Users.Where(x => x.Type == UserType.Administrator).ToList();
+    }
+
+    public List<AdministratorRole> GetAdministratorRoles(User administrator) {
         return AdministratorRoles.Where(x => x.Administrator == administrator).ToList();
     }
 
@@ -93,7 +67,11 @@ public class DatabaseContext : DbContext {
         return changesSaved > 0;
     }
 
-    public List<OfficerRole> GetOfficerRoles(Officer officer) {
+    public List<User> GetOfficers() {
+        return Users.Where(x => x.Type == UserType.Officer).ToList();
+    }
+
+    public List<OfficerRole> GetOfficerRoles(User officer) {
         return OfficerRoles.Where(x => x.Officer == officer).ToList();
     }
 
@@ -111,26 +89,21 @@ public class DatabaseContext : DbContext {
         return Organizations.ToList();
     }
 
+    public Organization? GetOrganization(int id) {
+        return Organizations.FirstOrDefault(x => x.Id == id);
+    }
+
     public bool AddOrganization(Organization organization) {
         Organizations.Add(organization);
         var changesSaved = SaveChanges();
         return changesSaved > 0;
     }
 
-    public List<Faculty> GetFaculties() {
-        return Faculties.ToList();
+    public List<User> GetFaculties() {
+        return Users.Where(x => x.Type == UserType.Faculty).ToList();
     }
 
-    public Faculty? GetFaculty(int id) {
-        return Faculties.FirstOrDefault(x => x.Id == id);
-    }
-
-    public bool AddFaculty(Faculty faculty) {
-        Faculties.Add(faculty);
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-    public List<FacultyRole> GetFacultyRoles(Faculty faculty) {
+    public List<FacultyRole> GetFacultyRoles(User faculty) {
         return FacultyRoles.Where(x => x.Faculty == faculty).ToList();
     }
 
@@ -140,8 +113,8 @@ public class DatabaseContext : DbContext {
 
     public bool AddFacultyRole(FacultyRole facultyRole) {
         FacultyRoles.Add(facultyRole);
-        var changeSaved = SaveChanges();
-        return changeSaved > 0;
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
     }
 
     public List<College> GetColleges() {
@@ -157,7 +130,7 @@ public class DatabaseContext : DbContext {
         var changesSaved = SaveChanges();
         return changesSaved > 0;
     }
-    
+
     public SchoolTag? GetSchoolTag() {
         return SchoolTags.LastOrDefault();
     }
@@ -167,4 +140,4 @@ public class DatabaseContext : DbContext {
         var changesSaved = SaveChanges();
         return changesSaved > 0;
     }
- }
+}

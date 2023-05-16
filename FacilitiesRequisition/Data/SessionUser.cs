@@ -10,7 +10,7 @@ public static class SessionUser {
     }
 
     public static void Logout(this ISession session) {
-        session.SetInt32(UserIdKey, -1);
+        session.Remove(UserIdKey);
     }
 
     public static User? GetLoggedInUser(this ISession session, DatabaseContext databaseContext) {
@@ -19,8 +19,8 @@ public static class SessionUser {
     }
 
     public static bool IsLoggedIn(this ISession session) {
-        var userId = session.GetInt32(UserIdKey);
-        return userId != null && userId != -1;
+        var username = session.GetInt32(UserIdKey);
+        return username != null;
     }
 }
 
