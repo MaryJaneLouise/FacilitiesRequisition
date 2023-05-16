@@ -43,6 +43,16 @@
       
       <form method="post">
         <div class="form-group">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      @Model.Name
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item">test</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <button type="submit" class="nav-link btn btn-link text-dark" asp-page-handler="Logout">Logout</button>
+                    </ul>
+                  </li>
           <span class="navbar-text">
             <text>@Model.Name | @Model.UserType | </text>
             <text id="time" class="vertical-line"></text>
