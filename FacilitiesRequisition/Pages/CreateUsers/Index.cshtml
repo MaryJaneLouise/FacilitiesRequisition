@@ -1,5 +1,5 @@
 @page
-@model FacilitiesRequisition.Pages.CreateUsers.Administrators.IndexModel;
+@model FacilitiesRequisition.Pages.CreateUsers.IndexModel;
 
 @{
     ViewData["Title"] = @Model.PageTitle + " creation";
@@ -15,7 +15,7 @@
 <body style="background: #EEEEEE">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
-            <div class="col-md-4 rounded-rectangle">
+            <div class="col-md-6 rounded-rectangle">
                 <h1 class="mb-4">@Model.PageTitle</h1>
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -70,10 +70,24 @@
                         <span asp-validation-for="RepeatPassword" class="text-danger mt-1"></span>
                     </div>
                     
-                    <div class="form-group mt-4 mb-2">
-                        <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
-                        <input type="reset" value="Cancel" class="btn btn-outline-secondary" style="width: 100%"/>
-                    </div>
+                    @if (Model.HasSuperAdmin) {
+                        <div class="form-group mt-4 mb-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="submit" value="Cancel" class="btn btn-outline-secondary" style="width: 100%" asp-page-handler="BackToDashboard"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
+                                </div>
+                            </div>
+                        </div>
+                    } else {
+                        <div class="form-group mt-4 mb-2">
+                            <div class="col-md-6">
+                                <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
+                            </div>
+                        </div>
+                    }
                 </form>
             </div>            
         </div>

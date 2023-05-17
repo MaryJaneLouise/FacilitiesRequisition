@@ -1,8 +1,8 @@
 @page
-@model FacilitiesRequisition.Pages.CreateRequestPaper.Index
+@model FacilitiesRequisition.Pages.CreateRequestPaper.IndexModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = @Model.PageTitle;
 }
 
 <!DOCTYPE html>
@@ -10,10 +10,77 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="./css/site.css">
 </head>
-<body>
-<div>
-    
-</div>
+<body style="background: #eeeeee">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-8 rounded-rectangle">
+                <h1 class="mb-4">@Model.PageTitle</h1>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            
+                    <div class="form-group mt-2">
+                        <label asp-for="DateFiled" class="control-label" ></label>
+                        <input asp-for="DateFiled" class="form-control mt-1" disabled/>
+                        <span asp-validation-for="DateFiled" class="text-danger mt-1"></span>
+                    </div>
+                            
+                    <div class="form-group mt-2">
+                        <label asp-for="NameRequester" class="control-label"></label>
+                        <input asp-for="NameRequester" class="form-control mt-1"/>
+                        <span asp-validation-for="NameRequester" class="text-danger mt-1"></span>
+                    </div>
+                            
+                    <div class="form-group mt-2">
+                        <label asp-for="Classification" class="control-label"></label>
+                        <input asp-for="Classification" class="form-control mt-1"/>
+                        <span asp-validation-for="Classification" class="text-danger mt-1"></span>
+                    </div>
+                            
+                    <div class="form-group mt-2">
+                        <label asp-for="NameActivity" class="control-label"></label>
+                        <input asp-for="NameActivity" class="form-control mt-1"/>
+                        <span asp-validation-for="NameActivity" class="text-danger mt-1"></span>
+                    </div>
+                            
+                    <div class="form-group mt-2">
+                        <label asp-for="RequestedDates" class="control-label"></label>
+                        <input asp-for="RequestedDates" class="form-control mt-1"/>
+                        <span asp-validation-for="RequestedDates" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="NumberOfHours" class="control-label"></label>
+                        <input asp-for="NumberOfHours" class="form-control mt-1"/>
+                        <span asp-validation-for="NumberOfHours" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="VenueRequested" class="control-label"></label>
+                        <input asp-for="VenueRequested" class="form-control mt-1"/>
+                        <span asp-validation-for="VenueRequested" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="EquipmentNeeded" class="control-label"></label>
+                        <input asp-for="EquipmentNeeded" class="form-control mt-1"/>
+                        <span asp-validation-for="EquipmentNeeded" class="text-danger mt-1"></span>
+                    </div>
+
+                    <div class="form-group mt-4 mb-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" value="Cancel" class="btn btn-outline-secondary" style="width: 100%" asp-page-handler="BackToDashboard"/>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
 </body>
 </html>

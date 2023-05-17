@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace FacilitiesRequisition.Pages.CreateUsers.Administrators;
+namespace FacilitiesRequisition.Pages.CreateUsers;
 
 public class IndexModel : PageModel {
     private readonly DatabaseContext _databaseContext;
@@ -110,5 +110,9 @@ public class IndexModel : PageModel {
 
     public void SetUserType(string userType) {
         UserType = userType;
+    }
+
+    public IActionResult OnPostBackToDashboard() {
+        return RedirectToPage("../Dashboard/Index");
     }
 }
