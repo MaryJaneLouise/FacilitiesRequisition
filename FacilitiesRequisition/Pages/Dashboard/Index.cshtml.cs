@@ -47,6 +47,14 @@ public class IndexModel : PageModel  {
     public IActionResult OnPostCreateAccount()  {
         return RedirectToPage("../CreateUsers/Index");
     }
+
+    public IActionResult OnPostManageUserAccount() {
+        return RedirectToPage();
+    }
+
+    public IActionResult OnPostEditProfile() {
+        return RedirectToPage();
+    }
     
     public IActionResult OnPostLogout() {
         HttpContext.Session.Logout();
