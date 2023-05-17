@@ -52,4 +52,8 @@ public class IndexModel : PageModel  {
         HttpContext.Session.Logout();
         return RedirectToPage("../Login/Index");
     }
+
+    public IActionResult OnPostRequestPaper() {
+        return RedirectToPage("../CreateRequestPaper/Index");
+    }
 }
