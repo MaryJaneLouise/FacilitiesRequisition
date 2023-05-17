@@ -29,40 +29,27 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Request Papers</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            @Model.Name
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">test</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href='@Url.Page("Dashboard","Logout")'>Logout</a></li>
-          </ul>
-        </li>
       </ul>
       
       <form method="post">
         <div class="form-group">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown list-unstyled">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      @Model.Name
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item">test</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <button type="submit" class="nav-link btn btn-link text-dark" asp-page-handler="Logout">Logout</button>
-                    </ul>
-                  </li>
-          <span class="navbar-text">
-            <text>@Model.Name | @Model.UserType | </text>
-            <text id="time" class="vertical-line"></text>
-          </span>
-          @if (Model.UserType == "Super Administrator") {
-            <input type="submit" value="Create new account" class="btn btn-outline-primary" asp-page-handler="CreateAccount"/>
-          }
-          <input type="submit" value="Logout" class="btn btn-primary" asp-page-handler="Logout"/>
+              @Model.Name
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item">@Model.UserType</a></li>
+              <li><hr class="dropdown-divider"></li>
+              @if (Model.UserType == "Super Administrator") {
+                <button type="submit" class="dropdown-item" asp-page-handler="CreateAccount">Create new account</button>
+              }
+              <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
+            </ul>
+          </li>
         </div>
       </form>
+      
+      <li class="time list-unstyled" id="time" style="float:right"></li>
     </div>
   </div>
 </nav>
