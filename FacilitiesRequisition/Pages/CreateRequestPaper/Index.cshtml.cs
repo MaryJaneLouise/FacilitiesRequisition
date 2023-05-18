@@ -33,7 +33,7 @@ public class IndexModel : PageModel {
 
     [BindProperty]
     [Display(Name = "Classification")]
-    public string? Classification { get; set; }
+    public string Classification { get; set; }
 
     [BindProperty]
     [Display(Name = "Name of Activity")]
@@ -41,7 +41,7 @@ public class IndexModel : PageModel {
 
     [BindProperty]
     [Display(Name = "Requested Dates")]
-    public string RequestedDates { get; set; }
+    public DateTime RequestedDates { get; set; } 
 
     [BindProperty]
     [Display(Name = "Total Number of Hours")]
@@ -53,14 +53,19 @@ public class IndexModel : PageModel {
     
     [BindProperty]
     [Display(Name = "Equipment Needed")]
-    public string EquipmentNeeded { get; set; }
+    public string? EquipmentNeeded { get; set; }
     
     public IActionResult OnGet() {
         PageTitle = "Create a Facility Request";
+        
+        var user = HttpContext.Session.GetLoggedInUser(_databaseContext);
+        var userType =  
+            user.Type == Models.UserType.Administrator ? "Administrator" :
+            user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
         return Page();
     }
 
-    public IActionResult OnPost() {
+    public IActionResult OnPostBackToDashboard() {
         return RedirectToPage("../Dashboard/Index");
     }
 }
