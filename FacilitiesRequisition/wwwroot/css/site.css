@@ -29,6 +29,26 @@ body {
   padding: 0;
 }
 
+textarea {
+  resize: none;
+}
+
+.clickRow {
+  cursor: pointer;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+.clickRow:hover {
+  background-color: #ebebeb;
+}
+
+.clickRow td {
+  border: none;
+}
+
 .rounded-rectangle {
   border-radius: 20px;
   background: #ffffff;

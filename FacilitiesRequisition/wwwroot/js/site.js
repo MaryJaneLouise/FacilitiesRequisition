@@ -1,9 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-function updateClock() {
+﻿function updateClock() {
     var timeElement = document.getElementById('time');
     var now = new Date();
     var hours = now.getHours();
@@ -19,3 +14,11 @@ function updateClock() {
 }
 updateClock();
 setInterval(updateClock, 1000);
+
+$(document).ready(function() {
+    $(".clickRow").click(function() {
+        var href = $(this).data("href");
+        window.location.href = href;
+    });
+});
+

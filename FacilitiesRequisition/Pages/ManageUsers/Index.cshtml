@@ -1,0 +1,53 @@
+@page
+@model FacilitiesRequisition.Pages.ManageUsers.IndexModel
+
+@{
+    ViewData["Title"] = "Manage User Accounts";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body style="background: #EEEEEE">
+<div>
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        <div class="col-md-8 rounded-rectangle">
+            <h2>Users' Details</h2>
+            <br/>
+            <table class="table">
+                <thead align="center">
+                <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>User Type</th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                @foreach (var user in Model.Users) {
+                    <tr class="clickRow" data-href="@Url.Page("./UserDetails", new { id = user.Id })">
+                        <td>@user.Username</td>
+                        <td>@user.FirstName @user.LastName</td>
+                        <td>@user.Type</td>
+                        <td>
+                            <button class="btn btn-link " type="button" asp-page="UserDetails" asp-route-id="@user.Id">View Details</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Back to Dashboard" class="btn btn-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+</body>
+</html>

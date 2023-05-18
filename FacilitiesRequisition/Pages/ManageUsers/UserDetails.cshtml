@@ -1,0 +1,46 @@
+@page
+@model FacilitiesRequisition.Pages.ManageUsers.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+</head>
+<body>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">User Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <dl>
+                    <dt class="col-sm-2">Username</dt>
+                    <dd class="col-md-6">@Model.SelectedUser.Username</dd>
+                
+                    <dt class="col-sm-2">User Type</dt>
+                    <dd class="col-md-6">@Model.SelectedUser.Type</dd>
+                
+                    <dt class="col-sm-2">Full Name</dt>
+                    <dd class="col-md-6">
+                        @Model.SelectedUser.FirstName @Model.SelectedUser.MiddleName @Model.SelectedUser.LastName
+                    </dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+</body>
+</html>
