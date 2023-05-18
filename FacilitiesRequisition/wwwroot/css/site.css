@@ -33,19 +33,16 @@ textarea {
   resize: none;
 }
 
-.clickRow {
+.clickable-row {
   cursor: pointer;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  padding: 8px;
   transition: background-color 0.3s;
 }
 
-.clickRow:hover {
+.clickable-row:hover {
   background-color: #ebebeb;
 }
 
-.clickRow td {
+.clickable-row td {
   border: none;
 }
 
@@ -55,6 +52,11 @@ textarea {
   padding: 40px;
 }
 
+td, th {
+  text-align: center;
+  height: 50px;
+  vertical-align: middle;
+}
 .vertical-line::after {
   content: "";
   position: absolute;

@@ -1,4 +1,11 @@
-﻿function updateClock() {
+﻿$(document).ready(function() {
+    $(".clickable-row").click(function() {
+        var href = $(this).data("href");
+        window.location.href = href;
+    });
+});
+
+function updateClock() {
     var timeElement = document.getElementById('time');
     var now = new Date();
     var hours = now.getHours();
@@ -14,11 +21,4 @@
 }
 updateClock();
 setInterval(updateClock, 1000);
-
-$(document).ready(function() {
-    $(".clickRow").click(function() {
-        var href = $(this).data("href");
-        window.location.href = href;
-    });
-});
 

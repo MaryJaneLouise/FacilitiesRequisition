@@ -14,6 +14,7 @@ public class IndexModel : PageModel {
 
     public IEnumerable<User> Users { get; set; }
     
+    
     public void OnGet() {
         Users = _context.GetUsers();
     }

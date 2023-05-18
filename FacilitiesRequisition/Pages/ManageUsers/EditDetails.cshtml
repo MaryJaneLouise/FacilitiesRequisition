@@ -1,0 +1,33 @@
+@page
+@model FacilitiesRequisition.Pages.ManageUsers.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+</head>
+<body>
+<div>
+        <div>
+            <dl>
+                <dt class="col-sm-2">Username</dt>
+                <dd class="col-md-6">@Model.SelectedUser.Username</dd>
+        
+                <dt class="col-sm-2">User Type</dt>
+                <dd class="col-md-6">@Model.SelectedUser.Type</dd>
+        
+                <dt class="col-sm-2">Full Name</dt>
+                <dd class="col-md-6">
+                    @Model.SelectedUser.FirstName @Model.SelectedUser.MiddleName @Model.SelectedUser.LastName
+                </dd>
+            </dl>
+        </div>
+        
+    </div>
+</body>
+</html>
