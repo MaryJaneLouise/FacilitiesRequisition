@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Dashboard";
-
 }
 
 <!DOCTYPE html>
@@ -18,7 +17,8 @@
 <nav class="navbar fixed-top navbar-expand-md bg-light">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Facilities Requisition</span>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -27,13 +27,16 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         @if (Model.UserType != "Super Administrator") {
-          <li class="nav-item">
-            <form method="post">
-              <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent" 
-                      asp-page-handler="RequestPaper">Request Papers</button>
-            </form>
-          </li>
+          
         }
+        <li class="nav-item">
+          <form method="post">
+            <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent"
+                    asp-page-handler="RequestPaper">
+              Request Papers
+            </button>
+          </form>
+        </li>
       </ul>
       
       <form method="post">

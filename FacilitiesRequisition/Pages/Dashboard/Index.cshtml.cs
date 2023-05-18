@@ -49,7 +49,7 @@ public class IndexModel : PageModel  {
     }
 
     public IActionResult OnPostManageUserAccount() {
-        return RedirectToPage();
+        return RedirectToPage("../ManageUsers/Index");
     }
 
     public IActionResult OnPostEditProfile() {
