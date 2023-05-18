@@ -1,5 +1,5 @@
 @page
-@model FacilitiesRequisition.Pages.ManageUsers.UserDetailsModel
+@model FacilitiesRequisition.Pages.ManageUsers.EditDetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,23 +11,82 @@
 <head>
     
 </head>
-<body>
-<div>
-        <div>
-            <dl>
-                <dt class="col-sm-2">Username</dt>
-                <dd class="col-md-6">@Model.SelectedUser.Username</dd>
-        
-                <dt class="col-sm-2">User Type</dt>
-                <dd class="col-md-6">@Model.SelectedUser.Type</dd>
-        
-                <dt class="col-sm-2">Full Name</dt>
-                <dd class="col-md-6">
-                    @Model.SelectedUser.FirstName @Model.SelectedUser.MiddleName @Model.SelectedUser.LastName
-                </dd>
-            </dl>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h1 class="mb-4">@Model.PageTitle</h1>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mt-2">
+                        <label class="control-label">User Type</label>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%;">
+                            <input type="radio" class="btn-check" asp-for="@Model.SelectedUser.Type" value="admin" id="btn-radio-1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btn-radio-1">Admin</label>
+                                                
+                            <input type="radio" class="btn-check" asp-for="@Model.SelectedUser.Type" value="officer" id="btn-radio-2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btn-radio-2">Officer</label>
+                                                
+                            <input type="radio" class="btn-check" asp-for="@Model.SelectedUser.Type" value="faculty" id="btn-radio-3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btn-radio-3">Faculty</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="@Model.SelectedUser.FirstName" class="form-control mt-1"/>
+                        <span asp-validation-for="FirstName" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="MiddleName" class="control-label"></label>
+                        <input asp-for="@Model.SelectedUser.MiddleName" class="form-control mt-1"/>
+                        <span asp-validation-for="MiddleName" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="@Model.SelectedUser.LastName" class="form-control mt-1"/>
+                        <span asp-validation-for="LastName" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="@Model.SelectedUser.Username" class="form-control mt-1"/>
+                        <span asp-validation-for="Username" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control mt-1" type="password"/>
+                        <span asp-validation-for="Password" class="text-danger mt-1"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label asp-for="RepeatPassword" class="control-label"></label>
+                        <input asp-for="RepeatPassword" class="form-control mt-1" type="password"/>
+                        <span asp-validation-for="RepeatPassword" class="text-danger mt-1"></span>
+                    </div>
+                    
+                    <div class="form-group mt-4 mb-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" value="Go back" class="btn btn-outline-secondary" style="width: 100%" asp-page-handler="BackToDashboard"/>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br/>
+                                <input type="reset" value="Clear All Fields" class="btn btn-outline-danger" style="width: 100%;"/>
+                            </div>
+                                                    
+                        </div>
+                    </div>
+                </form>
+            </div>            
         </div>
-        
     </div>
 </body>
 </html>

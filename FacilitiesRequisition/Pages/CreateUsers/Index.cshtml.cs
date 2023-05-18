@@ -48,7 +48,8 @@ public class IndexModel : PageModel {
     [Display(Name = "Repeat password")]
     public string RepeatPassword { get; set; }
 
-    [BindProperty] public string? UserType { get; set; }
+    [BindProperty] 
+    public string? UserType { get; set; }
 
 
     public IActionResult OnGet() {

@@ -57,6 +57,7 @@ td, th {
   height: 50px;
   vertical-align: middle;
 }
+
 .vertical-line::after {
   content: "";
   position: absolute;
