@@ -3,6 +3,10 @@
         var href = $(this).data("href");
         window.location.href = href;
     });
+
+    $('#search-input').on('input', function () {
+        $('form').submit();
+    });
 });
 
 function updateClock() {

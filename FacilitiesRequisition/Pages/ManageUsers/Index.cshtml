@@ -13,27 +13,31 @@
 <body style="background: #EEEEEE">
 <div>
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
-        <div class="col-md-8 rounded-rectangle">
-            <h2>Users Details</h2>
+        <div class="col-md-5 rounded-rectangle">
+            <h2>User List</h2>
             <br/>
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Full Name</th>
-                    <th>User Type</th>  
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var user in Model.Users) {
-                    <tr class="clickable-row" data-href="@Url.Page("./EditDetails", new { id = user.Id })">
-                        <td>@user.Username</td>
-                        <td>@user.FirstName @user.LastName</td>
-                        <td>@user.Type</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
+            <form method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-button" name="SearchQuery" id="search-input" value="@Model.SearchQuery">
+                    <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
+                </div>
+            </form>
+
+            @foreach (var user in Model.Users) {
+                <div class="clickable-row" data-href="@Url.Page("./EditDetails", new { id = user.Id })">
+                    <div style="display: flex; align-items: center; ">
+                        <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                        <div style="font-size: medium; horiz-align: center">
+                            @user.FirstName @user.LastName
+                            <div style="font-size: small">
+                                @user.Username | @user.Type
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            
 
             <form method="post">
                 <div class="form-group mt-4 mb-2">

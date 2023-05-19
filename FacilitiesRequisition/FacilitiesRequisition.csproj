@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="bootstrap" Version="5.3.0-alpha3" />
+      <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.9.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,12 +19,6 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages\Users\Administrators\" />
-      <Folder Include="Pages\Users\Faculties\" />
-      <Folder Include="Pages\Users\Students\" />
     </ItemGroup>
 
 </Project>
