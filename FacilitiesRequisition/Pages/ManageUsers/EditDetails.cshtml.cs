@@ -20,6 +20,7 @@ public class EditDetailsModel : PageModel {
         _databaseContext = context;
     }
     
+    [BindProperty]
     public User SelectedUser { get; set; }
     public string PageTitle { get; set; }
     public bool HasSuperAdmin { get; set; }
@@ -58,6 +59,8 @@ public class EditDetailsModel : PageModel {
         if (SelectedUser == null) {
             return NotFound();
         }
+        UserType = SelectedUser.Type.ToString();
+
         PageTitle = "Edit user details";
         return Page();
     }
@@ -69,13 +72,21 @@ public class EditDetailsModel : PageModel {
             return Page();
         }
 
-        var selectedUser = SelectedUser;
+        var selectedUser = _databaseContext.GetUser(SelectedUser.Id);
         
-        selectedUser.Type = SelectedUser.Type;
-        selectedUser.FirstName = SelectedUser.FirstName;
-        selectedUser.MiddleName = SelectedUser.MiddleName;
-        selectedUser.LastName = SelectedUser.LastName;
-        selectedUser.Username = SelectedUser.Username;
+        if (Enum.TryParse(UserType, out UserType parsedType))
+        {
+            selectedUser.Type = parsedType;
+        }
+        else
+        {
+            return Page();
+        }
+
+        SelectedUser.FirstName = FirstName;
+        SelectedUser.MiddleName = MiddleName;
+        SelectedUser.LastName = LastName;
+        SelectedUser.Username = Username;
 
         if (!string.IsNullOrEmpty(Password)) {
             var passwordSalt = PasswordHash.GenerateSalt();
