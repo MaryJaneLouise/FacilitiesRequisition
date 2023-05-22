@@ -52,8 +52,8 @@ public class IndexModel : PageModel  {
         return RedirectToPage("../ManageUsers/Index");
     }
 
-    public IActionResult OnPostEditProfile() {
-        return RedirectToPage();
+    public IActionResult OnPostViewProfile() {
+        return RedirectToPage("../ManageUsers/ViewProfile");
     }
     
     public IActionResult OnPostLogout() {

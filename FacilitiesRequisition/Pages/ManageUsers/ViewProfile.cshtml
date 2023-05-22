@@ -1,8 +1,8 @@
 @page
-@model FacilitiesRequisition.Pages.ManageUsers.ViewProfile
+@model FacilitiesRequisition.Pages.ManageUsers.ViewProfileModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
 
 <!DOCTYPE html>
@@ -11,9 +11,40 @@
 <head>
     <title></title>
 </head>
-<body>
-<div>
-    
-</div>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h1 class="mb-4">@Model.PageTitle</h1>
+                <div>
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="@Model.Username" value="@Model.Username" class="form-control mt-1" disabled/>
+                </div>
+                
+                <div>
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" value="@Model.Name" class="form-control mt-1" disabled/>
+                </div>
+                
+                <div>
+                    <label asp-for="UserType" class="control-label"></label>
+                    <input asp-for="@Model.UserType" value="@Model.UserType" class="form-control mt-1" disabled/>
+                </div>
+                
+                <form method="post">
+                    <div class="form-group mt-4 mb-2">
+                        <div class="col-md-auto" style="float: right">
+                            <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4 mb-2">
+                        <div class="col-md-auto" style="float: right">
+                            <input type="submit" value="Edit Profile" class="btn btn-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                        </div>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
 </body>
 </html>
