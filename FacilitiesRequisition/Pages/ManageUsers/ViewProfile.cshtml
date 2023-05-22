@@ -2,7 +2,7 @@
 @model FacilitiesRequisition.Pages.ManageUsers.ViewProfileModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Profile";
 }
 
 <!DOCTYPE html>
@@ -34,12 +34,8 @@
                 <form method="post">
                     <div class="form-group mt-4 mb-2">
                         <div class="col-md-auto" style="float: right">
-                            <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
-                        </div>
-                    </div>
-                    <div class="form-group mt-4 mb-2">
-                        <div class="col-md-auto" style="float: right">
-                            <input type="submit" value="Edit Profile" class="btn btn-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                            <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard"/>
+                            <input type="submit" value="Edit Profile" class="btn btn-primary" asp-page-handler="BackToDashboard"/>
                         </div>
                     </div>
                 </form>

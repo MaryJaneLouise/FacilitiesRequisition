@@ -23,6 +23,9 @@ public class ViewProfileModel : PageModel {
     [BindProperty]
     public string Name { get; set; }
     public string Username { get; set; }
+    
+    [BindProperty]
+    [Display(Name = "Type of User")]
     public string UserType { get; set; }
     
     public IActionResult OnGet()  {
