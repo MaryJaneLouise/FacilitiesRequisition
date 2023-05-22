@@ -64,4 +64,8 @@ public class IndexModel : PageModel  {
     public IActionResult OnPostRequestPaper() {
         return RedirectToPage("../CreateRequestPaper/Index");
     }
+
+    public IActionResult OnPostHome() {
+        return RedirectToPage("../Dashboard/MainScreen");
+    }
 }

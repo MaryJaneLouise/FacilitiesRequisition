@@ -20,7 +20,7 @@ public class IndexModel : PageModel {
         return RedirectToPage(!_context.HasSuperAdministrator()
             ? "./CreateUsers/Index"
             : HttpContext.Session.IsLoggedIn()
-                ? "./Dashboard/Index"
+                ? "./Dashboard/MainScreen"
                 : "./Login/Index");
     }
 }
