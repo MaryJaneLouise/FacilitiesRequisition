@@ -8,64 +8,54 @@
 <!DOCTYPE html>
 
 <html>
+<div>
+  <div>
+    @*@await Html.PartialAsync("_NavigationBar", new FacilitiesRequisition.Pages.Shared._NavigationBarModel())*@
+  </div>
+</div>
 <head>
-    <title></title>
-    <link rel="stylesheet" href="./css/site.css">
+  <title></title>
 </head>
-<body style="background: #eeeeee">
-
-<nav class="navbar fixed-top navbar-expand-md bg-light">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Facilities Requisition</span>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent"
-                  asp-page-handler="Home">
-            Home
-          </button>
-          
-        </li>
-        @if (Model.UserType != "Super Administrator") {
-          
-        }
-        <li class="nav-item">
-          <form method="post">
-            <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent"
-                    asp-page-handler="RequestPaper">
-              Request Papers
-            </button>
-          </form>
-        </li>
-      </ul>
-      
-      <form method="post">
-        <div class="form-group">
-          <li class="nav-item dropdown list-unstyled">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              @Model.Name
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item">@Model.UserType</a></li>
-              <li><hr class="dropdown-divider"></li>
-              @if (Model.UserType == "Super Administrator") {
-                <button type="submit" class="dropdown-item" asp-page-handler="CreateAccount">Create new account</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="ManageUserAccount">Manage user accounts</button>
-              }
-              <button type="submit" class="dropdown-item" asp-page-handler="ViewProfile">View Profile</button>
-              <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
-            </ul>
-          </li>
+<body>
+<div class="container">
+  <div class="row">
+    @for (int i = 0; i < 3; i++) {
+      <div class="col-md-4 mb-4">
+        <div class="card rounded-rectangle">
+          <div class="card-body">
+            <h5 class="card-title">Card Title</h5>
+            <p class="card-text">Card Description</p>
+          </div>
         </div>
-      </form>
-      
-      <li class="time list-unstyled" id="time" style="float:right"></li>
+      </div>
+    }
+  </div>
+  <div class="rounded-rectangle">
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Facility Requested</th>
+            <th>Name</th>
+            <th>Number of Days</th>
+          </tr>
+          </thead>
+          <tbody>
+          @for (int i = 0; i < 5; i++) {
+            <tr>
+              <td>Value 1</td>
+              <td>Value 2</td>
+              <td>@i days</td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</nav>
+
+</div>
+
 </body>
 </html>
