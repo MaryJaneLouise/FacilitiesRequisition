@@ -1,0 +1,53 @@
+@page
+@using FacilitiesRequisition.Models.Officers
+@model FacilitiesRequisition.Pages.ManageOrganizations.IndexModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body style="background: #EEEEEE">
+<div>
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        <div class="col-md-5 rounded-rectangle">
+            <h2>Organization List</h2>
+            <br/>
+            <form method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-button" name="SearchQuery" id="search-input" value="@Model.SearchQuery">
+                    <button class="btn btn-outline-secondary" type="submit" id="search-button">Search</button>
+                </div>
+            </form>
+
+            @foreach (var user in Model.Organizations) {
+                <div class="clickable-row" data-href="@Url.Page("./EditDetails", new { id = user.Id })">
+                    <div style="display: flex; align-items: center; ">
+                        <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                        <div style="font-size: medium; horiz-align: center">
+                            Organization Name
+                            <div style="font-size: small">
+                                Organization President | Organization Adviser
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Back to Dashboard" class="btn btn-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

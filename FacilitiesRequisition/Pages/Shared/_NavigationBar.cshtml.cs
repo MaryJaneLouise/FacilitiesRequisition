@@ -46,9 +46,17 @@ namespace FacilitiesRequisition.Pages.Shared {
         public IActionResult OnPostCreateAccount()  {
             return RedirectToPage("../CreateUsers/Index");
         }
+        
+        public IActionResult OnPostCreateOrganization()  {
+            return RedirectToPage("../CreateOrganizations/Index");
+        }
     
         public IActionResult OnPostManageUserAccount() {
             return RedirectToPage("../ManageUsers/Index");
+        }
+        
+        public IActionResult OnPostManageOrganization() {
+            return RedirectToPage("../ManageOrganizations/Index");
         }
     
         public IActionResult OnPostViewProfile() {
