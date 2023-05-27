@@ -21,4 +21,8 @@ public class IndexModel : PageModel {
     public void OnGet() {
         Organizations = _context.GetOrganizations();
     }
+    
+    public IActionResult OnPostBackToDashboard() {
+        return RedirectToPage("../Dashboard/Index");
+    }
 }

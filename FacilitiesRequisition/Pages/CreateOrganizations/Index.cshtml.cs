@@ -37,4 +37,8 @@ public class IndexModel : PageModel {
     public void OnGet() {
         
     }
+    
+    public IActionResult OnPostBackToDashboard() {
+        return RedirectToPage("../Dashboard/Index");
+    }
 }
