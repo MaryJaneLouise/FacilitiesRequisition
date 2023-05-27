@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\MarieJuana\RiderProjects\FacilitiesRequisition\FacilitiesRequisition
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/CreateOrganizations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlT3JnYW5pemF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/CreateRequestPaper/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlUmVxdWVzdFBhcGVyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -40,6 +44,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageOrganizations/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlT3JnYW5pemF0aW9uc1xFZGl0RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageOrganizations/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlT3JnYW5pemF0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageOrganizations/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlT3JnYW5pemF0aW9uc1xWaWV3RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageUsers/EditDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlVXNlcnNcRWRpdERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,8 +64,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageUsers/ViewProfile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlVXNlcnNcVmlld1Byb2ZpbGUuY3NodG1s
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/ManageUsers/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlVXNlcnNcVmlld0RldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Privacy.cshtml]
