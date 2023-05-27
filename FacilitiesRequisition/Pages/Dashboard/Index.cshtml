@@ -1,34 +1,26 @@
 @page
-@model FacilitiesRequisition.Pages.Dashboard.IndexModel
+@model FacilitiesRequisition.Pages.Shared._NavigationBarModel
+
 
 @{
     ViewData["Title"] = "Dashboard";
+    Layout = "_NavigationBar";
 }
 
-<!DOCTYPE html>
-
-<html>
-<div>
-  <div>
-    @*@await Html.PartialAsync("_NavigationBar", new FacilitiesRequisition.Pages.Shared._NavigationBarModel())*@
-  </div>
-</div>
-<head>
-  <title></title>
-</head>
-<body>
-<div class="container">
+<main>
+    <div class="container">
   <div class="row">
-    @for (int i = 0; i < 3; i++) {
-      <div class="col-md-4 mb-4">
-        <div class="card rounded-rectangle">
-          <div class="card-body">
-            <h5 class="card-title">Card Title</h5>
-            <p class="card-text">Card Description</p>
+            @for (int i = 0; i < 3; i++)
+            {
+          <div class="col-md-4 mb-4">
+            <div class="card rounded-rectangle">
+              <div class="card-body">
+                <h5 class="card-title">Card Title</h5>
+                <p class="card-text">Card Description</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    }
+            }
   </div>
   <div class="rounded-rectangle">
     <div class="row mt-4">
@@ -42,13 +34,14 @@
           </tr>
           </thead>
           <tbody>
-          @for (int i = 0; i < 5; i++) {
-            <tr>
-              <td>Value 1</td>
-              <td>Value 2</td>
-              <td>@i days</td>
-            </tr>
-          }
+            @for (int i = 0; i < 5; i++)
+            {
+                <tr>
+                    <td>Value 1</td>
+                    <td>Value 2</td>
+                    <td>@i days</td>
+                </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -56,6 +49,4 @@
   </div>
 
 </div>
-
-</body>
-</html>
+</main>

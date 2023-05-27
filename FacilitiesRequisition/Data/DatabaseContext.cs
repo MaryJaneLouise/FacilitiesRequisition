@@ -9,7 +9,7 @@ namespace FacilitiesRequisition.Data;
 
 public class DatabaseContext : DbContext {
     public const string CONNECTION_STRING =
-        @"Server=(localdb)\mssqllocaldb;Database=FacilitiesRequisitions;Trusted_Connection=True";
+        @"Server=LAPTOP-IERTITV7;Database=FacilitiesRequisitions;Trusted_Connection=True;TrustServerCertificate=True";
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {
         

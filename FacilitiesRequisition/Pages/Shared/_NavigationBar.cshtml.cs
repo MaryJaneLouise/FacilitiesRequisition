@@ -18,7 +18,7 @@ namespace FacilitiesRequisition.Pages.Shared {
         public _NavigationBarModel(DatabaseContext context)  {
             _context = context;
         }
-    
+
         [BindProperty]
         public string Name { get; set; }
     
