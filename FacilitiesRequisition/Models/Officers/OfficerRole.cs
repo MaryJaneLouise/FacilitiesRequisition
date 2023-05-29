@@ -1,8 +1,11 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace FacilitiesRequisition.Models.Officers;
 
 public class OfficerRole {
     public int Id { get; set; }
     public User Officer { get; set; }
     public Organization Organization { get; set; }
-    public OrganizationPosition OrganizationPosition { get; set; }
+    public OrganizationPosition Position { get; set; }
 }

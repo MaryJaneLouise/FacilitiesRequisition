@@ -24,7 +24,7 @@
             </form>
 
             @foreach (var user in Model.Users) {
-                <div class="clickable-row" data-href="@Url.Page("./EditDetails", new { id = user.Id })">
+                <div class="clickable-row" data-href="@Url.Page("./ViewDetails", new { id = user.Id })">
                     <div style="display: flex; align-items: center; ">
                         <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
                         <div style="font-size: medium; horiz-align: center">
@@ -40,7 +40,8 @@
             <form method="post">
                 <div class="form-group mt-4 mb-2">
                     <div class="col-md-auto" style="float: right">
-                        <input type="submit" value="Back to Dashboard" class="btn btn-primary" style="width: 100%;" asp-page-handler="BackToDashboard"/>
+                        <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" />
+                        <input type="submit" value="Create User" class="btn btn-primary mr-2" asp-page-handler="CreateUser" />
                     </div>
                 </div>
             </form>

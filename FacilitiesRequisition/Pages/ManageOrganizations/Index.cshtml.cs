@@ -19,10 +19,14 @@ public class IndexModel : PageModel {
     public string SearchQuery { get; set; }
     
     public void OnGet() {
-        Organizations = _context.GetOrganizations();
+        //Organizations = _context.GetOrganizations();
     }
     
     public IActionResult OnPostBackToDashboard() {
         return RedirectToPage("../Dashboard/Index");
+    }
+
+    public IActionResult OnPostCreateOrganization() {
+        return RedirectToPage("../CreateOrganizations/Index");
     }
 }

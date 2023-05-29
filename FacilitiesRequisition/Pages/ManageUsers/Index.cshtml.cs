@@ -30,4 +30,8 @@ public class IndexModel : PageModel {
         return RedirectToPage("../Dashboard/Index");
     }
 
+    public IActionResult OnPostCreateUser() {
+        return RedirectToPage("../CreateUsers/Index");
+    }
+
 }

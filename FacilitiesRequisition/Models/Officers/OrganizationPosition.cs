@@ -6,5 +6,6 @@ public enum OrganizationPosition {
     Secretary,
     Treasurer,
     Auditor,
-    PublicRelationsOfficer
+    PublicRelationsOfficer,
+    Faculty
 }

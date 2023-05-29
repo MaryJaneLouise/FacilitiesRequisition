@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using FacilitiesRequisition.Models.Administrators;
 
 namespace FacilitiesRequisition.Models.Faculties; 

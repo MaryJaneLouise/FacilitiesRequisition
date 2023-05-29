@@ -60,7 +60,7 @@ namespace FacilitiesRequisition.Pages.Shared {
         }
     
         public IActionResult OnPostViewProfile() {
-            return RedirectToPage("../ManageUsers/ViewProfile");
+            return RedirectToPage("../ManageUsers/ViewDetails");
         }
         
         public IActionResult OnPostLogout() {
@@ -73,7 +73,7 @@ namespace FacilitiesRequisition.Pages.Shared {
         }
     
         public IActionResult OnPostHome() {
-            return RedirectToPage("../Dashboard/MainScreen");
+            return RedirectToPage("../Dashboard/Index");
         }
     }
 }

@@ -74,12 +74,9 @@ public class EditDetailsModel : PageModel {
 
         var selectedUser = _databaseContext.GetUser(SelectedUser.Id);
         
-        if (Enum.TryParse(UserType, out UserType parsedType))
-        {
+        if (Enum.TryParse(UserType, out UserType parsedType)) {
             selectedUser.Type = parsedType;
-        }
-        else
-        {
+        } else  {
             return Page();
         }
 
