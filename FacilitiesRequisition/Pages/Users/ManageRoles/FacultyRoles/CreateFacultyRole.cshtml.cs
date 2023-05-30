@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Officers;
+using FacilitiesRequisition.Models.Faculties;
 
-namespace FacilitiesRequisition.Pages.OfficerRoles
+namespace FacilitiesRequisition.Pages.FacultyRoles
 {
     public class CreateModel : PageModel
     {
@@ -20,23 +21,25 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
             _context = context;
         }
         
-        public User Officer { get; set; }
+        public User Faculty { get; set; }
         public IEnumerable<SelectListItem> Organizations { get; set; } = default!;
         
         [BindProperty]
         public string OrganizationId { get; set; }
+        
         [BindProperty]
         public OrganizationPosition Position { get; set; }
 
 
-        public IActionResult OnGet(int? id) {
+        public IActionResult OnGet(int? id)
+        {
             var user = _context.GetUser(id ?? -1);
             if (user == null)
             {
                 return NotFound();
             }
 
-            Officer = user;
+            Faculty = user;
             Organizations = _context.GetOrganizations().Select(organization =>
                 new SelectListItem
                 {
@@ -45,7 +48,7 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
                 });
             return Page();
         }
-
+        
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public IActionResult OnPost(int? id)
         {
@@ -55,23 +58,22 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
                 return NotFound();
             }
 
-            Officer = user;
+            Faculty = user;
             
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var officerRole = new OfficerRole
+            var facultyRole = new FacultyRole()
             {
-                Officer = Officer,
+                Faculty = Faculty,
                 Organization = _context.GetOrganization(Convert.ToInt32(OrganizationId))!,
                 Position = Position
             };
-            _context.AddOfficerRole(officerRole);
+            _context.AddFacultyRole(facultyRole);
 
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

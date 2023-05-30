@@ -51,7 +51,7 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles  {
             };
             _context.AddAdministratorRole(adminRole);
             
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

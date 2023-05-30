@@ -23,9 +23,26 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\ManageUsers\ManageRoles\" />
       <Folder Include="Pages\Organizations\" />
       <Folder Include="Pages\Users\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\CreateAdminRoles.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\DeleteAdminRoles.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\EditDetails.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\Index.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\ViewDetails.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\CreateFacultyRole.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\DeleteFacultyRole.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\EditDetails.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\Index.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\ViewDetails.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\CreateOfficerRoles.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\DeleteOfficerRoles.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\EditDetails.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\Index.cshtml" />
+      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\ViewDetails.cshtml" />
     </ItemGroup>
 
 </Project>

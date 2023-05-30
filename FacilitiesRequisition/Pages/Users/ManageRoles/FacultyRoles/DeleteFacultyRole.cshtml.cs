@@ -56,7 +56,7 @@ namespace FacilitiesRequisition.Pages.FacultyRoles
                 _context.RemoveFacultyRole(FacultyRole);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

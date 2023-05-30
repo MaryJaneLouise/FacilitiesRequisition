@@ -44,19 +44,19 @@ namespace FacilitiesRequisition.Pages.Shared {
         }
         
         public IActionResult OnPostCreateAccount()  {
-            return RedirectToPage("../CreateUsers/Index");
+            return RedirectToPage("../Users/CreateUser");
         }
         
         public IActionResult OnPostCreateOrganization()  {
-            return RedirectToPage("../CreateOrganizations/Index");
+            return RedirectToPage("../Organizations/CreateOrganization");
         }
     
         public IActionResult OnPostManageUserAccount() {
-            return RedirectToPage("../ManageUsers/Index");
+            return RedirectToPage("../Users/Index");
         }
         
         public IActionResult OnPostManageOrganization() {
-            return RedirectToPage("../ManageOrganizations/Index");
+            return RedirectToPage("../Organizations/Index");
         }
     
         public IActionResult OnPostViewProfile() {

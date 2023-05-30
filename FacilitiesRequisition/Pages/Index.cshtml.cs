@@ -18,9 +18,9 @@ public class IndexModel : PageModel {
 
     public IActionResult OnGet() {
         return RedirectToPage(!_context.HasSuperAdministrator()
-            ? "./CreateUsers/Index"
+            ? "./Users/CreateUser"
             : HttpContext.Session.IsLoggedIn()
-                ? "./Dashboard/MainScreen"
+                ? "./Dashboard/Index"
                 : "./Login/Index");
     }
 }

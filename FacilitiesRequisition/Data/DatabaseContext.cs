@@ -63,6 +63,7 @@ public class DatabaseContext : DbContext {
 
     public List<AdministratorRole> GetAdministratorRoles(User administrator) {
         return AdministratorRoles.Where(x => x.Administrator == administrator).ToList();
+
     }
 
     public bool HasSuperAdministrator() {
@@ -90,7 +91,10 @@ public class DatabaseContext : DbContext {
     }
 
     public List<OfficerRole> GetOfficerRoles(User officer) {
-        return OfficerRoles.Where(x => x.Officer == officer).ToList();
+        return OfficerRoles
+            .Where(x => x.Officer == officer)
+            .Include(officerRole => officerRole.Organization)
+            .ToList();    
     }
 
     public OfficerRole? GetOfficerRole(int id) {
@@ -139,7 +143,10 @@ public class DatabaseContext : DbContext {
     }
 
     public List<FacultyRole> GetFacultyRoles(User faculty) {
-        return FacultyRoles.Where(x => x.Faculty == faculty).ToList();
+        return FacultyRoles
+            .Where(x => x.Faculty == faculty)
+            .Include(facultyRole => facultyRole.Organization)
+            .ToList();    
     }
 
     public FacultyRole? GetFacultyRole(int id) {

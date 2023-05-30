@@ -46,7 +46,7 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
                 _context.RemoveAdministratorRole(AdministratorRole);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

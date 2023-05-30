@@ -56,7 +56,7 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
                 _context.RemoveOfficerRole(OfficerRole);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Users/Index"); 
         }
     }
 }

@@ -66,7 +66,7 @@ namespace FacilitiesRequisition.Pages.Users
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Users/Index");
         }
 
         private bool UserExists(int id)

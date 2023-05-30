@@ -106,7 +106,7 @@ public class CreateModel : PageModel {
             HttpContext.Session.Login(user);
         }
 
-        return RedirectToPage("../Dashboard/Index");
+        return RedirectToPage("../Users/Index");
     }
 
     public void SetUserType(string userType) {

@@ -57,7 +57,7 @@ namespace FacilitiesRequisition.Pages.Users
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Users/Index");
         }
     }
 }
