@@ -10,14 +10,11 @@ using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Officers;
 using FacilitiesRequisition.Models.Faculties;
 
-namespace FacilitiesRequisition.Pages.FacultyRoles
-{
-    public class CreateModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.FacultyRoles {
+    public class CreateModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public CreateModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public CreateModel(DatabaseContext context) {
             _context = context;
         }
         
@@ -31,11 +28,9 @@ namespace FacilitiesRequisition.Pages.FacultyRoles
         public OrganizationPosition Position { get; set; }
 
 
-        public IActionResult OnGet(int? id)
-        {
+        public IActionResult OnGet(int? id) {
             var user = _context.GetUser(id ?? -1);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
@@ -49,31 +44,30 @@ namespace FacilitiesRequisition.Pages.FacultyRoles
             return Page();
         }
         
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPost(int? id)
-        {
+        public IActionResult OnPost(int? id) {
             var user = _context.GetUser(id ?? -1);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
             Faculty = user;
             
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
-            var facultyRole = new FacultyRole()
-            {
+            var facultyRole = new FacultyRole() {
                 Faculty = Faculty,
                 Organization = _context.GetOrganization(Convert.ToInt32(OrganizationId))!,
                 Position = Position
             };
             _context.AddFacultyRole(facultyRole);
 
-            return RedirectToPage("/Users/Index"); 
+            return RedirectToPage("./Index", new {id = Faculty.Id}); 
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("./Index", new { id = Faculty.Id });
         }
     }
 }

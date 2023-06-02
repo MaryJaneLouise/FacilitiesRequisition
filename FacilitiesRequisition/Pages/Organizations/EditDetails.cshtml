@@ -2,41 +2,58 @@
 @model FacilitiesRequisition.Pages.Organizations.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Update Organization's Details";
 }
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h2 class="mb-4">Update organization details</h2>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Organization.Id" />
+                    
+                    <div class="form-group">
+                        <label asp-for="Organization.Name" class="control-label"></label>
+                        <input asp-for="Organization.Name" class="form-control" />
+                        <span asp-validation-for="Organization.Name" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="Organization.OrganizationAdviser" class="control-label"></label>
+                        <input asp-for="Organization.OrganizationAdviser" class="form-control"/>
+                        <span asp-validation-for="Organization.OrganizationAdviser" class="text-danger"></span>
+                        <br/>
+                    </div>
 
-<h1>Edit</h1>
+                    <div class="form-group">
+                        <label asp-for="Organization.OrganizationBudget" class="control-label"></label>
+                        <input asp-for="Organization.OrganizationBudget" type="number" class="form-control" />
+                        <span asp-validation-for="Organization.OrganizationBudget" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Organization.IsStudentCouncil" /> @Html.DisplayNameFor(model => model.Organization.IsStudentCouncil)
+                        </label>
+                        <br/>
+                    </div>
 
-<h4>Organization</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Organization.Id" />
-            <div class="form-group">
-                <label asp-for="Organization.Name" class="control-label"></label>
-                <input asp-for="Organization.Name" class="form-control" />
-                <span asp-validation-for="Organization.Name" class="text-danger"></span>
+                    <div class="form-group" style="float: right">
+                        <br/>
+                        <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex"/>
+                        <input type="submit" value="Update organization" class="btn btn-primary"/>
+                    </div>
+                </form>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Organization.IsStudentCouncil" /> @Html.DisplayNameFor(model => model.Organization.IsStudentCouncil)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Organization.OrganizationBudget" class="control-label"></label>
-                <input asp-for="Organization.OrganizationBudget" class="form-control" />
-                <span asp-validation-for="Organization.OrganizationBudget" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
+</body>
+</html>

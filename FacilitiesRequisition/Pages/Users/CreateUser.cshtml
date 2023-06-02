@@ -2,7 +2,7 @@
 @model CreateModel;
 
 @{
-    ViewData["Title"] = @Model.PageTitle + " creation";
+    ViewData["Title"] = @Model.PageTitle;
 }
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @if (Model.HasSuperAdmin) {
                         <div class="form-group mt-2">
-                            <label class="control-label">User Type</label>
+                            <label class="control-label">Type of User</label>
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%;">
                                 <input type="radio" class="btn-check" asp-for="UserType" value="admin" id="btn-radio-1" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary" for="btn-radio-1">Admin</label>
@@ -71,28 +71,15 @@
                     </div>
                     
                     @if (Model.HasSuperAdmin) {
-                        <div class="form-group mt-4 mb-2">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="submit" value="Cancel" class="btn btn-outline-secondary" style="width: 100%" asp-page-handler="BackToDashboard"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <br/>
-                                    <input type="reset" value="Clear All Fields" class="btn btn-outline-danger" style="width: 100%;"/>
-                                </div>
-                                
-                            </div>
+                        <div class="form-group" style="float: right">
+                            <br/>
+                            <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex"/>
+                            <input type="submit" value="Create user" class="btn btn-primary"/>
                         </div>
                     } else {
-                        <div class="form-group mt-4 mb-2">
-                            <div class="col-md-6">
-                                <input type="submit" value="Save" class="btn btn-primary" style="width: 100%;"/>
-                            </div>
+                        <div class="form-group" style="float: right">
+                            <br/>
+                            <input type="submit" value="Create super user" class="btn btn-primary"/>
                         </div>
                     }
                 </form>

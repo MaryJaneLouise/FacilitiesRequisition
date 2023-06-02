@@ -9,14 +9,11 @@ using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.OfficerRoles
-{
-    public class CreateModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.OfficerRoles {
+    public class CreateModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public CreateModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public CreateModel(DatabaseContext context) {
             _context = context;
         }
         
@@ -25,14 +22,14 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
         
         [BindProperty]
         public string OrganizationId { get; set; }
+        
         [BindProperty]
         public OrganizationPosition Position { get; set; }
 
 
         public IActionResult OnGet(int? id) {
             var user = _context.GetUser(id ?? -1);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
@@ -45,25 +42,20 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
                 });
             return Page();
         }
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPost(int? id)
-        {
+        
+        public IActionResult OnPost(int? id) {
             var user = _context.GetUser(id ?? -1);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
             Officer = user;
             
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
-            var officerRole = new OfficerRole
-            {
+            var officerRole = new OfficerRole {
                 Officer = Officer,
                 Organization = _context.GetOrganization(Convert.ToInt32(OrganizationId))!,
                 Position = Position
@@ -71,7 +63,11 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
             _context.AddOfficerRole(officerRole);
 
 
-            return RedirectToPage("/Users/Index"); 
+            return RedirectToPage("./Index", new {id = Officer.Id}); 
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("./Index", new {id = Officer.Id}); 
         }
     }
 }

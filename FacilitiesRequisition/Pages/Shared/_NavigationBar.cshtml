@@ -14,8 +14,8 @@
 </head>
 
 <body style="background: #eeeeee">
-<nav class="navbar fixed-top navbar-expand-md bg-light">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-md bg-light">
+  <div class="container">
     <span class="navbar-brand mb-0 h1">Facilities Requisition</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,11 +72,10 @@
     </div>
   </div>
 </nav>
-<div class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
+
+<div class="container body-content">
+    @RenderBody()
+</div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -8,55 +8,49 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.OfficerRoles
-{
-    public class DeleteModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.OfficerRoles {
+    public class DeleteModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public DeleteModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public DeleteModel(FacilitiesRequisition.Data.DatabaseContext context) {
             _context = context;
         }
 
         [BindProperty]
         public OfficerRole OfficerRole { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var officerRole = _context.GetOfficerRole((int)id);
 
-            if (officerRole == null)
-            {
+            if (officerRole == null) {
                 return NotFound();
-            }
-            else 
-            {
+            } else {
                 OfficerRole = officerRole;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnPostAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
+            
             var officerRole = _context.GetOfficerRole((int)id);
 
-            if (officerRole != null)
-            {
+            if (officerRole != null) {
                 OfficerRole = officerRole;
                 _context.RemoveOfficerRole(OfficerRole);
             }
 
-            return RedirectToPage("../Users/Index"); 
+            return RedirectToPage("/Users/Index"); 
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("/Users/Index");
         }
     }
 }

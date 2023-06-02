@@ -8,55 +8,48 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Faculties;
 
-namespace FacilitiesRequisition.Pages.FacultyRoles
-{
-    public class DeleteModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.FacultyRoles {
+    public class DeleteModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public DeleteModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public DeleteModel(DatabaseContext context) {
             _context = context;
         }
 
         [BindProperty]
         public FacultyRole FacultyRole { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var facultyrole = _context.GetFacultyRole((int)id);
 
-            if (facultyrole == null)
-            {
+            if (facultyrole == null) {
                 return NotFound();
-            }
-            else 
-            {
+            } else {
                 FacultyRole = facultyrole;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnPostAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
             var facultyrole = _context.GetFacultyRole((int)id);
 
-            if (facultyrole != null)
-            {
+            if (facultyrole != null) {
                 FacultyRole = facultyrole;
                 _context.RemoveFacultyRole(FacultyRole);
             }
 
             return RedirectToPage("/Users/Index"); 
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("/Users/Index");
         }
     }
 }

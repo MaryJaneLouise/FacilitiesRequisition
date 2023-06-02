@@ -9,59 +9,49 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.Organizations
-{
-    public class EditModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.Organizations {
+    public class EditModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public EditModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public EditModel(DatabaseContext context) {
             _context = context;
         }
-
+        
+        public string PageTitle { get; set; }
+        
         [BindProperty]
         public Organization Organization { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.GetOrganizations() == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null || _context.GetOrganizations() == null) {
                 return NotFound();
             }
 
             var organization =  _context.GetOrganization((int)id);
-            if (organization == null)
-            {
+            
+            if (organization == null) {
                 return NotFound();
             }
             Organization = organization;
             return Page();
+            
+            PageTitle = "Update organization details";
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
+        
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
             _context.Attach(Organization).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrganizationExists(Organization.Id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!OrganizationExists(Organization.Id)) {
                     return NotFound();
-                }
-                else
-                {
+                } else {
                     throw;
                 }
             }
@@ -69,9 +59,12 @@ namespace FacilitiesRequisition.Pages.Organizations
             return RedirectToPage("./Index");
         }
 
-        private bool OrganizationExists(int id)
-        {
+        private bool OrganizationExists(int id) {
           return _context.GetOrganization(id) != null;
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("./Index");
         }
     }
 }

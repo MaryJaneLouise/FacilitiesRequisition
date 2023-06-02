@@ -113,7 +113,7 @@ public class CreateModel : PageModel {
         UserType = userType;
     }
 
-    public IActionResult OnPostBackToDashboard() {
-        return RedirectToPage("../Dashboard/Index");
+    public IActionResult OnPostBackToIndex() {
+        return RedirectToPage("../Users/Index");
     }
 }

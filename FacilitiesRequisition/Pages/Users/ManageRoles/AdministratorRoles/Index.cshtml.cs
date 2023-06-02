@@ -9,37 +9,40 @@ using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
 
-namespace FacilitiesRequisition.Pages.AdministratorRoles
-{
-    public class IndexModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.AdministratorRoles {
+    public class IndexModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public IndexModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public IndexModel(DatabaseContext context) {
             _context = context;
         }
 
         public IList<AdministratorRole> AdministratorRole { get;set; } = default!;
+        
         [BindProperty]
         public User Admin { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.GetUsers() == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null || _context.GetUsers() == null) {
                 return NotFound();
             }
 
             var user = _context.GetUser((int)id);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
             Admin = user;
             AdministratorRole = _context.GetAdministratorRoles(Admin);
             return Page();
+        }
+
+        public IActionResult OnPostBackToUserIndex() {
+            return RedirectToPage("/Users/Index");
+        }
+
+        public IActionResult OnPostCreateRole() {
+            return RedirectToPage("./CreateAdminRoles");
         }
     }
 }

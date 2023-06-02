@@ -1,36 +1,51 @@
 @page
+@using FacilitiesRequisition.Models.Administrators
 @model FacilitiesRequisition.Pages.AdministratorRoles.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Administrator Roles";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="CreateAdminRoles" asp-route-id="@Model.Admin.Id">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AdministratorRole[0].Position)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.AdministratorRole) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Position)
-            </td>
-            <td>
-                <a asp-page="./EditDetails" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./ViewDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./DeleteAdminRoles" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-5 rounded-rectangle">
+                <h2>Active user roles for @Model.Admin.FirstName</h2>
+                
+                @foreach (var role in Model.AdministratorRole) {
+                    <div class="clickable-row">
+                        @if (role.Position == AdministratorPosition.Dean) {
+                            <text>Dean</text>
+                        } else if (role.Position == AdministratorPosition.AssistantDean) {
+                            <text>Assistant Dean</text>
+                        } else if (role.Position == AdministratorPosition.StudentAffairs) {
+                            <text>Student Affairs</text>
+                        } else if (role.Position == AdministratorPosition.SuperAdmin) {
+                            <text>Super Administrator</text>
+                        }
+                        
+                        <a class="btn btn-outline-danger" asp-page="./DeleteAdminRoles" asp-route-id="@role.Id">
+                            <i class="bi bi-trash-fill" style="font-size: 17px"></i>
+                            <text style="vertical-align: center; align-items: center">Delete</text>
+                        </a>
+                    </div>
+                }
+                
+                <form method="post">
+                    <div class="form-group mt-4 mb-2">
+                        <div class="col-md-auto" style="float: right">
+                            <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToUserIndex" />
+                            <a class="btn btn-primary" asp-page="CreateAdminRoles" asp-route-id="@Model.Admin.Id">Add new role</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
 
 namespace FacilitiesRequisition.Pages.AdministratorRoles {
     public class DeleteModel : PageModel {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public DeleteModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public DeleteModel(DatabaseContext context) {
             _context = context;
         }
+        
+        public User Administrator { get; set; }
 
         [BindProperty]
         public AdministratorRole AdministratorRole { get; set; } = default!;
@@ -26,11 +28,14 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
             }
 
             var adminRole = _context.GetAdministratorRole((int)id);
+            var user = _context.GetUser(id ?? -1);
+            
 
             if (adminRole == null) {
                 return NotFound();
             } else  {
                 AdministratorRole = adminRole;
+                Administrator = user;
             }
             return Page();
         }
@@ -46,7 +51,12 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
                 _context.RemoveAdministratorRole(AdministratorRole);
             }
 
-            return RedirectToPage("/Users/Index"); 
+            //return RedirectToPage("./Index", new {id = Administrator.Id});
+            return RedirectToPage("/Users/Index");
+        }
+
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("/Users/Index");
         }
     }
 }

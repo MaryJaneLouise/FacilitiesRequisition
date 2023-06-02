@@ -3,68 +3,81 @@
 @model FacilitiesRequisition.Pages.Users.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage users";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="CreateUser">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].MiddleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Username)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MiddleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @if (item.Type == UserType.Officer) {
-                    <a asp-page="../Users/ManageRoles/OfficerRoles/Index" asp-route-id="@item.Id">Roles</a>@: |
-                }
-                else if (item.Type == UserType.Administrator) {
-                    <a asp-page="../Users/ManageRoles/AdministratorRoles/Index" asp-route-id="@item.Id">Roles</a>@: |
-                }
-                else {
-                    <a asp-page="../Users/ManageRoles/FacultyRoles/Index" asp-route-id="@item.Id">Roles</a>@: |
-                }
-                <a asp-page="./EditDetails" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./ViewDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./DeleteUser" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        <div class="col-md-5 rounded-rectangle">
+            <h2>User List</h2>
+            <br/>
+            
+            @foreach (var user in Model.User) {
+                <div class="clickable-row" data-href="@Url.Page("./EditDetails", new {id = user.Id})">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                        
+                        <div style="font-size: medium; horiz-align: center">
+                            @user.FirstName @user.LastName
+                            <div style="font-size: small">
+                                <text>&#64;</text>@user.Username | @user.Type
+                            </div>
+                        </div>
+                        
+                        @if (user.Type == UserType.Officer) {
+                            <div style="margin-right: 10px" align="right">
+                                <a class="btn btn-outline-secondary"
+                                   asp-page="../Users/ManageRoles/OfficerRoles/Index" 
+                                   asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            </div>
+                        }
+                        else if (user.Type == UserType.Administrator) {
+                            <div style="margin-right: 10px" align="right">
+                                <a class="btn btn-outline-secondary"
+                                   asp-page="../Users/ManageRoles/AdministratorRoles/Index" 
+                                   asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            </div>
+                        }
+                        else {
+                            <div style="margin-right: 10px" align="right">
+                                <a class="btn btn-outline-secondary" 
+                                   style="float: right"
+                                   asp-page="../Users/ManageRoles/FacultyRoles/Index" 
+                                   asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            </div>
+                            
+                        }
+                        <div align="right">
+                            <a class="btn btn-outline-danger"
+                               style="align-items: end"
+                               asp-page="./DeleteUser" 
+                               asp-route-id="@user.Id">
+                                <i class="bi bi-person-fill-x" style="font-size: 15px"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" />
+                        <input type="submit" value="Create user" class="btn btn-primary mr-2" asp-page-handler="CreateUser" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

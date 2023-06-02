@@ -8,23 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.Organizations
-{
-    public class IndexModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.Organizations {
+    public class IndexModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public IndexModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public IndexModel(DatabaseContext context) {
             _context = context;
         }
-
+        
+        [BindProperty] 
+        public string SmallDetails { get; set; }
         public IList<Organization> Organizations { get;set; } = default!;
 
-        public IActionResult OnGet()
-        {
+        public IActionResult OnGet() {
             Organizations = _context.GetOrganizations();
             return Page();
+        }
+
+        public IActionResult OnPostBackToDashboard() {
+            return RedirectToPage("../Dashboard/Index");
+        }
+
+        public IActionResult OnPostCreateOrganization() {
+            return RedirectToPage("./CreateOrganization");
         }
     }
 }

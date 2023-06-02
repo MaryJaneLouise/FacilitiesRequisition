@@ -1,43 +1,77 @@
 @page
+@using FacilitiesRequisition.Models.Officers
 @model FacilitiesRequisition.Pages.OfficerRoles.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Officer Roles";
 }
 
-<h1>Index</h1>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h2>Active user roles for @Model.Officer.FirstName</h2>
+                
+                @foreach (var roleOrg in Model.OfficerRoles) {
+                    <div class="clickable-row">
+                        @if (roleOrg.Position == OrganizationPosition.VicePresident) {
+                            <div style="display: flex; align-items: center;">
+                                <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                                
+                                <div style="font-size: medium; horiz-align: center">
+                                    @roleOrg.Organization.Name
+                                    <div style="font-size: small">
+                                        <text>Vice President</text>
+                                    </div>
+                                </div>
+                            </div>
+                        } else if (roleOrg.Position == OrganizationPosition.PublicRelationsOfficer) {
+                            <div style="display: flex; align-items: center;">
+                                <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                                
+                                <div style="font-size: medium; horiz-align: center">
+                                    @roleOrg.Organization.Name
+                                    <div style="font-size: small">
+                                        <text>Public Relations Officer</text>
+                                    </div>
+                                </div>
+                            </div>
+                        } else {
+                            <div style="display: flex; align-items: center;">
+                                <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                                
+                                <div style="font-size: medium; horiz-align: center">
+                                    @roleOrg.Organization.Name
+                                    <div style="font-size: small">
+                                        <text>@roleOrg.Position</text>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        
+                        <a class="btn btn-outline-danger" asp-page="./DeleteOfficerRole" asp-route-id="@roleOrg.Id">
+                            <i class="bi bi-trash-fill" style="font-size: 17px"></i>
+                            <text style="vertical-align: center; align-items: center">Delete</text>
+                        </a>
+                    </div>
+                }
+                
+                <form method="post">
+                    <div class="form-group mt-4 mb-2">
+                        <div class="col-md-auto" style="float: right">
+                            <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToUserIndex" />
+                            <a class="btn btn-primary" asp-page="CreateOfficerRole" asp-route-id="@Model.Officer.Id">Add new role</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>
 
-<p>
-    <a asp-page="CreateOfficerRole" asp-route-id="@Model.Officer.Id">Create New</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OfficerRoles[0].Organization)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OfficerRoles[0].Position)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.OfficerRoles) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Organization.Name)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.Position)
-        </td>
-        <td>
-            <a asp-page="./EditDetails" asp-route-id="@item.Id">Edit</a> |
-            <a asp-page="./ViewDetails" asp-route-id="@item.Id">Details</a> |
-            <a asp-page="./DeleteOfficerRole" asp-route-id="@item.Id">Delete</a>
-        </td>
-    </tr>
-}
-    </tbody>
-</table>

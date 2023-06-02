@@ -2,47 +2,63 @@
 @model FacilitiesRequisition.Pages.Organizations.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Manage organizations";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="CreateOrganization">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Organizations[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Organizations[0].IsStudentCouncil)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Organizations[0].OrganizationBudget)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Organizations) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsStudentCouncil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrganizationBudget)
-            </td>
-            <td>
-                <a asp-page="./EditDetails" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./ViewDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./DeleteOrganization" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        <div class="col-md-5 rounded-rectangle">
+            <h2>Organization List</h2>
+            <br/>
+            
+            @foreach (var organization in Model.Organizations) {
+                <div class="clickable-row" data-href="@Url.Page("./EditDetails", new {id = organization.Id})">
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                        <div style="font-size: medium; horiz-align: center">
+                            @organization.Name
+                            <div style="font-size: small">
+                                @if (organization.IsStudentCouncil) {
+                                    @if (organization.OrganizationAdviser == null) {
+                                        @: <text>Student Council |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                    }
+                                    else {
+                                        @: <text>Student Council |</text>
+                                        @organization.OrganizationAdviser.FirstName @organization.OrganizationAdviser.LastName 
+                                        <text> |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                        
+                                    }
+                                } else {
+                                    if (organization.OrganizationAdviser == null) {
+                                        @: <text>Non-mandated Organization |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                    }
+                                    else {
+                                        @: <text>Non-mandated Organization |</text>
+                                        @organization.OrganizationAdviser.FirstName @organization.OrganizationAdviser.LastName 
+                                        <text> |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                    }
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" />
+                        <input type="submit" value="Create organization" class="btn btn-primary mr-2" asp-page-handler="CreateOrganization" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

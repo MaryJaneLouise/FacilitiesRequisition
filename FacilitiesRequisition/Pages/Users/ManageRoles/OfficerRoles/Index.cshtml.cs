@@ -9,14 +9,11 @@ using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.OfficerRoles
-{
-    public class IndexModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.OfficerRoles {
+    public class IndexModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public IndexModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public IndexModel(DatabaseContext context) {
             _context = context;
         }
 
@@ -25,23 +22,24 @@ namespace FacilitiesRequisition.Pages.OfficerRoles
         [BindProperty]
         public User Officer { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.GetUsers() == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null || _context.GetUsers() == null) {
                 return NotFound();
             }
 
             var user = _context.GetUser((int)id);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
             }
 
             Officer = user;
             OfficerRoles = _context.GetOfficerRoles(Officer);
-            // var organization = OfficerRoles[0].Organization;
+            
             return Page();
+        }
+
+        public IActionResult OnPostBackToUserIndex() {
+            return RedirectToPage("/Users/Index");
         }
     }
 }

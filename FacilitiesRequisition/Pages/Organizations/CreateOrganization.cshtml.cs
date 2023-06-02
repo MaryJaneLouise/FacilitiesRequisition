@@ -8,37 +8,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Officers;
 
-namespace FacilitiesRequisition.Pages.Organizations
-{
-    public class CreateModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.Organizations {
+    public class CreateModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public CreateModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public CreateModel(DatabaseContext context) {
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
+        public IActionResult OnGet() {
+            PageTitle = "Create Organization";
             return Page();
         }
-
+        
+        public string PageTitle { get; set; }
+        
         [BindProperty]
         public Organization Organization { get; set; } = default!;
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.GetOrganizations() == null || Organization == null)
-            {
+        public async Task<IActionResult> OnPostAsync() {
+          if (!ModelState.IsValid || _context.GetOrganizations() == null || Organization == null) {
                 return Page();
-            }
+          }
 
-            _context.AddOrganization(Organization);
-            await _context.SaveChangesAsync();
+          _context.AddOrganization(Organization);
+          await _context.SaveChangesAsync();
 
+          return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnPostBackToIndex() {
             return RedirectToPage("./Index");
         }
     }

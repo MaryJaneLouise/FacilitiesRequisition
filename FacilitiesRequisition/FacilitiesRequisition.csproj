@@ -25,6 +25,7 @@
     <ItemGroup>
       <Folder Include="Pages\Organizations\" />
       <Folder Include="Pages\Users\" />
+      <Folder Include="Pages\_RecycleFiles\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,11 +39,29 @@
       <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\EditDetails.cshtml" />
       <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\Index.cshtml" />
       <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\ViewDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\CreateOfficerRoles.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\DeleteOfficerRoles.cshtml" />
       <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\EditDetails.cshtml" />
       <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\Index.cshtml" />
       <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\ViewDetails.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\CreateOrganizations\Index.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\CreateRequestPaper\Index.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\CreateUsers\Index.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageOrganizations\EditDetails.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageOrganizations\Index.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageOrganizations\ViewDetails.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\EditDetails.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\Index.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\ViewDetails.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\CreateRequestPaper\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\CreateUsers\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageOrganizations\EditDetails.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageOrganizations\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageOrganizations\ViewDetails.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageUsers\EditDetails.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageUsers\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ManageUsers\ViewDetails.cshtml" />
     </ItemGroup>
 
 </Project>
