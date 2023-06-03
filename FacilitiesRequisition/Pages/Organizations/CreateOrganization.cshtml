@@ -25,16 +25,16 @@
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="Organization.OrganizationAdviser" class="control-label"></label>
-                        <input asp-for="Organization.OrganizationAdviser" class="form-control"/>
-                        <span asp-validation-for="Organization.OrganizationAdviser" class="text-danger"></span>
+                        <label asp-for="Organization.Adviser" class="control-label"></label>
+                        <select asp-for="AdviserId" asp-items="Model.Administrators" class="form-control"></select>
+                        <span asp-validation-for="AdviserId" class="text-danger"></span>
                         <br/>
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="Organization.OrganizationBudget" class="control-label"></label>
-                        <input asp-for="Organization.OrganizationBudget" type="number" class="form-control"/>
-                        <span asp-validation-for="Organization.OrganizationBudget" class="text-danger"></span>
+                        <label asp-for="Organization.TotalBudget" class="control-label"></label>
+                        <input asp-for="Organization.TotalBudget" type="number" class="form-control"/>
+                        <span asp-validation-for="Organization.TotalBudget" class="text-danger"></span>
                         <br/>
                     </div>
                     

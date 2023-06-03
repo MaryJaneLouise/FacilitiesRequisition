@@ -1,0 +1,77 @@
+@page
+@model FacilitiesRequisition.Pages.RequestFacility.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].DateFiled)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].Requester)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].NameActivity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].ContactNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].StartDateRequested)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].EndDateRequested)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FacilityRequest[0].VenueRequested)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFiled)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Requester.Name)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.NameActivity)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDateRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDateRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueRequested)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -50,6 +50,10 @@ namespace FacilitiesRequisition.Pages.Shared {
         public IActionResult OnPostCreateOrganization()  {
             return RedirectToPage("../Organizations/CreateOrganization");
         }
+
+        public IActionResult OnPostCreateFacilityRequest() {
+            return RedirectToPage("../RequestFacility/Create");
+        }
     
         public IActionResult OnPostManageUserAccount() {
             return RedirectToPage("../Users/Index");
@@ -57,6 +61,10 @@ namespace FacilitiesRequisition.Pages.Shared {
         
         public IActionResult OnPostManageOrganization() {
             return RedirectToPage("../Organizations/Index");
+        }
+
+        public IActionResult OnPostManageFacilityRequest() {
+            return RedirectToPage("../RequestFacility/Index");
         }
     
         public IActionResult OnPostViewProfile() {

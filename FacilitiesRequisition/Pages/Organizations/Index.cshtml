@@ -24,23 +24,23 @@
                             @organization.Name
                             <div style="font-size: small">
                                 @if (organization.IsStudentCouncil) {
-                                    @if (organization.OrganizationAdviser == null) {
-                                        @: <text>Student Council |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                    @if (organization.Adviser == null) {
+                                        @: <text>Student Council |</text> @organization.TotalBudget.ToString("c") <text> left</text>
                                     }
                                     else {
                                         @: <text>Student Council |</text>
-                                        @organization.OrganizationAdviser.FirstName @organization.OrganizationAdviser.LastName 
-                                        <text> |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                        @organization.Adviser.FirstName @organization.Adviser.LastName 
+                                        <text> |</text> @organization.TotalBudget.ToString("c") <text> left</text>
                                         
                                     }
                                 } else {
-                                    if (organization.OrganizationAdviser == null) {
-                                        @: <text>Non-mandated Organization |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                    if (organization.Adviser == null) {
+                                        @: <text>Non-mandated Organization |</text> @organization.TotalBudget.ToString("c") <text> left</text>
                                     }
                                     else {
                                         @: <text>Non-mandated Organization |</text>
-                                        @organization.OrganizationAdviser.FirstName @organization.OrganizationAdviser.LastName 
-                                        <text> |</text> @organization.OrganizationBudget.ToString("c") <text> left</text>
+                                        @organization.Adviser.FirstName @organization.Adviser.LastName 
+                                        <text> |</text> @organization.TotalBudget.ToString("c") <text> left</text>
                                     }
                                 }
                                 

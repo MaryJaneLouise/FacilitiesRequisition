@@ -12,12 +12,12 @@ public class Organization {
     public string Name { get; set; }
     
     [Display(Name = "Name of Adviser's Organization")]
-    public User? OrganizationAdviser { get; set; }
+    public User? Adviser { get; set; }
     
     [Display(Name = "The organization is a student council.")]
     public bool IsStudentCouncil { get; set; }
     
     [Display(Name = "Organization's Budget")]
     [Column(TypeName = "decimal(18, 2)")]
-    public decimal OrganizationBudget { get; set; }
+    public decimal TotalBudget { get; set; }
 }

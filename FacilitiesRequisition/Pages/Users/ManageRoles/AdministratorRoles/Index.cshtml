@@ -23,10 +23,12 @@
                             <text>Dean</text>
                         } else if (role.Position == AdministratorPosition.AssistantDean) {
                             <text>Assistant Dean</text>
-                        } else if (role.Position == AdministratorPosition.StudentAffairs) {
+                        } else if (role.Position == AdministratorPosition.StudentAffairsDirector) {
                             <text>Student Affairs</text>
                         } else if (role.Position == AdministratorPosition.SuperAdmin) {
                             <text>Super Administrator</text>
+                        } else {
+                          <text>@role.Position</text>  
                         }
                         
                         <a class="btn btn-outline-danger" asp-page="./DeleteAdminRoles" asp-route-id="@role.Id">

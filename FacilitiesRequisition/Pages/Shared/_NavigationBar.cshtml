@@ -56,10 +56,16 @@
               @if (Model.UserType == "Super Administrator") {
                 <button type="submit" class="dropdown-item" asp-page-handler="CreateAccount">Create new account</button>
                 <button type="submit" class="dropdown-item" asp-page-handler="CreateOrganization">Create new organization</button>
+                <button type="submit" class="dropdown-item" asp-page-handler="CreateFacilityRequest">Create new request</button>
                 <li><hr class="dropdown-divider"></li>
                 <button type="submit" class="dropdown-item" asp-page-handler="ManageUserAccount">Manage user accounts</button>
                 <button type="submit" class="dropdown-item" asp-page-handler="ManageOrganization">Manage organizations</button>
+                <button type="submit" class="dropdown-item" asp-page-handler="ManageFacilityRequest">Manage requests</button>
                 <li><hr class="dropdown-divider"></li>
+              } else {
+                <button type="submit" class="dropdown-item" asp-page-handler="CreateFacilityRequest">Create new request</button>
+                <button type="submit" class="dropdown-item" asp-page-handler="ManageFacilityRequest">Manage requests</button>
+                <li><hr class="dropdown-divider"></li>  
               }
               <button type="submit" class="dropdown-item" asp-page-handler="ViewProfile">View Profile</button>
               <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>

@@ -12,5 +12,5 @@ public class SCC {
     public DateTime DateRequested { get; set; }
     public string NumHours { get; set; }
     public string VenueRequested { get; set; }
-    public Signature Signatory { get; set; }
+    public Signatures Signatory { get; set; }
 }

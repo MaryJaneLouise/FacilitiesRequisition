@@ -1,0 +1,55 @@
+@page
+@model FacilitiesRequisition.Pages.RequestFacility.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FacilityRequest</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.DateFiled)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.DateFiled)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.NameActivity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.NameActivity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.ContactNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.ContactNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.StartDateRequested)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.StartDateRequested)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.EndDateRequested)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.EndDateRequested)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FacilityRequest.VenueRequested)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FacilityRequest.VenueRequested)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.FacilityRequest?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

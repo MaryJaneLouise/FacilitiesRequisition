@@ -12,5 +12,5 @@ public class OAS {
     public string FacilityNeeded { get; set; }
     public string? EquipmentNeeded { get; set; }
     public DateTime DateRequested { get; set; }
-    public Signature Signatory { get; set; }
+    public Signatures Signatory { get; set; }
 }
