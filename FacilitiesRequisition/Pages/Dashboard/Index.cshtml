@@ -12,45 +12,62 @@
 <head>
   <title></title>
 </head>
-<body>
+<body style="background: #EEEEEE">
 <div class="container-fluid">
-  <div class="row">
-    @for (int i = 0; i < 3; i++) {
-      <div class="col-md-4 mb-4">
-        <div class="card rounded-rectangle">
-          <div class="card-body">
-            <h5 class="card-title">Card Title</h5>
-            <p class="card-text">Card Description</p>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
-  <div class="rounded-rectangle">
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <table class="table">
-          <thead>
+  <div class="row d-flex justify-content-md-center align-items-center vh-100">
+    <div class="col-md-12 rounded-rectangle">
+      <h2>Recent Facility Request</h2>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Date Filed</th>
+          <th>Requester</th>
+          <th>Activity</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Venue Requested</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.FacilityRequest.OrderBy(x => x.StartDateRequested).Take(3)) {
           <tr>
-            <th>Facility Requested</th>
-            <th>Name</th>
-            <th>Number of Days</th>
+            <td><text>@item.DateFiled</text></td>
+            <td><text>@item.Requester.Name</text></td>
+            <td><text>@item.NameActivity</text></td>
+            <td><text>@item.StartDateRequested</text></td>
+            <td><text>@item.EndDateRequested</text></td>
+            <td><text>@item.VenueRequested</text></td>
           </tr>
-          </thead>
-          <tbody>
-          @for (int i = 0; i < 5; i++) {
-            <tr>
-              <td>Value 1</td>
-              <td>Value 2</td>
-              <td>@i days</td>
-            </tr>
-          }
-          </tbody>
-        </table>
-      </div>
+        }
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="col-md-8 rounded-rectangle">
+      <h2>Organizations</h2>
+          
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Organization Name</th>
+          <th>Adviser</th>
+          <th>President</th>
+          <th>Budget Left</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Organizations) {
+          <tr>
+            <td><text>@item.Name</text></td>
+            <td><text>@item.Adviser.FirstName @item.Adviser.LastName</text></td>
+            <td><text>presidentName</text></td>
+            <td><text>@item.TotalBudget.ToString("c")</text></td>
+          </tr>
+        }
+        </tbody>
+      </table>
     </div>
   </div>
-
 </div>
 
 </body>

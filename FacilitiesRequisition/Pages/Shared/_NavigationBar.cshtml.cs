@@ -2,7 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
+using FacilitiesRequisition.Models.Officers;
 using FacilitiesRequisition.Models.Faculties;
+using FacilitiesRequisition.Models.FacilityRequests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +26,9 @@ namespace FacilitiesRequisition.Pages.Shared {
     
         public string UserType { get; set; }
         public string IsSuperAdmin { get; set; }
+        
+        public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
+        public IList<Organization> Organizations { get;set; } = default!;
     
         public IActionResult OnGet()  {
             var user = HttpContext.Session.GetLoggedInUser(_context);
@@ -39,6 +44,8 @@ namespace FacilitiesRequisition.Pages.Shared {
                 default:
                     Name = $"{user.FirstName} {user.LastName}";
                     UserType = $"{userType}";
+                    FacilityRequest = _context.GetFacilityRequests();
+                    Organizations = _context.GetOrganizations();
                     return Page();
             }
         }

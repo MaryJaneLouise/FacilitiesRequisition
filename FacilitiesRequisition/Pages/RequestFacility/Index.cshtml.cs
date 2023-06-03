@@ -18,11 +18,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility
         }
         
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
-        
-        public string SortStartDate { get; set; }
-        
-        public async Task OnGetAsync(string sortDate) {
-            //SortStartDate = sortDate == 
+
+        public async Task OnGetAsync() {
             FacilityRequest = _context.GetFacilityRequests();
         }
     }
