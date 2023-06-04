@@ -5,73 +5,58 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-10 rounded-rectangle">
+                <h2>Manage facility request</h2>
+                <br/>
+                
+                <div style="float: right">
+                    <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
+                    <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Requester</th>
+                        <th>Activity</th>
+                        <th>Venue Requested</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].DateFiled)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].Requester)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].NameActivity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].ContactNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].StartDateRequested)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].EndDateRequested)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FacilityRequest[0].VenueRequested)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateFiled)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Requester.Name)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.NameActivity)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateRequested)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDateRequested)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VenueRequested)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                    <tbody>
+                    @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
+                        <tr class="clickable-row" data-href="@Url.Page("./ViewDetails", new { id = request.Id})")>
+                            <td><text>@request.Requester.Name</text></td>
+                            <td><text>@request.NameActivity</text></td>
+                            <td><text>@request.VenueRequested</text></td>
+                            <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
+                            <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
+                            <td><a class="btn btn-outline-secondary"asp-page="./EditDetails" asp-route-id="@request.Id">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-danger" asp-page="./DeleteRequest" asp-route-id="@request.Id">
+                                    <i class="bi bi-trash-fill"></i>
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>

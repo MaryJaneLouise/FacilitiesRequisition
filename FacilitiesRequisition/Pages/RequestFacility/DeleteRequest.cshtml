@@ -1,0 +1,31 @@
+@page
+@model FacilitiesRequisition.Pages.RequestFacility.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete facility request";
+}
+
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h2>Delete request of facility</h2>
+                
+                <text>Are you sure you want to delete the facility request "@Model.FacilityRequest.NameActivity"?
+                    This cannot be undone.</text>
+                <form method="post" style="float: right">
+                    <br/>
+                    <input type="hidden" asp-for="FacilityRequest.Id"/>
+                    <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
+                    <input type="submit" value="Delete request" class="btn btn-danger"/>
+                </form>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>

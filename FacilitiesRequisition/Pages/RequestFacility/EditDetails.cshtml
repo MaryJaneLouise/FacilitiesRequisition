@@ -1,0 +1,72 @@
+@page
+@model FacilitiesRequisition.Pages.RequestFacility.EditModel
+
+@{
+    ViewData["Title"] = "Edit request details";
+}
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+</head>
+<body style="background: #EEEEEE">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-6 rounded-rectangle">
+                <h2>Edit facility request details</h2>
+                
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="FacilityRequest.Id" />
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.DateFiled" class="control-label"></label>
+                        <input asp-for="FacilityRequest.DateFiled" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.DateFiled" class="text-danger"></span>
+                        <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.NameActivity" class="control-label"></label>
+                        <input asp-for="FacilityRequest.NameActivity" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.NameActivity" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.ContactNumber" class="control-label"></label>
+                        <input asp-for="FacilityRequest.ContactNumber" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.ContactNumber" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.StartDateRequested" class="control-label"></label>
+                        <input asp-for="FacilityRequest.StartDateRequested" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.StartDateRequested" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.EndDateRequested" class="control-label"></label>
+                        <input asp-for="FacilityRequest.EndDateRequested" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.EndDateRequested" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="FacilityRequest.VenueRequested" class="control-label"></label>
+                        <input asp-for="FacilityRequest.VenueRequested" class="form-control" />
+                        <span asp-validation-for="FacilityRequest.VenueRequested" class="text-danger"></span>
+                        <br/>
+                    </div>
+                    
+                    <div class="form-group" style="float: right">
+                        <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
+                        <input type="submit" value="Update details" class="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>
+        </div>  
+    </div>
+</body>
+</html>

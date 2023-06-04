@@ -23,20 +23,20 @@
           <th>Date Filed</th>
           <th>Requester</th>
           <th>Activity</th>
+          <th>Venue Requested</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th>Venue Requested</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.FacilityRequest.OrderBy(x => x.StartDateRequested).Take(3)) {
+        @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested).Take(3)) {
           <tr>
-            <td><text>@item.DateFiled</text></td>
-            <td><text>@item.Requester.Name</text></td>
-            <td><text>@item.NameActivity</text></td>
-            <td><text>@item.StartDateRequested</text></td>
-            <td><text>@item.EndDateRequested</text></td>
-            <td><text>@item.VenueRequested</text></td>
+            <td><text>@request.DateFiled</text></td>
+            <td><text>@request.Requester.Name</text></td>
+            <td><text>@request.NameActivity</text></td>
+            <td><text>@request.VenueRequested</text></td>
+            <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
+            <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
           </tr>
         }
         </tbody>
@@ -45,7 +45,6 @@
     
     <div class="col-md-8 rounded-rectangle">
       <h2>Organizations</h2>
-          
       <table class="table">
         <thead>
         <tr>
@@ -56,12 +55,12 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.Organizations) {
+        @foreach (var organization in Model.Organizations) {
           <tr>
-            <td><text>@item.Name</text></td>
-            <td><text>@item.Adviser.FirstName @item.Adviser.LastName</text></td>
+            <td><text>@organization.Name</text></td>
+            <td><text>@organization.Adviser.FirstName @organization.Adviser.LastName</text></td>
             <td><text>presidentName</text></td>
-            <td><text>@item.TotalBudget.ToString("c")</text></td>
+            <td><text>@organization.TotalBudget.ToString("c")</text></td>
           </tr>
         }
         </tbody>
@@ -69,6 +68,5 @@
     </div>
   </div>
 </div>
-
 </body>
 </html>
