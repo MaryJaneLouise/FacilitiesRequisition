@@ -26,8 +26,15 @@ public class IndexModel : PageModel {
     public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
     public IList<Organization> Organizations { get;set; } = default!;
 
+    public IList<OfficerRole> OfficerRolesOrganization { get; set; } = default!;
+    
+    public string OfficerRole { get; set; }
+
     public async Task OnGetAsync() {
         FacilityRequest = _context.GetFacilityRequests();
         Organizations = _context.GetOrganizations();
+        
+        var president = OfficerRolesOrganization.Select(role => role.Position == OrganizationPosition.President);
+        OfficerRole = president.ToString();
     }
 }

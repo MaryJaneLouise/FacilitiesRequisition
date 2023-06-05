@@ -33,7 +33,7 @@
                     
                     <div class="form-group" style="float: right">
                         <br/>
-                        <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex" />
+                        <a class="btn btn-outline-primary" asp-page="./Index" asp-route-id="@Model.Faculty.Id">Go back</a>
                         <input type="submit" value="Add role" class="btn btn-primary"/>
                     </div>
                 </form>

@@ -21,6 +21,9 @@ namespace FacilitiesRequisition.Pages.FacultyRoles {
 
         [BindProperty] 
         public User Faculty { get; set; } = default!;
+        
+        [BindProperty]
+        public FacultyRole FacultyRole { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetUsers() == null) {
@@ -40,6 +43,21 @@ namespace FacilitiesRequisition.Pages.FacultyRoles {
 
         public IActionResult OnPostBackToUserIndex() {
             return RedirectToPage("/Users/Index");
+        }
+
+        public IActionResult OnPostDeleteRole(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+            var facultyrole = _context.GetFacultyRole((int)id);
+
+            if (facultyrole != null) {
+                FacultyRole = facultyrole;
+                _context.RemoveFacultyRole(FacultyRole);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

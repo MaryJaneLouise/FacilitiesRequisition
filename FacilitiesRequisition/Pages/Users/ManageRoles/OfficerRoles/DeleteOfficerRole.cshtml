@@ -22,7 +22,7 @@
                 <form method="post">
                     <br/>
                     <input type="hidden" asp-for="OfficerRole.Id" />
-                    <a class="btn btn-outline-primary" asp-page-handler="BackToIndex">Go back</a>
+                    @*<a class="btn btn-outline-primary" asp-page="./Index" asp-route-id="@Model.Officer.Id">Go back</a>*@
                     <input type="submit" value="Delete officer role" class="btn btn-primary"/>
                 </form>
             </div>

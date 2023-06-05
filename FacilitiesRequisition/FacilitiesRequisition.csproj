@@ -24,7 +24,6 @@
 
     <ItemGroup>
       <Folder Include="Pages\Organizations\" />
-      <Folder Include="Pages\RequestFacility\" />
       <Folder Include="Pages\Users\" />
       <Folder Include="Pages\_RecycleFiles\" />
     </ItemGroup>

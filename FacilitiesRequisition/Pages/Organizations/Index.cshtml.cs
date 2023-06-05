@@ -19,6 +19,9 @@ namespace FacilitiesRequisition.Pages.Organizations {
         [BindProperty] 
         public string SmallDetails { get; set; }
         public IList<Organization> Organizations { get;set; } = default!;
+        
+        [BindProperty]
+        public Organization Organization { get; set; } = default!;
 
         public IActionResult OnGet() {
             Organizations = _context.GetOrganizations();
@@ -31,6 +34,21 @@ namespace FacilitiesRequisition.Pages.Organizations {
 
         public IActionResult OnPostCreateOrganization() {
             return RedirectToPage("./CreateOrganization");
+        }
+
+        public IActionResult OnPostDeleteOrganization(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+            var organization = _context.GetOrganization((int)id);
+
+            if (organization != null) {
+                Organization = organization;
+                _context.RemoveOrganization(Organization);
+                _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

@@ -16,6 +16,8 @@ namespace FacilitiesRequisition.Pages.Users {
         }
 
         public List<User> User { get;set; } = default!;
+        public User Users { get; set; } = default!;
+
 
         public async Task OnGetAsync() {
             if (_context.GetUsers() != null) {
@@ -29,6 +31,21 @@ namespace FacilitiesRequisition.Pages.Users {
 
         public IActionResult OnPostCreateUser() {
             return RedirectToPage("./CreateUser");
+        }
+
+        public IActionResult OnPostDeleteUser(int? id) {
+            if (id == null || _context.GetUsers() == null) {
+                return NotFound();
+            }
+            var user = _context.GetUser((int)id);
+
+            if (user != null) {
+                Users = user;
+                _context.RemoveUser(Users); 
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("../Users/Index");
         }
     }
 }

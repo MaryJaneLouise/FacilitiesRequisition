@@ -97,6 +97,10 @@ public class DatabaseContext : DbContext {
             .ToList();    
     }
 
+    public List<OfficerRole> GetOfficerRoles(Organization organization) {
+        return OfficerRoles.Where(officerRole => officerRole.Organization == organization).ToList();
+    }
+
     public OfficerRole? GetOfficerRole(int id) {
         return OfficerRoles.FirstOrDefault(x => x.Id == id);
     }
@@ -221,7 +225,7 @@ public class DatabaseContext : DbContext {
     }
 
     public List<FacilityRequest> GetFacilityRequests() {
-        return FacilityRequests
+        return FacilityRequests 
             .Include(requester => requester.Requester).ToList();
     }
 

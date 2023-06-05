@@ -28,7 +28,7 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         
         [BindProperty] public DateTime? EndDateRequested { get; set; }
         
-        [BindProperty] public string VenueRequested { get; set; }
+        [BindProperty] public Venues VenueRequested { get; set; }
         
         [BindProperty] public string OrganizationId { get; set; }
 
@@ -42,12 +42,23 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             return Page();
         }
         
-        public async Task<IActionResult> OnPostAsync() {
+        public IActionResult OnPost() {
+            var overlappingRequest = _context.GetFacilityRequests().FirstOrDefault(x =>
+                x.VenueRequested == VenueRequested &&
+                ((x.StartDateRequested <= StartDateRequested && x.EndDateRequested >= StartDateRequested) ||
+                 (x.StartDateRequested <= EndDateRequested && x.EndDateRequested >= EndDateRequested) ||
+                 (x.StartDateRequested >= StartDateRequested && x.EndDateRequested <= EndDateRequested)));
+
+            if (overlappingRequest != null) {
+                ModelState.AddModelError(string.Empty, "The selected venue is not available for the specified date range.");
+                return Page();
+            }
+            
             if (!ModelState.IsValid) {
                 return Page();
             }
 
-            _context.AddFacilityRequest(new FacilityRequest {
+            var facilityRequest = new FacilityRequest {
                 DateFiled = DateFiled,
                 Requester = _context.GetOrganization(Convert.ToInt32(OrganizationId))!,
                 NameActivity = NameActivity,
@@ -55,7 +66,9 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                 StartDateRequested = StartDateRequested,
                 EndDateRequested = EndDateRequested,
                 VenueRequested = VenueRequested
-            }, new List<Expense>());
+            };
+
+            _context.AddFacilityRequest(facilityRequest, new List<Expense>());
 
             return RedirectToPage("./Index");
         }

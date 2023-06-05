@@ -21,7 +21,9 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
         
         [BindProperty]
         public User Admin { get; set; } = default!;
-
+        
+        [BindProperty]
+        public AdministratorRole AdministratorRoles { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetUsers() == null) {
                 return NotFound();
@@ -43,6 +45,20 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
 
         public IActionResult OnPostCreateRole() {
             return RedirectToPage("./CreateAdminRoles");
+        }
+
+        public IActionResult OnPostDeleteRole(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+            var adminRole = _context.GetAdministratorRole((int)id);
+
+            if (adminRole != null) {
+                AdministratorRoles = adminRole;
+                _context.RemoveAdministratorRole(AdministratorRoles);
+            }
+            
+            return RedirectToPage("/Users/Index");
         }
     }
 }

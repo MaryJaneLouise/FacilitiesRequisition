@@ -26,18 +26,22 @@ namespace FacilitiesRequisition.Pages.Shared {
     
         public string UserType { get; set; }
         public string IsSuperAdmin { get; set; }
+        public string UserRole { get; set; }
         
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
         public IList<Organization> Organizations { get;set; } = default!;
-    
+        public IList<User?> Presidents { get;set; } = default!;
+
+        public IList<OfficerRole> OfficerRoles { get; set; } = default!;
+
         public IActionResult OnGet()  {
             var user = HttpContext.Session.GetLoggedInUser(_context);
             bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
                 _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
-            var userType = isSuperAdministrator ? "Super Administrator" : 
+            var userType = isSuperAdministrator ? "Super Administrator" :
                 user.Type == Models.UserType.Administrator ? "Administrator" :
                 user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
-            
+
             switch (user) {
                 case null:
                     return RedirectToPage("../Login/Index");
@@ -46,6 +50,10 @@ namespace FacilitiesRequisition.Pages.Shared {
                     UserType = $"{userType}";
                     FacilityRequest = _context.GetFacilityRequests();
                     Organizations = _context.GetOrganizations();
+                    /*Presidents = Organizations
+                        .Select(organization => _context.GetOfficerRoles(organization)
+                            .FirstOrDefault(officerRole => officerRole.Position == OrganizationPosition.President)?.Officer)
+                        .ToList();*/  
                     return Page();
             }
         }
@@ -59,7 +67,7 @@ namespace FacilitiesRequisition.Pages.Shared {
         }
 
         public IActionResult OnPostCreateFacilityRequest() {
-            return RedirectToPage("../RequestFacility/Create");
+            return RedirectToPage("../RequestFacility/CreateRequest");
         }
     
         public IActionResult OnPostManageUserAccount() {

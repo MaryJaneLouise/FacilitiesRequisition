@@ -10,7 +10,6 @@ public class FacilityRequest {
     public string DateFiled { get; set; }
     public Organization Requester { get; set; }
     
-    //[Display(Name = "Name of Activity")]
     public string NameActivity { get; set; }
     
     public string ContactNumber { get; set; }
@@ -21,6 +20,7 @@ public class FacilityRequest {
     [DataType(DataType.Date)]
     public DateTime? EndDateRequested { get; set; }
     
-    public string VenueRequested { get; set; }
+    [EnumDataType(typeof(Venues))]
+    public Venues VenueRequested { get; set; }
     
 }

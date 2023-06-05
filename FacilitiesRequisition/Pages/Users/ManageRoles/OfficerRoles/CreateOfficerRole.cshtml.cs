@@ -66,7 +66,13 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
             return RedirectToPage("./Index", new {id = Officer.Id}); 
         }
 
-        public IActionResult OnPostBackToIndex() {
+        public IActionResult OnPostBackToIndex(int? id) {
+            var user = _context.GetUser(id ?? -1);
+            if (user == null) {
+                return NotFound();
+            }
+
+            Officer = user;
             return RedirectToPage("./Index", new {id = Officer.Id}); 
         }
     }

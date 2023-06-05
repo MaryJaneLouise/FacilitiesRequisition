@@ -44,5 +44,17 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
 
             return RedirectToPage("./Index");
         }
+
+        public IActionResult OnPostDeleteRequest(int? id) {
+            var facilityrequest = _context.GetFacilityRequest(id ?? -1);
+
+            if (facilityrequest != null) {
+                FacilityRequest = facilityrequest;
+                _context.RemoveFacilityRequest(FacilityRequest);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("./Index");
+        }
     }
 }

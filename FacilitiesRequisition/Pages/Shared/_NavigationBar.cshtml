@@ -25,23 +25,50 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <form method="post">
-            <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent"
+            <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="background-color:transparent"
                     asp-page-handler="Home">
               Home
             </button>
           </form>
         </li>
-        @if (Model.UserType != "Super Administrator") {
+        
+        @if (Model.UserType == "Super Administrator") {
+          <li class="nav-item">
+            <form method="post">
+              <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="background-color:transparent"
+                      asp-page-handler="ManageFacilityRequest">
+                Request Papers
+              </button>
+            </form>
+          </li>
           
+          <li class="nav-item">
+            <form method="post">
+              <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="background-color:transparent"
+                      asp-page-handler="ManageUserAccount">
+                Users
+              </button>
+            </form>
+          </li>
+          
+          <li class="nav-item">
+            <form method="post">
+              <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="background-color:transparent"
+                      asp-page-handler="ManageOrganization">
+                Organizations
+              </button>
+            </form>
+          </li>
+        } else if (Model.UserType == "Administrator" || Model.UserType == "Organization Officer" || Model.UserType == "Faculty") {
+          <li class="nav-item">
+            <form method="post">
+              <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="background-color:transparent"
+                      asp-page-handler="ManageFacilityRequest">
+                Request Papers
+              </button>
+            </form>
+          </li>
         }
-        <li class="nav-item">
-          <form method="post">
-            <button type="submit" class="nav-link border-0" role="link" style="background-color:transparent"
-                    asp-page-handler="RequestPaper">
-              Request Papers
-            </button>
-          </form>
-        </li>
       </ul>
       
       <form method="post">
@@ -53,21 +80,6 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item">@Model.UserType</a></li>
               <li><hr class="dropdown-divider"></li>
-              @if (Model.UserType == "Super Administrator") {
-                <button type="submit" class="dropdown-item" asp-page-handler="CreateAccount">Create new account</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="CreateOrganization">Create new organization</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="CreateFacilityRequest">Create new request</button>
-                <li><hr class="dropdown-divider"></li>
-                <button type="submit" class="dropdown-item" asp-page-handler="ManageUserAccount">Manage user accounts</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="ManageOrganization">Manage organizations</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="ManageFacilityRequest">Manage requests</button>
-                <li><hr class="dropdown-divider"></li>
-              } else {
-                <button type="submit" class="dropdown-item" asp-page-handler="CreateFacilityRequest">Create new request</button>
-                <button type="submit" class="dropdown-item" asp-page-handler="ManageFacilityRequest">Manage requests</button>
-                <li><hr class="dropdown-divider"></li>  
-              }
-              <button type="submit" class="dropdown-item" asp-page-handler="ViewProfile">View Profile</button>
               <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
             </ul>
           </li>
@@ -80,7 +92,7 @@
 </nav>
 
 <div class="container">
-    @RenderBody()
+  @RenderBody()
 </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

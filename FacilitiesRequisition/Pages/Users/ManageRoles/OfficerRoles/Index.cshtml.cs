@@ -21,6 +21,9 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
 
         [BindProperty]
         public User Officer { get; set; } = default!;
+        
+        [BindProperty]
+        public OfficerRole OfficerRole { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetUsers() == null) {
@@ -40,6 +43,22 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
 
         public IActionResult OnPostBackToUserIndex() {
             return RedirectToPage("/Users/Index");
+        }
+
+        public IActionResult OnPostDeleteRole(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+            
+            var officerRole = _context.GetOfficerRole((int)id);
+
+            if (officerRole != null) {
+                OfficerRole = officerRole;
+                _context.RemoveOfficerRole(OfficerRole);
+                _context.SaveChanges();
+            }
+
+            return RedirectToPage("/Users/Index"); 
         }
     }
 }

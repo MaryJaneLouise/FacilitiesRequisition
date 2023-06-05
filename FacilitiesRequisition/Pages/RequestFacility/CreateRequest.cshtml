@@ -1,4 +1,5 @@
 @page
+@using FacilitiesRequisition.Models.FacilityRequests
 @model FacilitiesRequisition.Pages.RequestFacility.CreateModel
 
 @{
@@ -62,7 +63,7 @@
                             
                     <div class="form-group">
                         <label asp-for="VenueRequested" class="control-label"></label>
-                        <input asp-for="VenueRequested" class="form-control" />
+                        <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
                         <span asp-validation-for="VenueRequested" class="text-danger"></span>
                         <br/>
                     </div>
@@ -77,18 +78,3 @@
     </div>
 </body>
 </html>
-
-<h1>Create</h1>
-
-<h4>FacilityRequest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        
-    </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-

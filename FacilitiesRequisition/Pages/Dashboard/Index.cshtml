@@ -7,66 +7,85 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
   <title></title>
 </head>
 <body style="background: #EEEEEE">
-<div class="container-fluid">
-  <div class="row d-flex justify-content-md-center align-items-center vh-100">
-    <div class="col-md-12 rounded-rectangle">
-      <h2>Recent Facility Request</h2>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Date Filed</th>
-          <th>Requester</th>
-          <th>Activity</th>
-          <th>Venue Requested</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested).Take(3)) {
-          <tr>
-            <td><text>@request.DateFiled</text></td>
-            <td><text>@request.Requester.Name</text></td>
-            <td><text>@request.NameActivity</text></td>
-            <td><text>@request.VenueRequested</text></td>
-            <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
-            <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
-          </tr>
+<main>
+  <div class="container">
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+      <div class="col-md-12 rounded-rectangle">
+        @if (Model.UserType == "Super Administrator" || Model.UserType == "Administrator") {
+          <h2>Recent Facility Request</h2>
+        } else {
+          <h2>Your Facility Request</h2>
         }
-        </tbody>
-      </table>
-    </div>
-    
-    <div class="col-md-8 rounded-rectangle">
-      <h2>Organizations</h2>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Organization Name</th>
-          <th>Adviser</th>
-          <th>President</th>
-          <th>Budget Left</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var organization in Model.Organizations) {
-          <tr>
-            <td><text>@organization.Name</text></td>
-            <td><text>@organization.Adviser.FirstName @organization.Adviser.LastName</text></td>
-            <td><text>presidentName</text></td>
-            <td><text>@organization.TotalBudget.ToString("c")</text></td>
-          </tr>
+        
+        @if (Model.FacilityRequest.Count == 0) {
+          <div align="center">
+            <text>There's no recent facility request. Please add first so it will be shown here.</text>
+          </div>
         }
-        </tbody>
-      </table>
+        else {
+          @if (Model.UserType == "Super Administrator" || Model.UserType == "Administrator") {
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Date Filed</th>
+                <th>Requester</th>
+                <th>Activity</th>
+                <th>Venue Requested</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
+                <tr>
+                  <td><text>@request.DateFiled</text></td>
+                  <td><text>@request.Requester.Name</text></td>
+                  <td><text>@request.NameActivity</text></td>
+                  <td><text>@request.VenueRequested</text></td>
+                  <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
+                  <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
+                  <td>Pending</td>
+                </tr>
+              }
+              </tbody>
+            </table>
+          } else {
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Date Filed</th>
+                <th>Activity</th>
+                <th>Venue Requested</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
+                <tr>
+                  <td><text>@request.DateFiled</text></td>
+                  <td><text>@request.Requester.Name</text></td>
+                  <td><text>@request.NameActivity</text></td>
+                  <td><text>@request.VenueRequested</text></td>
+                  <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
+                  <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
+                  <td>Pending | See status button</td>
+                </tr>
+              }
+              </tbody>
+            </table>
+          }
+        }
+      </div>
     </div>
   </div>
-</div>
+</main>
 </body>
 </html>

@@ -30,6 +30,23 @@ textarea {
   resize: none;
 }
 
+.hover-item {
+  transition: background-color 0.3s;
+}
+
+.hover-item:hover {
+  background-color: #ebebeb;
+}
+
+.clickable-nav {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clickable-nav:hover {
+  background-color: #0047AB;
+}
+
 .clickable-row {
   cursor: pointer;
   transition: background-color 0.3s;

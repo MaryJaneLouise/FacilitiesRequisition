@@ -21,13 +21,13 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Position" class="control-label"></label>
-                        <select asp-for="Position" asp-items="Html.GetEnumSelectList<AdministratorPosition>()" class="form-control mt-1"></select>
+                        <select asp-for="Position" asp-items="Html.GetEnumSelectList<AdministratorPosition>()" class="form-control"></select>
                         <span asp-validation-for="Position" class="text-danger"></span>
                     </div>
                     
                     <div class="form-group" style="float: right">
                         <br/>
-                        <input type="submit" value="Go back" class="btn btn-outline-primary"asp-page-handler="BackToIndex" />
+                        <a class="btn btn-outline-primary" asp-page="./Index" asp-route-id="@Model.Administrator.Id">Go back</a>
                         <input type="submit" value="Add role" class="btn btn-primary"/>
                     </div>
                 </form>
