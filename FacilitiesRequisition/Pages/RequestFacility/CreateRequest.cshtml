@@ -18,7 +18,7 @@
                 <h2>Add a facility request</h2>
                 
                 <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
                     <div class="form-group">
                         <label asp-for="DateFiled" class="control-label"></label>
                         <input asp-for="DateFiled" class="form-control"/>
@@ -32,6 +32,7 @@
                         <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
                         <br/>
                     </div>
+
                 
                     <div class="form-group">
                         <label asp-for="NameActivity" class="control-label"></label>

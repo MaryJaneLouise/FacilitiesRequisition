@@ -37,7 +37,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             Organizations = _context.GetOfficerOrganizations(officer).Select(organization =>
                 new SelectListItem {
                     Value = organization.Id.ToString(),
-                    Text = organization.Name
+                    Text = organization.Name,
+                    Selected = OrganizationId == organization.Id.ToString()
                 });
             return Page();
         }
@@ -50,13 +51,24 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                  (x.StartDateRequested >= StartDateRequested && x.EndDateRequested <= EndDateRequested)));
 
             if (overlappingRequest != null) {
-                ModelState.AddModelError(string.Empty, "The selected venue is not available for the specified date range.");
-                return Page();
+                ModelState.AddModelError(string.Empty, $"The selected venue is not available for the specified date range. " + 
+                                         $"Please pick other dates for specified venue requested.");
             }
             
             if (!ModelState.IsValid) {
+                var officer = HttpContext.Session.GetLoggedInUser(_context)!;
+                var organizations = _context.GetOfficerOrganizations(officer);
+                Organizations = organizations.Select(organization =>
+                    new SelectListItem
+                    {
+                        Value = organization.Id.ToString(),
+                        Text = organization.Name,
+                        Selected = OrganizationId == organization.Id.ToString()
+                    });
                 return Page();
             }
+            
+            
 
             var facilityRequest = new FacilityRequest {
                 DateFiled = DateFiled,

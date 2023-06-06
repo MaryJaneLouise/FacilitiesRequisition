@@ -7,6 +7,33 @@
     $('#search-input').on('input', function () {
         $('form').submit();
     });
+
+    
+    var startDateInput = document.getElementById("StartDateRequested");
+    var endDateInput = document.getElementById("EndDateRequested");
+
+    // Add event listeners to the input fields
+    startDateInput.addEventListener("change", validateDateRange);
+    endDateInput.addEventListener("change", validateDateRange);
+
+    function validateDateRange() {
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (startDate < today || endDate < today) {
+            startDateInput.setCustomValidity("Invalid date. Please select a date starting from today or later.");
+            endDateInput.setCustomValidity("Invalid date.");
+        } else if (startDate > endDate) {
+            startDateInput.setCustomValidity("");
+            endDateInput.setCustomValidity("End date must be greater than or equal to start date.");
+        } else {
+            startDateInput.setCustomValidity("");
+            endDateInput.setCustomValidity("");
+        }
+    }
 });
 
 function updateClock() {

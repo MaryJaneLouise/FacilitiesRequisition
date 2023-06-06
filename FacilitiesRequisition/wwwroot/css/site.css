@@ -38,6 +38,12 @@ textarea {
   background-color: #ebebeb;
 }
 
+.validation-summary-errors ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+
 .clickable-nav {
   cursor: pointer;
   transition: background-color 0.3s;
