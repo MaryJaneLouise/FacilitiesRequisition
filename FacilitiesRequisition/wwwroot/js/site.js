@@ -34,8 +34,23 @@
             endDateInput.setCustomValidity("");
         }
     }
+    
 });
 
+function generateRandomColor() {
+    var red = Math.floor(Math.random() * 156); 
+    var green = Math.floor(Math.random() * 156);
+    var blue = Math.floor(Math.random() * 156);
+    return 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+}
+
+// Apply random background color to profile icons
+document.addEventListener('DOMContentLoaded', function() {
+    var profileIcons = document.getElementsByClassName('profile-icon');
+    for (var i = 0; i < profileIcons.length; i++) {
+        profileIcons[i].style.backgroundColor = generateRandomColor();
+    }
+});
 function updateClock() {
     var timeElement = document.getElementById('time');
     var now = new Date();

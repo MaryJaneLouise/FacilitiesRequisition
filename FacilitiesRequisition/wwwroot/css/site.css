@@ -32,6 +32,8 @@ textarea {
 
 .hover-item {
   transition: background-color 0.3s;
+  padding-bottom: 7px;
+  padding-top: 7px;
 }
 
 .hover-item:hover {
@@ -70,6 +72,23 @@ textarea {
   border-radius: 20px;
   background: #ffffff;
   padding: 40px;
+}
+
+.profile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  padding: 5px;
+}
+
+.user-container {
+  max-height: 500px; /* Set the desired height of the container */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 td, th {

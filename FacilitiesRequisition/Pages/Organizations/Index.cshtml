@@ -22,68 +22,78 @@
                     <text>There's no organizations present in this system. Please add organization first</text>
                 </div>
             } else {
-                @foreach (var organization in Model.Organizations) {
-                    <div class="hover-item">
-                        <div style="display: flex; align-items: center;">
-                            <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
-                            <div style="font-size: medium; horiz-align: center">
-                                @organization.Name
-                                <div style="font-size: small">
-                                    @if (organization.IsStudentCouncil) {
-                                        @if (organization.Adviser == null) {
-                                            @: <text>Student Council |</text> @organization.TotalBudget.ToString("c") <text> left</text>
+                <div class="user-container">
+                    @foreach (var organization in Model.Organizations) {
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center;">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 5px">
+                                    <span>@organization.Name.Substring(0, 1)</span>
+                                </div>
+                                <div style="font-size: medium; horiz-align: center">
+                                    @organization.Name
+                                    <div style="font-size: small">
+                                        @if (organization.IsStudentCouncil) {
+                                            @if (organization.Adviser == null) {
+                                                @: <text>Student Council |</text> @organization.TotalBudget.ToString("c") <text> left</text>
+                                            }
+                                            else {
+                                                @: <text>Student Council |</text>
+                                                @organization.Adviser.FirstName
+                                                @organization.Adviser.LastName
+                                                <text> |</text>
+                                                @organization.TotalBudget.ToString("c")
+                                                <text> left</text>
+                                            }
                                         }
                                         else {
-                                            @: <text>Student Council |</text>
-                                            @organization.Adviser.FirstName @organization.Adviser.LastName 
-                                            <text> |</text> @organization.TotalBudget.ToString("c") <text> left</text>
-                                        
+                                            if (organization.Adviser == null) {
+                                                @: <text>Non-mandated Organization |</text> @organization.TotalBudget.ToString("c") <text> left</text>
+                                            }
+                                            else {
+                                                @: <text>Non-mandated Organization |</text>
+                                                @organization.Adviser.FirstName
+                                                @organization.Adviser.LastName
+                                                <text> |</text>
+                                                @organization.TotalBudget.ToString("c")
+                                                <text> left</text>
+                                            }
                                         }
-                                    } else {
-                                        if (organization.Adviser == null) {
-                                            @: <text>Non-mandated Organization |</text> @organization.TotalBudget.ToString("c") <text> left</text>
-                                        }
-                                        else {
-                                            @: <text>Non-mandated Organization |</text>
-                                            @organization.Adviser.FirstName @organization.Adviser.LastName 
-                                            <text> |</text> @organization.TotalBudget.ToString("c") <text> left</text>
-                                        }
-                                    }
-                                
+
+                                    </div>
                                 </div>
+                                <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@organization.Id">
+                                    <i class="bi bi-trash-fill"></i>
+                                    Delete
+                                </button>
+
                             </div>
-                            <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id">
-                                <i class="bi bi-pencil-square"></i>
-                                Edit
-                            </a>
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@organization.Id">
-                                <i class="bi bi-trash-fill"></i>
-                                Delete
-                            </button>
-                            
                         </div>
-                    </div>
-                    
-                    <div class="modal fade" id="deleteModal_@organization.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@organization.Id" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel_@organization.Id">Delete Organization</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to delete this organization "@organization.Name"? This cannot be undone.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@organization.Id">
-                                        <button type="submit" class="btn btn-danger">Delete organization</button>
-                                    </form>
+
+                        <div class="modal fade" id="deleteModal_@organization.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@organization.Id" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel_@organization.Id">Delete Organization</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this organization "@organization.Name"? This cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@organization.Id">
+                                            <button type="submit" class="btn btn-danger">Delete organization</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-            }
+                    }
+                </div>
             }
             
             
