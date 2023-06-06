@@ -10,8 +10,86 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
-    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+<body>
+    <div class="d-flex justify-content-md-center align-items-center vh-100" style="background: #EEEEEE!">
+        <div style="display:flex; flex-direction:column; width: auto">
+            <h2>User List</h2>
+            @foreach(var user in Model.User)
+            {
+                <div class="row">
+                    <div style="font-size: medium; display:flex; flex-direction:row">
+                        <div style="flex-grow:1; flex-direction:row; display:flex">
+                            <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
+                            <div style="font-size: medium;">
+                                @user.FirstName @user.LastName
+                                <div style="font-size: small">
+                                    <text>&#64;</text> @user.Username | @user.Type
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-left: 10px; justify-content:flex-end">
+                            @if (user.Type == UserType.Officer) {
+                                <a class="btn btn-outline-secondary"
+                                    asp-page="../Users/ManageRoles/OfficerRoles/Index" 
+                                    asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            }else if (user.Type == UserType.Administrator)
+                            {
+                                <a class="btn btn-outline-secondary"
+                                   asp-page="../Users/ManageRoles/AdministratorRoles/Index" 
+                                   asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            }else
+                            {
+                                <a class="btn btn-outline-secondary" 
+                                   style="float: right"
+                                   asp-page="../Users/ManageRoles/FacultyRoles/Index" 
+                                   asp-route-id="@user.Id">
+                                    <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
+                                </a>
+                            }
+                            <a class="btn btn-outline-danger"
+                                style="align-items: end"
+                                onclick="showModalDelete('@user.Id')">
+                                <i class="bi bi-person-fill-x" style="font-size: 15px"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" />
+                        <input type="submit" value="Create user" class="btn btn-primary mr-2" asp-page-handler="CreateUser" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="deleteModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="row d-flex justify-content-md-center align-items-center vh-100">
         <div class="col-md-5 rounded-rectangle">
             <h2>User List</h2>
             <br/>
@@ -29,7 +107,7 @@
                         </div>
                         
                         @if (user.Type == UserType.Officer) {
-                            <div style="margin-right: 10px" align="right">
+                            <div style="margin-left: 10px;" align="right">
                                 <a class="btn btn-outline-secondary"
                                    asp-page="../Users/ManageRoles/OfficerRoles/Index" 
                                    asp-route-id="@user.Id">
@@ -38,7 +116,7 @@
                             </div>
                         }
                         else if (user.Type == UserType.Administrator) {
-                            <div style="margin-right: 10px" align="right">
+                            <div style="margin-left: 10px" align="right">
                                 <a class="btn btn-outline-secondary"
                                    asp-page="../Users/ManageRoles/AdministratorRoles/Index" 
                                    asp-route-id="@user.Id">
@@ -47,7 +125,7 @@
                             </div>
                         }
                         else {
-                            <div style="margin-right: 10px" align="right">
+                            <div style="margin-left: 10px" align="right">
                                 <a class="btn btn-outline-secondary" 
                                    style="float: right"
                                    asp-page="../Users/ManageRoles/FacultyRoles/Index" 
@@ -78,6 +156,16 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>*@
+
+
 </body>
 </html>
+
+<script type="text/javascript">
+
+    function showModalDelete(id){
+        $("#deleteModal").modal("show");
+    }
+
+</script>
