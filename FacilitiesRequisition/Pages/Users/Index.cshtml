@@ -14,7 +14,7 @@
 </head>
 <body style="background: #EEEEEE">
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
-        <div class="col-md-7 rounded-rectangle">
+        <div class="col-md-6 rounded-rectangle">
             <h2>User List</h2>
             <br/>
             
@@ -23,8 +23,8 @@
                     .Concat(Model.User.Where(user => user.Type == UserType.Faculty).OrderBy(user => user.FirstName))
                     .Concat(Model.User.Where(user => user.Type == UserType.Officer).OrderBy(user => user.FirstName))) {
                     <div class="hover-item">
-                        <div style="display: flex; align-items: center;">
-                            <div class="profile-icon" style="margin-right: 10px; margin-left: 5px">
+                        <div style="display: flex; align-items: center">
+                            <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
                                 <span>@user.FirstName.Substring(0, 1)</span>
                             </div>
 
@@ -34,48 +34,62 @@
                                     <text>&#64;</text>@user.Username | @user.Type
                                 </div>
                             </div>
-
-                            @if (user.Type == UserType.Officer) {
-                                <div style="margin-right: 10px" align="right">
+                            
+                            <div style="margin-left: auto; margin-right: 10px; justify-content: end">
+                                @if (user.Type == UserType.Officer) {
                                     <a class="btn btn-outline-success"
                                        asp-page="../Users/ManageRoles/OfficerRoles/Index"
                                        asp-route-id="@user.Id">
                                         <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
                                         Roles
                                     </a>
-                                </div>
-                            }
-                            else if (user.Type == UserType.Administrator) {
-                                <div style="margin-right: 10px" align="right">
+
+                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                        <i class="bi bi-pencil-fill"></i>
+                                        Edit
+                                    </a>
+
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
+                                        <i class="bi bi-trash-fill"></i>
+                                        Delete
+                                    </button>
+                                } else if (user.Type == UserType.Administrator) {
                                     <a class="btn btn-outline-success"
                                        asp-page="../Users/ManageRoles/AdministratorRoles/Index"
                                        asp-route-id="@user.Id">
                                         <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
                                         Roles
                                     </a>
-                                </div>
-                            }
-                            else {
-                                <div style="margin-right: 10px" align="right">
+
+                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                        <i class="bi bi-pencil-fill"></i>
+                                        Edit
+                                    </a>
+
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
+                                        <i class="bi bi-trash-fill"></i>
+                                        Delete
+                                    </button>
+                                } else {
                                     <a class="btn btn-outline-success"
-                                       style="float: right"
                                        asp-page="../Users/ManageRoles/FacultyRoles/Index"
                                        asp-route-id="@user.Id">
                                         <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
                                         Roles
                                     </a>
-                                </div>
-                            }
-                            <div align="right">
-                                <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
-                                    <i class="bi bi-pencil-fill"></i>
-                                    Edit
-                                </a>
-                                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
-                                    <i class="bi bi-trash-fill"></i>
-                                    Delete
-                                </button>
+
+                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                        <i class="bi bi-pencil-fill"></i>
+                                        Edit
+                                    </a>
+
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
+                                        <i class="bi bi-trash-fill"></i>
+                                        Delete
+                                    </button>
+                                }
                             </div>
+                            
                         </div>
                     </div>
 

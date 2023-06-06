@@ -47,18 +47,18 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
             return RedirectToPage("./CreateAdminRoles");
         }
 
-        public IActionResult OnPostDeleteRole(int? id) {
-            if (id == null) {
-                return NotFound();
-            }
-            var adminRole = _context.GetAdministratorRole((int)id);
+            public IActionResult OnPostDeleteRole(int? id) {
+                if (id == null) {
+                    return NotFound();
+                }
+                var adminRole = _context.GetAdministratorRole((int)id);
 
-            if (adminRole != null) {
-                AdministratorRoles = adminRole;
-                _context.RemoveAdministratorRole(AdministratorRoles);
+                if (adminRole != null) {
+                    AdministratorRoles = adminRole;
+                    _context.RemoveAdministratorRole(AdministratorRoles);
+                }
+                
+                return RedirectToPage("/Users/Index");
             }
-            
-            return RedirectToPage("/Users/Index");
-        }
     }
 }

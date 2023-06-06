@@ -136,7 +136,10 @@ public class DatabaseContext : DbContext {
     }
 
     public Organization? GetOrganization(int id) {
-        return Organizations.FirstOrDefault(x => x.Id == id);
+        return Organizations
+            .Where(x => x.Id == id)
+            .Include(x => x.Adviser)
+            .FirstOrDefault();
     }
 
     public bool AddOrganization(Organization organization) {
@@ -180,43 +183,16 @@ public class DatabaseContext : DbContext {
         return changesSaved > 0;
     }
     
-    public User? GetAdmin(AdministratorPosition position)
-    {
+    public User? GetAdministrator(AdministratorPosition position) {
         return AdministratorRoles.FirstOrDefault(x => x.Position == position)?.Administrator;
     }
 
-    public List<College> GetColleges() {
-        return Colleges.ToList();
-    }
-
-    public College? GetCollege(int id) {
-        return Colleges.FirstOrDefault(x => x.Id == id);
-    }
-
-    public bool AddCollege(College college) {
-        Colleges.Add(college);
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-    
-    public bool RemoveCollege(College college) {
-        Colleges.Remove(college);
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-
-    public SchoolTag? GetSchoolTag() {
-        return SchoolTags.LastOrDefault();
-    }
-
-    public bool SetSchoolTag(SchoolTag schoolTag) {
-        SchoolTags.Add(schoolTag);
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-
     public FacilityRequest? GetFacilityRequest(int id) {
-        return FacilityRequests.FirstOrDefault(facilityRequest => facilityRequest.Id == id);
+        return FacilityRequests
+            .Where(facilityRequest => facilityRequest.Id == id)
+            .Include(facilityRequest => facilityRequest.Requester)
+            .Include(facilityRequest => facilityRequest.Requester.Adviser)
+            .FirstOrDefault();
     }
     
     public List<FacilityRequest> GetFacilityRequestsRequested(User user) {
@@ -303,9 +279,27 @@ public class DatabaseContext : DbContext {
 
         return showFacilityRequests;
     }
+    
+    public bool AddFacilityRequest(FacilityRequest facilityRequest, List<Expense> expenses) {
+        FacilityRequests.Add(facilityRequest);
+        Expenses.AddRange(expenses);
+        AddSignatures(GetDefaultSignatures(facilityRequest));
+
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
+
+    public bool RemoveFacilityRequest(FacilityRequest facilityRequest) {
+        FacilityRequests.Remove(facilityRequest);
+        //TODO: Deletion of expenses and signatures
+
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
 
     private Signatures GetDefaultSignatures(FacilityRequest facilityRequest) {
-        var officerRoles = OfficerRoles.Where(officerRole => officerRole.Organization == facilityRequest.Requester);
+        var officerRoles = OfficerRoles.Where(officerRole => officerRole.Organization == facilityRequest.Requester)
+            .Include(officerRole => officerRole.Officer);
 
         return new Signatures(
             President: new OfficerSignatory {
@@ -316,7 +310,9 @@ public class DatabaseContext : DbContext {
             Adviser: new AdministratorSignatory {
                 FacilityRequest = facilityRequest,
                 IsSigned = false,
-                Role = AdministratorRoles.FirstOrDefault(officerRole => officerRole.Position == AdministratorPosition.Adviser && officerRole.Administrator == facilityRequest.Requester.Adviser),
+                Role = AdministratorRoles
+                    .FirstOrDefault(officerRole => officerRole.Position == AdministratorPosition.Adviser && 
+                                                   officerRole.Administrator == facilityRequest.Requester.Adviser)
             },
             AssistantDean: new AdministratorSignatory {
                 FacilityRequest = facilityRequest,
@@ -382,40 +378,35 @@ public class DatabaseContext : DbContext {
         return changesSaved > 0;
     }
 
-    public bool AddFacilityRequest(FacilityRequest facilityRequest, List<Expense> expenses) {
-        FacilityRequests.Add(facilityRequest);
-        Expenses.AddRange(expenses);
-        AddSignatures(GetDefaultSignatures(facilityRequest));
-
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-
-    public bool RemoveFacilityRequest(FacilityRequest facilityRequest) {
-        FacilityRequests.Remove(facilityRequest);
-        //TODO: Deletion of expenses and signatures
-
-        var changesSaved = SaveChanges();
-        return changesSaved > 0;
-    }
-
     public List<AdministratorSignatory> GetAdministratorSignatories(FacilityRequest facilityRequest) {
         return AdministratorSignatories
             .Where(adminSignatory => adminSignatory.FacilityRequest == facilityRequest)
+            .Include(adminSignatory => adminSignatory.Role)
+            .Include(adminSignatory => adminSignatory.Role.Administrator)
             .ToList();
     }
 
     public List<OfficerSignatory> GetOfficerSignatories(FacilityRequest facilityRequest) {
         return OfficerSignatories
             .Where(officerSignatory => officerSignatory.FacilityRequest == facilityRequest)
+            .Include(officerSignatory => officerSignatory.Role)
+            .Include(officerSignatory => officerSignatory.Role.Officer)
+            .ToList();
+    }
+
+    public List<FacultySignatory> GetFacultySignatories(FacilityRequest facilityRequest) {
+        return FacultySignatories
+            .Where(facultySignatory => facultySignatory.FacilityRequest == facilityRequest)
+            .Include(facultySignatory => facultySignatory.Role)
+            .Include(facultySignatory => facultySignatory.Role.Faculty)
             .ToList();
     }
 
     public Signatures GetSignatures(FacilityRequest facilityRequest) {
         var officerSignatories = GetOfficerSignatories(facilityRequest);
         var adminSignatories = GetAdministratorSignatories(facilityRequest);
-
-        return new Signatures(
+        
+        var signatories =  new Signatures(
             President: officerSignatories.First(signatory => signatory.Role!.Position == OrganizationPosition.President),
             Adviser: adminSignatories.First(signatory => signatory.Role!.Administrator == facilityRequest.Requester.Adviser),
             
@@ -431,5 +422,37 @@ public class DatabaseContext : DbContext {
             
             VicePresidentAcademicAffairs: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.VicePresidentAcademicAffairs),
             VicePresidentAdministration: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.VicePresidentAdministration));
-    }   
+
+        return signatories;
+    }
+    
+    public List<College> GetColleges() {
+        return Colleges.ToList();
+    }
+
+    public College? GetCollege(int id) {
+        return Colleges.FirstOrDefault(x => x.Id == id);
+    }
+
+    public bool AddCollege(College college) {
+        Colleges.Add(college);
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
+    
+    public bool RemoveCollege(College college) {
+        Colleges.Remove(college);
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
+
+    public SchoolTag? GetSchoolTag() {
+        return SchoolTags.LastOrDefault();
+    }
+
+    public bool SetSchoolTag(SchoolTag schoolTag) {
+        SchoolTags.Add(schoolTag);
+        var changesSaved = SaveChanges();
+        return changesSaved > 0;
+    }
 }

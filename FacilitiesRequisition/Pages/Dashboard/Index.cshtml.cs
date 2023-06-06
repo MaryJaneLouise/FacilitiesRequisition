@@ -37,4 +37,15 @@ public class IndexModel : PageModel {
         var president = OfficerRolesOrganization.Select(role => role.Position == OrganizationPosition.President && role.Organization == Organizations);
         OfficerRole = president.ToString();
     }
+    
+    public static class EnumExtensions {
+        public static string GetDisplayName(Enum value) {
+            var displayAttribute = value.GetType()
+                .GetField(value.ToString())
+                .GetCustomAttributes(typeof(DisplayAttribute), false)
+                .FirstOrDefault() as DisplayAttribute;
+
+            return displayAttribute?.GetName() ?? value.ToString();
+        }
+    }
 }

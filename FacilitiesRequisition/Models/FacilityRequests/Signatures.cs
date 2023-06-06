@@ -31,4 +31,20 @@ public record Signatures(
 
         return SignatureStage.Organization;
     }
+
+    public List<Signature> ToList() {
+        return new() {
+            President,
+            Adviser, 
+            AssistantDean,
+            Dean,
+            BuildingManager,
+            AdminServicesDirector,
+            StudentAffairsDirector,
+            CampusFacilitiesDevelopmentDirector,
+            AccountingOfficeDirector,
+            VicePresidentAcademicAffairs,
+            VicePresidentAdministration
+        };
+    }
 }     

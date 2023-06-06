@@ -27,10 +27,10 @@ public enum AdministratorPosition {
     [Display(Name = "Accounting Office Director")]
     AccountingOfficeDirector,
     
-    [Display(Name = "Vice President Academic Affairs")]
+    [Display(Name = "Vice President for Academic Affairs")]
     VicePresidentAcademicAffairs,
     
-    [Display(Name = "Vice President Administration")]
+    [Display(Name = "Vice President for Administration")]
     VicePresidentAdministration,
     
     [Display(Name = "Super Admin")]

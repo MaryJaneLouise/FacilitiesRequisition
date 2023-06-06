@@ -20,10 +20,7 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
                     <div class="form-group">
-                        <label asp-for="DateFiled" class="control-label"></label>
-                        <input asp-for="DateFiled" class="form-control"/>
-                        <span asp-validation-for="DateFiled" class="text-danger"></span>
-                        <br/>
+                        <input asp-for="DateFiled" class="form-control" hidden/>
                     </div>
                             
                     <div class="form-group mt-2">
@@ -40,24 +37,24 @@
                         <span asp-validation-for="NameActivity" class="text-danger"></span>
                         <br/>
                     </div>
-                            
+                    
                     <div class="form-group">
                         <label asp-for="ContactNumber" class="control-label"></label>
-                        <input asp-for="ContactNumber" class="form-control" />
+                        <input asp-for="ContactNumber" type="number" class="form-control" />
                         <span asp-validation-for="ContactNumber" class="text-danger"></span>
                         <br/>
                     </div>
                             
                     <div class="form-group">
                         <label asp-for="StartDateRequested" class="control-label"></label>
-                        <input asp-for="StartDateRequested" class="form-control" />
+                        <input asp-for="StartDateRequested" type="date" class="form-control" />
                         <span asp-validation-for="StartDateRequested" class="text-danger"></span>
                         <br/>
                     </div>
                             
                     <div class="form-group">
                         <label asp-for="EndDateRequested" class="control-label"></label>
-                        <input asp-for="EndDateRequested" class="form-control" />
+                        <input asp-for="EndDateRequested" type="date" class="form-control" />
                         <span asp-validation-for="EndDateRequested" class="text-danger"></span>
                         <br/>
                     </div>

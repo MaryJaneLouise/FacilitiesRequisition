@@ -51,8 +51,8 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
                 _context.RemoveAdministratorRole(AdministratorRole);
             }
 
-            //return RedirectToPage("./Index", new {id = Administrator.Id});
-            return RedirectToPage("/Users/Index");
+            return RedirectToPage("./Index", new {id = Administrator.Id});
+            return Page();
         }
 
         public IActionResult OnPostBackToIndex() {

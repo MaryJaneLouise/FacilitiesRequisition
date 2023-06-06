@@ -34,6 +34,7 @@ textarea {
   transition: background-color 0.3s;
   padding-bottom: 7px;
   padding-top: 7px;
+  border-radius: 10px;
 }
 
 .hover-item:hover {

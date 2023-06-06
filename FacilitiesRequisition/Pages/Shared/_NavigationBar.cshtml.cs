@@ -54,7 +54,7 @@ namespace FacilitiesRequisition.Pages.Shared {
                             FacilityRequest = _context.GetFacilityRequests();
                             Organizations = _context.GetOrganizations();
                             break;
-                        case "Admininstrator" :
+                        case "Administrator" :
                             FacilityRequest = _context.GetFacilityRequests();
                             Organizations = _context.GetOrganizations();
                             break;
@@ -64,6 +64,17 @@ namespace FacilitiesRequisition.Pages.Shared {
                             break;
                     }
                     return Page();
+            }
+        }
+        
+        public static class EnumExtensions {
+            public static string GetDisplayName(Enum value) {
+                var displayAttribute = value.GetType()
+                    .GetField(value.ToString())
+                    .GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .FirstOrDefault() as DisplayAttribute;
+
+                return displayAttribute?.GetName() ?? value.ToString();
             }
         }
         

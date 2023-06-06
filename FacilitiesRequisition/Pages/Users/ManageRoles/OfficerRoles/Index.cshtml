@@ -1,5 +1,6 @@
 @page
 @using FacilitiesRequisition.Models.Officers
+@using FacilitiesRequisition.Pages.Organizations
 @model FacilitiesRequisition.Pages.OfficerRoles.IndexModel
 
 @{
@@ -24,69 +25,52 @@
                             Please add role first.</text>
                     </div>
                 } else {
-                    @foreach (var roleOrg in Model.OfficerRoles) {
-                        <div class="hover-item">
-                            @if (roleOrg.Position == OrganizationPosition.VicePresident) {
-                                <div style="display: flex; align-items: center;">
-                                    <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
-                                
-                                    <div style="font-size: medium; horiz-align: center">
-                                        @roleOrg.Organization.Name
-                                        <div style="font-size: small">
-                                            <text>Vice President</text>
+                    <div class="user-container">
+                        @foreach (var roleOrg in Model.OfficerRoles) {
+                            <div class="hover-item">
+                                 <div style="display: flex; align-items: center">
+                                     <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                         <span>@roleOrg.Organization.Name.Substring(0, 1)</span>
+                                     </div>
+                                     
+                                     <div style="font-size: medium; horiz-align: center">
+                                         @roleOrg.Organization.Name
+                                         <div style="font-size: small">
+                                             @roleOrg.Position.GetDisplayName()
+                                         </div>
+                                     </div>
+                                     
+                                     <div style="margin-left: auto; margin-right: 10px; justify-content: end">
+                                         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@roleOrg.Id">
+                                             <i class="bi bi-trash-fill"></i>
+                                             Delete
+                                         </button>
+                                     </div>
+                                 </div>
+                            </div>
+
+                            <div class="modal fade" id="deleteModal_@roleOrg.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@roleOrg.Id" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel_@roleOrg.Id">Delete Role</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    </div>
-                                </div>
-                            } else if (roleOrg.Position == OrganizationPosition.PublicRelationsOfficer) {
-                                <div style="display: flex; align-items: center;">
-                                    <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
-                                
-                                    <div style="font-size: medium; horiz-align: center">
-                                        @roleOrg.Organization.Name
-                                        <div style="font-size: small">
-                                            <text>Public Relations Officer</text>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete this role "@roleOrg.Position" for the selected user? This cannot be undone.</p>
                                         </div>
-                                    </div>
-                                </div>
-                            } else {
-                                <div style="display: flex; align-items: center;">
-                                    <i class="bi bi-person-circle" style="margin-right: 10px; margin-left: 5px; font-size: 40px"></i>
-                                
-                                    <div style="font-size: medium; horiz-align: center">
-                                        @roleOrg.Organization.Name
-                                        <div style="font-size: small">
-                                            <text>@roleOrg.Position</text>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <form method="post" asp-page-handler="DeleteRole" asp-route-id="@roleOrg.Id">
+                                                <button type="submit" class="btn btn-danger">Delete role</button>
+                                            </form>
                                         </div>
-                                    </div>
-                                </div>
-                            }
-                        
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@roleOrg.Id">
-                                <i class="bi bi-trash-fill"></i>
-                                Delete
-                            </button>
-                        </div>
-                        
-                        <div class="modal fade" id="deleteModal_@roleOrg.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@roleOrg.Id" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel_@roleOrg.Id">Delete Role</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to delete this role "@roleOrg.Position" for the selected user? This cannot be undone.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <form method="post" asp-page-handler="DeleteRole" asp-route-id="@roleOrg.Id">
-                                            <button type="submit" class="btn btn-danger">Delete role</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
+                    
                 }
                 <form method="post">
                     <div class="form-group mt-4 mb-2">

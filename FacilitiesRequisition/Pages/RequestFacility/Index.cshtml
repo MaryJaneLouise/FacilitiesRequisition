@@ -1,4 +1,5 @@
 @page
+@using FacilitiesRequisition.Pages.Organizations
 @model FacilitiesRequisition.Pages.RequestFacility.IndexModel
 
 @{
@@ -42,7 +43,9 @@
 
                     <div style="float: right">
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
-                        <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
+                        @if (Model.UserInfo != "Administrator") {
+                            <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
+                        }
                     </div>
                     
                     @if (Model.UserInfo == "Administrator") {
@@ -63,10 +66,14 @@
                             <tr>
                                 <td><text>@request.Requester.Name</text></td>
                                 <td><text>@request.NameActivity</text></td>
-                                <td><text>@request.VenueRequested</text></td>
+                                <td><text>@request.VenueRequested.GetDisplayName()</text></td>
                                 <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
                                 <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
                                 <td>
+                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@request.Id">
+                                        <i class="bi bi-box-arrow-up-left"></i>
+                                        Details
+                                    </a>
                                     <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-pencil-square"></i>
                                         Edit
@@ -118,10 +125,14 @@
                             <tr>
                                 <td><text>@request.DateFiled</text></td>
                                 <td><text>@request.NameActivity</text></td>
-                                <td><text>@request.VenueRequested</text></td>
+                                <td><text>@request.VenueRequested.GetDisplayName()</text></td>
                                 <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
                                 <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
                                 <td>
+                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@request.Id">
+                                        <i class="bi bi-box-arrow-up-left"></i>
+                                        See Details
+                                    </a>
                                     <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-pencil-square"></i>
                                         Edit
@@ -137,7 +148,7 @@
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel_@request.Id">Delete Facility Request</h5>
+                                            <h5 class="modal-title" id="deleteModalLabel_@request.Id">Cancel Facility Request</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
