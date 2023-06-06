@@ -44,8 +44,9 @@
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
                         <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
                     </div>
-
-                    <table class="table">
+                    
+                    @if (Model.UserInfo == "Administrator") {
+                        <table class="table">
                         <thead>
                         <tr>
                             <th>Requester</th>
@@ -99,6 +100,62 @@
                         }
                         </tbody>
                     </table>
+                    } else {
+                        <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date Filed</th>
+                            <th>Activity</th>
+                            <th>Venue Requested</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
+                            <tr>
+                                <td><text>@request.DateFiled</text></td>
+                                <td><text>@request.NameActivity</text></td>
+                                <td><text>@request.VenueRequested</text></td>
+                                <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
+                                <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
+                                <td>
+                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@request.Id">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Edit
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@request.Id">
+                                        <i class="bi bi-trash-fill"></i>
+                                        Cancel Request
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <div class="modal fade" id="deleteModal_@request.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@request.Id" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel_@request.Id">Delete Facility Request</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to cancel the facility request "@request.NameActivity"? This cannot be undone.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@request.Id">
+                                                <button type="submit" class="btn btn-danger">Cancel</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        </tbody>
+                    </table>
+                    }
                 </div>
             }
         </div>    

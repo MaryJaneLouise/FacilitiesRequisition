@@ -34,7 +34,7 @@ public class IndexModel : PageModel {
         FacilityRequest = _context.GetFacilityRequests();
         Organizations = _context.GetOrganizations();
         
-        var president = OfficerRolesOrganization.Select(role => role.Position == OrganizationPosition.President);
+        var president = OfficerRolesOrganization.Select(role => role.Position == OrganizationPosition.President && role.Organization == Organizations);
         OfficerRole = president.ToString();
     }
 }

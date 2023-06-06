@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models;
+using FacilitiesRequisition.Models.Officers;
 using FacilitiesRequisition.Models.FacilityRequests;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FacilitiesRequisition.Pages.RequestFacility
 {
@@ -17,13 +21,29 @@ namespace FacilitiesRequisition.Pages.RequestFacility
             _context = context;
         }
         
+        public IList<Organization> Organizations { get; set; } = default!;
+
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
         
         [BindProperty]
         public FacilityRequest FacilityRequests { get; set; } = default!;
 
-        public async Task OnGetAsync() {
-            FacilityRequest = _context.GetFacilityRequests();
+        public string UserInfo { get; set; } = default!;
+
+        public IActionResult OnGet() {
+            var officer = HttpContext.Session.GetLoggedInUser(_context)!;
+            UserInfo = $"{officer.Type}";
+            switch (UserInfo) {
+                case "Administrator" :
+                    FacilityRequest = _context.GetFacilityRequests();
+                    Organizations = _context.GetOrganizations();
+                    break;
+                default:
+                    Organizations = _context.GetOfficerOrganizations(officer).ToList();
+                    FacilityRequest = _context.GetFacilityRequestsRequested(officer).ToList();
+                    break;
+            }
+            return Page();
         }
         
         public IActionResult OnPostDeleteRequest(int? id) {

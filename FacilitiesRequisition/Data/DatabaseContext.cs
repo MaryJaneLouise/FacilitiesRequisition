@@ -221,7 +221,9 @@ public class DatabaseContext : DbContext {
     
     public List<FacilityRequest> GetFacilityRequestsRequested(User user) {
         var organizations = GetOrganizations(user);
-        return FacilityRequests.Where(facilityRequest => organizations.Contains(facilityRequest.Requester)).ToList();
+        return FacilityRequests.Include(request => request.Requester)
+            .Where(request => organizations.Contains(request.Requester))
+            .ToList();
     }
 
     public List<FacilityRequest> GetFacilityRequests() {

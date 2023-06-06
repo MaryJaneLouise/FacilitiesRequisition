@@ -71,7 +71,6 @@
               @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
                 <tr>
                   <td><text>@request.DateFiled</text></td>
-                  <td><text>@request.Requester.Name</text></td>
                   <td><text>@request.NameActivity</text></td>
                   <td><text>@request.VenueRequested</text></td>
                   <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>

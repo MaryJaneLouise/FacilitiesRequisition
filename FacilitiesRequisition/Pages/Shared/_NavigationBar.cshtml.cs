@@ -48,12 +48,21 @@ namespace FacilitiesRequisition.Pages.Shared {
                 default:
                     Name = $"{user.FirstName} {user.LastName}";
                     UserType = $"{userType}";
-                    FacilityRequest = _context.GetFacilityRequests();
-                    Organizations = _context.GetOrganizations();
-                    /*Presidents = Organizations
-                        .Select(organization => _context.GetOfficerRoles(organization)
-                            .FirstOrDefault(officerRole => officerRole.Position == OrganizationPosition.President)?.Officer)
-                        .ToList();*/  
+
+                    switch (UserType) {
+                        case "Super Administrator" :
+                            FacilityRequest = _context.GetFacilityRequests();
+                            Organizations = _context.GetOrganizations();
+                            break;
+                        case "Admininstrator" :
+                            FacilityRequest = _context.GetFacilityRequests();
+                            Organizations = _context.GetOrganizations();
+                            break;
+                        default:
+                            Organizations = _context.GetOfficerOrganizations(user).ToList();
+                            FacilityRequest = _context.GetFacilityRequestsRequested(user).ToList();
+                            break;
+                    }
                     return Page();
             }
         }
