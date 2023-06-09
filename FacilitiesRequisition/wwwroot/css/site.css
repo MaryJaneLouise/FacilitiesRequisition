@@ -1,24 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=DM+Sans');
+
 html {
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
 }
 
 @media (min-width: 768px) {
   html {
+    font-family: 'DM Sans', sans-serif;
     font-size: 16px;
   }
 }
 
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-primary {
+  border-radius: 10px;
+  background-color: #275382;
+  border: 1px solid #275382;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #1c436b;
+  border-color: #1c436b;
+}
+
+.btn-outline-primary {
+  border-radius: 10px;
+  border: 1px solid #275382;
+  color: #275382;
+}
+
+.btn-outline-primary:hover {
+  background-color: #275382;
+  border-color: #275382;
+  color: #fff;
+}
+
+.btn-secondary,
+.btn-outline-secondary,
+.btn-success,
+.btn-outline-success,
+.btn-danger,
+.btn-outline-danger{
+  border-radius: 10px;
+}
+
+.nav-link {
+  color: #275382;
+}
+
+.nav-link:hover {
+   /* Darker shade of the original color */
+  background-color: #1c3c59;
+  cursor: pointer;
+}
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem white, 
+  0 0 0 0.25rem #275382;
 }
 
 .nav-collapse .li {
   list-style-type: none;
 }
 
-html {
-  
+.no-underline {
+  text-decoration: none;
 }
 
 body {
@@ -26,8 +77,32 @@ body {
   padding: 0;
 }
 
+.dashboard-body {
+  overflow: hidden;
+}
+
 textarea {
   resize: none;
+}
+
+.hover-nav-item {
+  transition: background-color 0.3s;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  border-radius: 10px;
+}
+
+.hover-table-row {
+  transition: background-color 0.3s;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  border-radius: 10px;
+}
+
+.hover-table-row:hover {
+  color: white;
+  background-color: #275382;
+  border-radius: 10px;
 }
 
 .hover-item {
@@ -39,6 +114,26 @@ textarea {
 
 .hover-item:hover {
   background-color: #ebebeb;
+  border-radius: 10px;
+}
+
+/* Customize the radio button */
+.btn-check {
+  /* Hide the default radio button */
+  display: none;
+}
+
+/* Style the custom radio button */
+.btn-custom-radio {
+  border-radius: 10px;
+  background-color: transparent; /* Set the background color for unselected */
+  border: 1px solid #1c3c59; /* Set the border color for unselected */
+}
+
+/* Style the custom radio button when checked */
+.btn-check:checked + .btn-custom-radio {
+  background-color: #1c3c59; /* Set the background color when checked */
+  border-color: #1c3c59; /* Set the border color when checked */
 }
 
 .validation-summary-errors ul {
@@ -46,14 +141,23 @@ textarea {
   padding: 0;
 }
 
+.nav-item.active {
+  background-color: #000000;
+  font-weight: bold;
+}
+
 
 .clickable-nav {
   cursor: pointer;
+  border-radius: 10px;
   transition: background-color 0.3s;
+  background-color: transparent;
 }
 
 .clickable-nav:hover {
-  background-color: #0047AB;
+  border-radius: 10px;
+  color: white;
+  background-color: #1c3c59;
 }
 
 .clickable-row {
@@ -62,17 +166,32 @@ textarea {
 }
 
 .clickable-row:hover {
-  background-color: #ebebeb;
+  background-color: #1c3c59;
 }
 
 .clickable-row td {
   border: none;
 }
 
+.dropdown-menu {
+  border-radius: 10px;
+}
+
+.dropdown-item:hover {
+  color: white;
+  background-color: #1c3c59;
+  align-items: center;
+}
+
 .rounded-rectangle {
   border-radius: 20px;
   background: #ffffff;
   padding: 40px;
+}
+
+.modal-content {
+  border-radius: 20px;
+  border: transparent;
 }
 
 .profile-icon {

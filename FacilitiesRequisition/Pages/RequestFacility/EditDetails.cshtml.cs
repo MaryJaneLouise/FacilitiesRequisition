@@ -19,6 +19,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
 
         [BindProperty]
         public FacilityRequest FacilityRequest { get; set; } = default!;
+        
+        [BindProperty] public Venues VenueRequested { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             var facilityrequest =  _context.GetFacilityRequest(id ?? -1);
@@ -31,8 +33,15 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         }
         
         public async Task<IActionResult> OnPostAsync() {
-            if (!ModelState.IsValid) {
-                return Page();
+            var overlappingRequest = _context.GetFacilityRequests().FirstOrDefault(x =>
+                x.VenueRequested == VenueRequested &&
+                ((x.StartDateRequested <= FacilityRequest.StartDateRequested && x.EndDateRequested >= FacilityRequest.StartDateRequested) ||
+                 (x.StartDateRequested <= FacilityRequest.EndDateRequested && x.EndDateRequested >= FacilityRequest.EndDateRequested) ||
+                 (x.StartDateRequested >= FacilityRequest.StartDateRequested && x.EndDateRequested <= FacilityRequest.EndDateRequested)));
+
+            if (overlappingRequest != null) {
+                ModelState.AddModelError(string.Empty, $"The selected venue is not available for the specified date range. " + 
+                                                       $"Please pick other dates for specified venue requested.");
             }
 
             _context.Attach(FacilityRequest).State = EntityState.Modified;

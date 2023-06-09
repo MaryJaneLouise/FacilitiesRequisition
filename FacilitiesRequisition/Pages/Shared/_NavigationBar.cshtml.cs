@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
 
 
 namespace FacilitiesRequisition.Pages.Shared {
@@ -27,6 +29,8 @@ namespace FacilitiesRequisition.Pages.Shared {
         public string UserType { get; set; }
         public string IsSuperAdmin { get; set; }
         public string UserRole { get; set; }
+        public string ActivePage { get; set; }
+
         
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
         public IList<Organization> Organizations { get;set; } = default!;
@@ -41,6 +45,11 @@ namespace FacilitiesRequisition.Pages.Shared {
             var userType = isSuperAdministrator ? "Super Administrator" :
                 user.Type == Models.UserType.Administrator ? "Administrator" :
                 user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
+            
+            var currentPage = PageContext.RouteData.Values["page"].ToString();
+            var facilityRequestsJson = JsonConvert.SerializeObject(FacilityRequest);
+            ViewData["FacilityRequestsJson"] = facilityRequestsJson;
+            
 
             switch (user) {
                 case null:
@@ -51,14 +60,18 @@ namespace FacilitiesRequisition.Pages.Shared {
 
                     switch (UserType) {
                         case "Super Administrator" :
+                            ActivePage = currentPage;
                             FacilityRequest = _context.GetFacilityRequests();
+                            
                             Organizations = _context.GetOrganizations();
                             break;
                         case "Administrator" :
+                            ActivePage = currentPage;
                             FacilityRequest = _context.GetFacilityRequests();
                             Organizations = _context.GetOrganizations();
                             break;
                         default:
+                            ActivePage = currentPage;
                             Organizations = _context.GetOfficerOrganizations(user).ToList();
                             FacilityRequest = _context.GetFacilityRequestsRequested(user).ToList();
                             break;

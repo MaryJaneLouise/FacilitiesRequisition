@@ -31,11 +31,11 @@ namespace FacilitiesRequisition.Pages.RequestFacility
         public string UserInfo { get; set; } = default!;
 
         public IActionResult OnGet() {
-            var officer = HttpContext.Session.GetLoggedInUser(_context)!;
+            var officer = HttpContext.Session.GetLoggedInUser(_context);
             UserInfo = $"{officer.Type}";
             switch (UserInfo) {
                 case "Administrator" :
-                    FacilityRequest = _context.GetFacilityRequests();
+                    FacilityRequest = _context.GetFacilityRequests(officer);
                     Organizations = _context.GetOrganizations();
                     break;
                 default:

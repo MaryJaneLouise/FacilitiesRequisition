@@ -10,12 +10,18 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        
+    
 </head>
-<body style="background: #eeeeee">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
 <div>
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
         <div class="col-md-5 rounded-rectangle">
-            <h2 class="mb-4">Login</h2>
+            <h2 class="mb-4" style="font-weight: bold">Budget Request</h2>
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mt-2">
@@ -25,8 +31,12 @@
                 </div>
                 <div class="form-group mt-2">
                     <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control mt-1" type="password"/>
+                    <input asp-for="Password" class="form-control mt-1" type="password" id="passwordField"/>
                     <span asp-validation-for="Password" class="text-danger mt-1"></span>
+                    
+                    <label>
+                      <input type="checkbox" onclick="togglePassword()"> Show Password
+                    </label>
                 </div>
                 <div class="form-group mt-4 mb-2">
                     <input type="submit" value="Login" class="btn btn-primary" style="width: 100%;"/>

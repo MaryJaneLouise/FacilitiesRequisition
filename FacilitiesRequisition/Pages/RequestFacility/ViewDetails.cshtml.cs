@@ -38,7 +38,7 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             return Page();
         }
 
-        public IActionResult OnPostApprove(int? id) {
+        public IActionResult OnPostSign(int? id) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
             var facilityRequest = _context.GetFacilityRequest(id ?? -1);
 
@@ -58,12 +58,11 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             return Page();
         }
         
-        public IActionResult OnPostDisapprove(int? id) {
+        public IActionResult OnPostUnsign(int? id) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
             var facilityRequest = _context.GetFacilityRequest(id ?? -1);
 
-            if (user == null || facilityRequest == null)
-            {
+            if (user == null || facilityRequest == null) {
                 return NotFound();
             }
 

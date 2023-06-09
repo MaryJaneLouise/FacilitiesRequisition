@@ -208,73 +208,36 @@ public class DatabaseContext : DbContext {
     }
 
     public List<FacilityRequest> GetFacilityRequests(User user) {
-        if (user.Type == UserType.Officer || user.Type == UserType.Faculty || user.Type == UserType.Administrator) {
-            var facilityRequests = OfficerSignatories
-                .Where(signatory => signatory.Role.Officer == user)
-                .Select(signatory => signatory.FacilityRequest).ToList();
-
-            if (user.Type == UserType.Faculty) {
-                var facultyRequests = FacultySignatories
-                    .Where(signatory => signatory.Role.Faculty == user)
-                    .Select(signatory => signatory.FacilityRequest).ToList();
-                
-                facilityRequests.AddRange(facultyRequests);
-            } else if (user.Type == UserType.Administrator) {
-                var adminRequests = AdministratorSignatories
-                    .Where(signatory => signatory.Role.Administrator == user)
-                    .Select(signatory => signatory.FacilityRequest).ToList();
-            }
-
-            return facilityRequests;
+        if (user.Type == UserType.Officer) {
+            var organizations = GetOrganizations(user);
+            return FacilityRequests.Where(facilityRequest => organizations
+                    .Contains(facilityRequest.Requester))
+                    .ToList();
         }
 
+        var facilityRequests = AdministratorSignatories
+            .Where(signatory => signatory.Role.Administrator == user)
+            .Include(signatory => signatory.FacilityRequest.Requester)
+            .Select(signatory => signatory.FacilityRequest)
+            .Distinct()
+            .ToList();
+
         var showFacilityRequests = new List<FacilityRequest>();
-        foreach (var facilityRequest in FacilityRequests) {
-            var officerSignatories =
-                OfficerSignatories.Where(signatory => signatory.FacilityRequest == facilityRequest);
-            var facultySignatories =
-                FacultySignatories.Where(signatory => signatory.FacilityRequest == facilityRequest);
-            var adminSignatories =
-                AdministratorSignatories.Where(signatory => signatory.FacilityRequest == facilityRequest);
-            
-            var assistantDeanSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.AssistantDean);
-            var deanSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.Dean);
-            
-            var buildingManagerDirectorSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.BuildingManager);
-            var adminServicesDirectorSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.AdminServicesDirector);
-            var studentAffairsDirectorSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.StudentAffairsDirector);
-            var campusFacilitiesDevelopmentDirectorSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.CampusFacilitiesDevelopmentDirector);
-            var accountingOfficeDirectorSignatory = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.AccountingOfficeDirector);
-            
-            var vicePresidentAcademicAffairs = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.VicePresidentAcademicAffairs);
-            var vicePresidentAdministration = adminSignatories
-                .FirstOrDefault(signatory => signatory.Role.Position == AdministratorPosition.VicePresidentAdministration);
-            
-            
-            var allOfficersHaveSigned = officerSignatories.All(x => x.IsSigned);
-            var allFacultiesHaveSigned = facultySignatories.All(x => x.IsSigned);
-            
-            if ((user == assistantDeanSignatory?.Role.Administrator && allOfficersHaveSigned) ||
-                (user == assistantDeanSignatory?.Role.Administrator && allFacultiesHaveSigned) ||
-                (user == deanSignatory?.Role.Administrator && assistantDeanSignatory?.IsSigned == true) ||
-                (user == buildingManagerDirectorSignatory?.Role.Administrator && deanSignatory?.IsSigned == true) ||
-                (user == adminServicesDirectorSignatory?.Role.Administrator && buildingManagerDirectorSignatory?.IsSigned == true) ||
-                (user == studentAffairsDirectorSignatory?.Role.Administrator && adminServicesDirectorSignatory?.IsSigned == true) ||
-                (user == campusFacilitiesDevelopmentDirectorSignatory?.Role.Administrator && studentAffairsDirectorSignatory?.IsSigned == true) ||
-                (user == accountingOfficeDirectorSignatory?.Role.Administrator && campusFacilitiesDevelopmentDirectorSignatory?.IsSigned == true ) ||
-                (user == vicePresidentAcademicAffairs?.Role.Administrator && adminServicesDirectorSignatory?.IsSigned == true) || 
-                (user == vicePresidentAdministration?.Role.Administrator && vicePresidentAcademicAffairs?.IsSigned == true)) {
-                
+        foreach (var facilityRequest in facilityRequests) {
+            var signatories = GetSignatures(facilityRequest);
+            var signingStage = signatories.GetSignatureStage();
+
+            if ((signingStage >= SignatureStage.Organization && facilityRequest.Requester.Adviser == user) ||
+                (signingStage >= SignatureStage.Deans &&
+                 (user == signatories.AssistantDean.User || user == signatories.Dean.User)) ||
+                (signingStage >= SignatureStage.BuildingManager && user == signatories.BuildingManager.User) ||
+                (signingStage >= SignatureStage.Directors && (user == signatories.AdminServicesDirector.User ||
+                                                              user == signatories.StudentAffairsDirector.User ||
+                                                              user == signatories.AccountingOfficeDirector.User)) ||
+                (signingStage >= SignatureStage.VicePresidents && (user == signatories.VicePresidentAdministration.User ||
+                                                                   user == signatories.VicePresidentAcademicAffairs.User))) {
                 showFacilityRequests.Add(facilityRequest);
-            }
+            }   
         }
 
         return showFacilityRequests;
@@ -407,21 +370,21 @@ public class DatabaseContext : DbContext {
         var adminSignatories = GetAdministratorSignatories(facilityRequest);
         
         var signatories =  new Signatures(
-            President: officerSignatories.First(signatory => signatory.Role!.Position == OrganizationPosition.President),
-            Adviser: adminSignatories.First(signatory => signatory.Role!.Administrator == facilityRequest.Requester.Adviser),
+            President: officerSignatories.First(signatory => signatory.Role?.Position == OrganizationPosition.President),
+            Adviser: adminSignatories.First(signatory => signatory.Role?.Administrator == facilityRequest.Requester.Adviser),
             
-            AssistantDean: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.AssistantDean),
-            Dean: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.Dean),
+            AssistantDean: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.AssistantDean),
+            Dean: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.Dean),
             
-            BuildingManager: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.BuildingManager),
+            BuildingManager: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.BuildingManager),
             
-            AdminServicesDirector: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.AdminServicesDirector),
-            StudentAffairsDirector: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.StudentAffairsDirector),
-            CampusFacilitiesDevelopmentDirector: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.CampusFacilitiesDevelopmentDirector),
-            AccountingOfficeDirector: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.AccountingOfficeDirector),
+            AdminServicesDirector: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.AdminServicesDirector),
+            StudentAffairsDirector: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.StudentAffairsDirector),
+            CampusFacilitiesDevelopmentDirector: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.CampusFacilitiesDevelopmentDirector),
+            AccountingOfficeDirector: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.AccountingOfficeDirector),
             
-            VicePresidentAcademicAffairs: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.VicePresidentAcademicAffairs),
-            VicePresidentAdministration: adminSignatories.First(signatory => signatory.Role!.Position == AdministratorPosition.VicePresidentAdministration));
+            VicePresidentAcademicAffairs: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.VicePresidentAcademicAffairs),
+            VicePresidentAdministration: adminSignatories.First(signatory => signatory.Role?.Position == AdministratorPosition.VicePresidentAdministration));
 
         return signatories;
     }

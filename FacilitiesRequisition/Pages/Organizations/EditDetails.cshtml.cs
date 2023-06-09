@@ -19,13 +19,24 @@ namespace FacilitiesRequisition.Pages.Organizations {
         
         public string PageTitle { get; set; }
         
+        public IEnumerable<SelectListItem> Administrators { get; set; } = default!;
+        
         [BindProperty]
         public Organization Organization { get; set; } = default!;
+
+        [BindProperty] 
+        public string AdviserId { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetOrganizations() == null) {
                 return NotFound();
             }
+            
+            Administrators = _context.GetAdministrators().Select(adminstrator =>
+                new SelectListItem {
+                    Value = adminstrator.Id.ToString(),
+                    Text = $"{adminstrator.FirstName} {adminstrator.LastName}"
+                });
 
             var organization =  _context.GetOrganization((int)id);
             

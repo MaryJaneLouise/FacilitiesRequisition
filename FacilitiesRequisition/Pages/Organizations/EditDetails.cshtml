@@ -9,11 +9,11 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-6 rounded-rectangle">
-                <h2 class="mb-4">Update organization details</h2>
+                <h2 class="mb-4" style="font-weight: bold">Update organization details</h2>
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Organization.Id" />
@@ -27,7 +27,7 @@
                     
                     <div class="form-group">
                         <label asp-for="Organization.Adviser" class="control-label"></label>
-                        <input asp-for="Organization.Adviser" class="form-control"/>
+                        <select asp-for="AdviserId" asp-items="Model.Administrators" class="form-control"></select>
                         <span asp-validation-for="Organization.Adviser" class="text-danger"></span>
                         <br/>
                     </div>

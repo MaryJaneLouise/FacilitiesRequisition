@@ -10,64 +10,54 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-6 rounded-rectangle">
-                <h2>Edit user details</h2>
-                <form method="post">
+                <h2 style="font-weight: bold">Edit user details</h2>
+                <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="User.Id"/>
+                    
 
                     <div class="form-group">
-                        <label asp-for="User.Type" class="control-label"></label>
-                        <select asp-for="User.Type" class="form-control"></select>
-                        <span asp-validation-for="User.Type" class="text-danger"></span>
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control"/>
+                        <span asp-validation-for="Username" class="text-danger"></span>
                         <br/>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="User.FirstName" class="control-label"></label>
-                        <input asp-for="User.FirstName" class="form-control"/>
-                        <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control"/>
+                        <span asp-validation-for="Password" class="text-danger"></span>
                         <br/>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label asp-for="User.MiddleName" class="control-label"></label>
-                        <input asp-for="User.MiddleName" class="form-control"/>
-                        <span asp-validation-for="User.MiddleName" class="text-danger"></span>
+                        <label asp-for="RepeatPassword" class="control-label">Repeat Password</label>
+                        <input asp-for="RepeatPassword" class="form-control"/>
+                        <span asp-validation-for="RepeatPassword" class="text-danger"></span>
                         <br/>
                     </div>
-
-                    <div class="form-group">
-                        <label asp-for="User.LastName" class="control-label"></label>
-                        <input asp-for="User.LastName" class="form-control"/>
-                        <span asp-validation-for="User.LastName" class="text-danger"></span>
-                        <br/>
+                    
+                    <div>
+                        <label>Digital Signature</label>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        @if (Model.SignaturePath != null) {
+                            <img src="@Model.SignaturePath" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;">
+                            <div style="margin-bottom: 10px;"></div>
+                        } else {
+                            <img src="~/images/stockPhoto.png" alt="Default Signature" style="max-width: 1.25in; max-height: 1.25in;">
+                            <div style="margin-bottom: 10px;"></div>
+                        }
+                        @Html.TextBoxFor(Model => Model.Signature, new { @class = "form-control", type = "file", style = "margin:auto;", accept = ".png,.jpg" })
                     </div>
 
-                    <div class="form-group">
-                        <label asp-for="User.Username" class="control-label"></label>
-                        <input asp-for="User.Username" class="form-control"/>
-                        <span asp-validation-for="User.Username" class="text-danger"></span>
-                        <br/>
-                    </div>
 
-                    <div class="form-group">
-                        <label asp-for="User.PasswordHash" class="control-label"></label>
-                        <input asp-for="User.PasswordHash" class="form-control"/>
-                        <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
-                        <br/>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="User.PasswordSalt" class="control-label"></label>
-                        <input asp-for="User.PasswordSalt" class="form-control"/>
-                        <span asp-validation-for="User.PasswordSalt" class="text-danger"></span>
-                        <br/>
-                    </div>
-
+                    
                     <div class="form-group" style="float: right">
                         <br/>
                         <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex"/>

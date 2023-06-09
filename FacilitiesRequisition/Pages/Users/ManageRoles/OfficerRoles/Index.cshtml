@@ -14,11 +14,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-6 rounded-rectangle">
-                <h2>Active user roles for @Model.Officer.FirstName</h2>
+                <h2 style="font-weight: bold">Active user roles for @Model.Officer.FirstName</h2>
                 @if (Model.OfficerRoles.Count == 0) {
                     <div align="center">
                         <text>There's no role assigned for @Model.Officer.FirstName. 

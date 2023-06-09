@@ -12,12 +12,12 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-7">
                 <div class="rounded-rectangle" style="margin-right: 10px; height: 750px">
-                    <h2>View @Model.FacilityRequest.NameActivity details</h2>
+                    <h2 style="font-weight: bold">View @Model.FacilityRequest.NameActivity details</h2>
                     
                     <div style="float: right; margin-bottom: 20px">
                         <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
@@ -71,7 +71,7 @@
             
             <div class="col-md-5">
                 <div class="rounded-rectangle" style="margin-left: 10px; height: 750px">
-                    <h2>Signatories</h2>
+                    <h2 style="font-weight: bold">Signatories</h2>
                     
                     <div>
                         @foreach (var signatory in Model.Signatories.ToList()) {
@@ -97,16 +97,16 @@
                                         <form method="post">
                                             @if (signatory.User == Model.User) {
                                                 if (!signatory.IsSigned) {
-                                                    <input type="submit" value="Signed" class="btn btn-secondary mb-2" asp-page-handler="Approve" asp-route-id="@Model.FacilityRequest.Id"/>
+                                                    <input type="submit" value="Sign" class="btn btn-secondary mb-2" asp-page-handler="Sign" asp-route-id="@Model.FacilityRequest.Id"/>
                                                 }
                                                 else {
-                                                    <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Disapprove" asp-route-id="@Model.FacilityRequest.Id"/>
+                                                    <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Unsign" asp-route-id="@Model.FacilityRequest.Id"/>
                                                 }
                                             } else {
-                                                if (!signatory.IsSigned) {
-                                                    @: <text>Unsigned</text>
-                                                } else {
+                                                if (signatory.IsSigned) {
                                                     @: <text>Signed</text>
+                                                } else {
+                                                    @: <text>Unsigned</text>
                                                 }
                                             }
                                         </form>

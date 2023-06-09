@@ -12,25 +12,26 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-6 rounded-rectangle">
-                <h1 class="mb-4">@Model.PageTitle</h1>
+                <h2 style="font-weight: bold">@Model.PageTitle</h2>
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @if (Model.HasSuperAdmin) {
-                        <div class="form-group mt-2">
+                        <div class="form-group mt-2 flex-grow-1">
                             <label class="control-label">Type of User</label>
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%;">
+                            <br/>
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 100%">
                                 <input type="radio" class="btn-check" asp-for="UserType" value="admin" id="btn-radio-1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btn-radio-1">Admin</label>
-                            
+                                <label class="btn btn-outline-primary btn-custom-radio" for="btn-radio-1">Admin</label>
+    
                                 <input type="radio" class="btn-check" asp-for="UserType" value="officer" id="btn-radio-2" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btn-radio-2">Officer</label>
-                            
+                                <label class="btn btn-outline-primary btn-custom-radio" for="btn-radio-2">Officer</label>
+    
                                 <input type="radio" class="btn-check" asp-for="UserType" value="faculty" id="btn-radio-3" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btn-radio-3">Faculty</label>
+                                <label class="btn btn-outline-primary btn-custom-radio" for="btn-radio-3">Faculty</label>
                             </div>
                         </div>
                     }
@@ -39,35 +40,48 @@
                         <label asp-for="FirstName" class="control-label"></label>
                         <input asp-for="FirstName" class="form-control mt-1"/>
                         <span asp-validation-for="FirstName" class="text-danger mt-1"></span>
+                        <br/>
                     </div>
                     
                     <div class="form-group mt-2">
                         <label asp-for="MiddleName" class="control-label"></label>
                         <input asp-for="MiddleName" class="form-control mt-1"/>
                         <span asp-validation-for="MiddleName" class="text-danger mt-1"></span>
+                        <br/>
                     </div>
                     
                     <div class="form-group mt-2">
                         <label asp-for="LastName" class="control-label"></label>
                         <input asp-for="LastName" class="form-control mt-1"/>
                         <span asp-validation-for="LastName" class="text-danger mt-1"></span>
+                        <br/>
                     </div>
                     
                     <div class="form-group mt-2">
                         <label asp-for="Username" class="control-label"></label>
                         <input asp-for="Username" class="form-control mt-1"/>
                         <span asp-validation-for="Username" class="text-danger mt-1"></span>
+                        <br/>
                     </div>
                     
                     <div class="form-group mt-2">
                         <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control mt-1" type="password"/>
+                        <input asp-for="Password" class="form-control mt-1" type="password" id="passwordField"/>
                         <span asp-validation-for="Password" class="text-danger mt-1"></span>
+                        <label>
+                            <input type="checkbox" onclick="togglePassword()"> Show Password
+                        </label>
+                        <br/>
                     </div>
+                    
                     <div class="form-group mt-2">
                         <label asp-for="RepeatPassword" class="control-label"></label>
-                        <input asp-for="RepeatPassword" class="form-control mt-1" type="password"/>
+                        <input asp-for="RepeatPassword" class="form-control mt-1" type="password" id="repeatPasswordField"/>
                         <span asp-validation-for="RepeatPassword" class="text-danger mt-1"></span>
+                        <label>
+                            <input type="checkbox" onclick="toggleRepeatPassword()"> Show Password
+                        </label>
+                        <br/>
                     </div>
                     
                     @if (Model.HasSuperAdmin) {

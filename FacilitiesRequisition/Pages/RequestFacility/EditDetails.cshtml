@@ -1,4 +1,6 @@
 @page
+@using FacilitiesRequisition.Models.FacilityRequests
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model FacilitiesRequisition.Pages.RequestFacility.EditModel
 
 @{
@@ -9,11 +11,11 @@
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
 </head>
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             <div class="col-md-6 rounded-rectangle">
-                <h2>Edit facility request details</h2>
+                <h2 style="font-weight: bold">Edit facility request details</h2>
                 
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -26,36 +28,36 @@
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="FacilityRequest.NameActivity" class="control-label"></label>
+                        <label asp-for="FacilityRequest.NameActivity" class="control-label">Activity Name</label>
                         <input asp-for="FacilityRequest.NameActivity" class="form-control" />
                         <span asp-validation-for="FacilityRequest.NameActivity" class="text-danger"></span>
                         <br/>
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="FacilityRequest.ContactNumber" class="control-label"></label>
+                        <label asp-for="FacilityRequest.ContactNumber" class="control-label">Contact Number</label>
                         <input asp-for="FacilityRequest.ContactNumber" class="form-control" />
                         <span asp-validation-for="FacilityRequest.ContactNumber" class="text-danger"></span>
                         <br/>
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="FacilityRequest.StartDateRequested" class="control-label"></label>
+                        <label asp-for="FacilityRequest.StartDateRequested" class="control-label">Start Date Requisition</label>
                         <input asp-for="FacilityRequest.StartDateRequested" class="form-control" />
                         <span asp-validation-for="FacilityRequest.StartDateRequested" class="text-danger"></span>
                         <br/>
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="FacilityRequest.EndDateRequested" class="control-label"></label>
+                        <label asp-for="FacilityRequest.EndDateRequested" class="control-label">End Date Requisition</label>
                         <input asp-for="FacilityRequest.EndDateRequested" class="form-control" />
                         <span asp-validation-for="FacilityRequest.EndDateRequested" class="text-danger"></span>
                         <br/>
                     </div>
                     
                     <div class="form-group">
-                        <label asp-for="FacilityRequest.VenueRequested" class="control-label"></label>
-                        <input asp-for="FacilityRequest.VenueRequested" class="form-control" />
+                        <label asp-for="FacilityRequest.VenueRequested" class="control-label">Venue Requested</label>
+                        <select asp-for="FacilityRequest.VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
                         <span asp-validation-for="FacilityRequest.VenueRequested" class="text-danger"></span>
                         <br/>
                     </div>

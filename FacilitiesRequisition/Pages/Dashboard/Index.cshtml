@@ -1,5 +1,7 @@
 @page
 @using FacilitiesRequisition.Pages.Organizations
+@using Newtonsoft.Json
+@using FacilitiesRequisition.Models.FacilityRequests
 @model FacilitiesRequisition.Pages.Shared._NavigationBarModel
 
 @{
@@ -11,81 +13,117 @@
 <html>
 <head>
   <title></title>
+  <script src="/js/daypilot-all.min.js?v=2023.2.470"></script>
+  <link href='https://fonts.googleapis.com/css?family=DM Sans' rel="stylesheet">
 </head>
-<body style="background: #EEEEEE">
+
+<body class="dashboard-body" style="background: #EEEEEE; font-family: 'DM Sans', sans-serif">
 <main>
-  <div class="container">
-    <div class="row d-flex justify-content-md-center align-items-center vh-100">
-      <div class="col-md-12 rounded-rectangle">
-        @if (Model.UserType == "Super Administrator" || Model.UserType == "Administrator") {
-          <h2>Recent Facility Request</h2>
-        } else {
-          <h2>Your Facility Request</h2>
-        }
-        
-        @if (Model.FacilityRequest.Count == 0) {
-          <div align="center">
-            <text>There's no recent facility request. Please add first so it will be shown here.</text>
-          </div>
-        }
-        else {
-          @if (Model.UserType == "Super Administrator" || Model.UserType == "Administrator") {
-            <table class="table">
-              <thead>
-              <tr>
-                <th>Date Filed</th>
-                <th>Requester</th>
-                <th>Activity</th>
-                <th>Venue Requested</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
-                <tr>
-                  <td><text>@request.DateFiled</text></td>
-                  <td><text>@request.Requester.Name</text></td>
-                  <td><text>@request.NameActivity</text></td>
-                  <td><text>@request.VenueRequested.GetDisplayName()</text></td>
-                  <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
-                  <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
-                  <td>Pending</td>
-                </tr>
-              }
-              </tbody>
-            </table>
-          } else {
-            <table class="table">
-              <thead>
-              <tr>
-                <th>Date Filed</th>
-                <th>Activity</th>
-                <th>Venue Requested</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
-                <tr>
-                  <td><text>@request.DateFiled</text></td>
-                  <td><text>@request.NameActivity</text></td>
-                  <td><text>@request.VenueRequested.GetDisplayName()</text></td>
-                  <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
-                  <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
-                  <td>Pending | See status button</td>
-                </tr>
-              }
-              </tbody>
-            </table>
-          }
-        }
-      </div>
+    <div class="container" style="padding-top: 35px">
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-12 rounded-rectangle" style="height: 800px">
+                @if (Model.UserType == "Super Administrator" || Model.UserType == "Administrator") {
+                    <h2 style="font-weight: bold">Recent Facility Request</h2>
+                }
+                else {
+                    <h2 style="font-weight: bold">Your Facility Request</h2>
+                }
+
+                @if (Model.FacilityRequest.Count == 0) {
+                    <div align="center" style="font-size: 16px">
+                        <text>There's no recent facility request. Please add first so it will be shown here.</text>
+                    </div>
+                } else {
+                    <div class="space" style="display: flex; justify-content: flex-end; padding-bottom: 10px">
+                            <div>
+                                <a href="javascript:dp.startDate = dp.startDate.addMonths(-1); dp.update();" class="btn-sm btn-primary no-underline">Previous month</a>
+                                <a href="javascript:dp.startDate = dp.startDate.addMonths(1); dp.update();" class="btn-sm btn-primary no-underline">Next month</a>
+                            </div>
+                        </div>
+
+                        <div id="dp"></div>
+                        <script type="text/javascript">
+                            const dp = new DayPilot.Month("dp", {
+                            startDate: "2023-06-01",
+                            onTimeRangeSelected: async function (args) {
+                                const colors = [
+                                    { name: "Blue", id: "#3c78d8" },
+                                    { name: "Green", id: "#6aa84f" },
+                                    { name: "Yellow", id: "#f1c232" },
+                                    { name: "Red", id: "#cc0000" },
+                                ];
+                    
+                                const form = [
+                                    { name: "Text", id: "text" },
+                                    { name: "Color", id: "barColor", options: colors }
+                                ];
+                    
+                                const data = {
+                                    text: "Event",
+                                    barColor: "#6aa84f"
+                                };
+                            },
+                            
+                            onEventClicked: function (args) {
+                                let event = args.e.data;
+                                showModal(event);
+                            }
+
+                            });
+
+                            let facilityRequests = @Html.Raw(JsonConvert.SerializeObject(Model.FacilityRequest));
+                            for (let i = 0; i < facilityRequests.length; i++) {
+                                let request = facilityRequests[i];
+                                let venue = "";
+                        
+                                switch (request.VenueRequested) {
+                                    case 1:
+                                        venue = "The Struggle Square";
+                                        break;
+                                    case 2:
+                                        venue = "St. Cecilia Auditorium";
+                                        break;
+                                    case 3:
+                                        venue = "Silungan";
+                                        break;
+                                    case 4:
+                                        venue = "Quadrangle";
+                                        break;
+                                    case 5:
+                                        venue = "Classrooms";
+                                        break;
+                                    case 6:
+                                        venue = "Board Room";
+                                        break;
+                                    case 7:
+                                        venue = "Cabalen Hall";
+                                        break;
+                                    case 8:
+                                        venue = "St. John Paul Activity Room 1";
+                                        break;
+                                    case 9:
+                                        venue = "St. John Paul Activity Room 2";
+                                        break;
+                                    default:
+                                        venue = "Unknown Venue";
+                                }
+                        
+                                let startDate = new Date(request.StartDateRequested).toISOString();
+                                let endDate = new Date(request.EndDateRequested).toISOString();
+                                dp.events.add({
+                                    start: new DayPilot.Date(startDate),
+                                    end: new DayPilot.Date(endDate),
+                                    id: DayPilot.guid(),
+                                    text: request.NameActivity + " - " + venue
+                                });
+                            }
+                            
+                            dp.init();
+                        </script>
+                    }
+            </div>
+        </div>
     </div>
-  </div>
 </main>
 </body>
 </html>

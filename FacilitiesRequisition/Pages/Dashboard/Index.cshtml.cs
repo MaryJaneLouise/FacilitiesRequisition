@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
 
 namespace FacilitiesRequisition.Pages.Dashboard; 
 
@@ -29,13 +32,16 @@ public class IndexModel : PageModel {
     public IList<OfficerRole> OfficerRolesOrganization { get; set; } = default!;
     
     public string OfficerRole { get; set; }
-
+    
     public async Task OnGetAsync() {
         FacilityRequest = _context.GetFacilityRequests();
         Organizations = _context.GetOrganizations();
         
         var president = OfficerRolesOrganization.Select(role => role.Position == OrganizationPosition.President && role.Organization == Organizations);
         OfficerRole = president.ToString();
+        
+        var facilityRequestsJson = JsonConvert.SerializeObject(FacilityRequest);
+        ViewData["FacilityRequestsJson"] = facilityRequestsJson;
     }
     
     public static class EnumExtensions {

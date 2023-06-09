@@ -13,17 +13,18 @@
     <head>
         <title></title>
         <link rel="stylesheet" href="./css/site.css">
+        <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     </head>
 </head>
 
-<body style="background: #EEEEEE">
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
             @if (Model.FacilityRequest.Count == 0) {
                 <div class="col-md-5 rounded-rectangle">
-                    <h2>Manage facility request</h2>
+                    <h2 style="font-weight: bold">Manage facility request</h2>
                     <br/>
 
                     <div align="center">
@@ -37,8 +38,8 @@
                     </div>
                 </div>
             } else {
-                <div class="col-md-10 rounded-rectangle">
-                    <h2>Manage facility request</h2>
+                <div class="col-md-12 rounded-rectangle">
+                    <h2 style="font-weight: bold">Manage facility request</h2>
                     <br/>
 
                     <div style="float: right">
@@ -49,7 +50,7 @@
                     </div>
                     
                     @if (Model.UserInfo == "Administrator") {
-                        <table class="table">
+                        <table class="table" style="font-size: 18px">
                         <thead>
                         <tr>
                             <th>Requester</th>
@@ -70,11 +71,11 @@
                                 <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
                                 <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
                                 <td>
-                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@request.Id">
+                                    <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-box-arrow-up-left"></i>
                                         Details
                                     </a>
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@request.Id">
+                                    <a class="btn btn-outline-primary" asp-page="./EditDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-pencil-square"></i>
                                         Edit
                                     </a>
@@ -93,7 +94,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are you sure you want to delete the facility request "@request.NameActivity" made by @request.Requester.Name? This cannot be undone.</p>
+                                            <text>Are you sure you want to delete the facility request "@request.NameActivity" made by @request.Requester.Name? This cannot be undone.</text>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -108,7 +109,7 @@
                         </tbody>
                     </table>
                     } else {
-                        <table class="table">
+                        <table class="table" style="font-size: 18px">
                         <thead>
                         <tr>
                             <th>Date Filed</th>
@@ -129,11 +130,11 @@
                                 <td><text>@request.StartDateRequested.Value.ToShortDateString()</text></td>
                                 <td><text>@request.EndDateRequested.Value.ToShortDateString()</text></td>
                                 <td>
-                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@request.Id">
+                                    <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-box-arrow-up-left"></i>
                                         See Details
                                     </a>
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@request.Id">
+                                    <a class="btn btn-outline-primary" asp-page="./EditDetails" asp-route-id="@request.Id">
                                         <i class="bi bi-pencil-square"></i>
                                         Edit
                                     </a>
