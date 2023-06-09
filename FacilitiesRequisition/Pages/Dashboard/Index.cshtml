@@ -74,6 +74,7 @@
                             let facilityRequests = @Html.Raw(JsonConvert.SerializeObject(Model.FacilityRequest));
                             for (let i = 0; i < facilityRequests.length; i++) {
                                 let request = facilityRequests[i];
+                                console.log(request);
                                 let venue = "";
                         
                                 switch (request.VenueRequested) {
