@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FacilitiesRequisition.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Models;
+using FacilitiesRequisition.Models.Administrators;
 
 namespace FacilitiesRequisition.Pages.Users {
     public class IndexModel : PageModel {
@@ -17,11 +19,28 @@ namespace FacilitiesRequisition.Pages.Users {
 
         public List<User> User { get;set; } = default!;
         public User Users { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
+        public IActionResult OnGet() {
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-        public async Task OnGetAsync() {
-            if (_context.GetUsers() != null) {
-                User = _context.GetUsers();
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (_context.GetUsers() != null) {
+                        User = _context.GetUsers();
+                    }
+
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
             }
         }
         

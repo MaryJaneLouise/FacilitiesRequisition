@@ -13,15 +13,16 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles
 {
     public class EditModel : PageModel
     {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public EditModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public EditModel(DatabaseContext context) {
             _context = context;
         }
 
         [BindProperty]
         public AdministratorRole AdministratorRole { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,37 +32,41 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles
             }
 
             var adminRole =  _context.GetAdministratorRole((int)id);
-            if (adminRole == null)
-            {
-                return NotFound();
-            }
-            AdministratorRole = adminRole;
-            return Page();
-        }
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (adminRole == null) {
+                        return NotFound();
+                    }
+                    
+                    AdministratorRole = adminRole;
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
+        }
+        
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
             _context.Attach(AdministratorRole).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AdministratorRoleExists(AdministratorRole.Id))
-                {
+            } catch (DbUpdateConcurrencyException) {
+                if (!AdministratorRoleExists(AdministratorRole.Id)) {
                     return NotFound();
-                }
-                else
-                {
+                } else {
                     throw;
                 }
             }
@@ -69,8 +74,7 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles
             return RedirectToPage("./Index");
         }
 
-        private bool AdministratorRoleExists(int id)
-        {
+        private bool AdministratorRoleExists(int id) {
           return _context.GetAdministratorRole(id) != null;
         }
     }

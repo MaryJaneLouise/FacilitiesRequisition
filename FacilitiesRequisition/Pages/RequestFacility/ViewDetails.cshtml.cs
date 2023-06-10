@@ -22,11 +22,13 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         public FacilityRequest FacilityRequest { get; set; } = default!; 
         
         public Signatures Signatories { get; set; } = default!;
+        
+        public string Status { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
             var facilityrequest = _context.GetFacilityRequest(id ?? -1);
-            
+
             if (facilityrequest == null || user == null) {
                 return NotFound();
             }
@@ -34,7 +36,6 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             User = user;
             FacilityRequest = facilityrequest;
             Signatories = _context.GetSignatures(facilityrequest);
-            
             return Page();
         }
 

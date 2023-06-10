@@ -7,61 +7,65 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Faculties;
 
-namespace FacilitiesRequisition.Pages.FacultyRoles
-{
-    public class EditModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.FacultyRoles {
+    public class EditModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public EditModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public EditModel(DatabaseContext context) {
             _context = context;
         }
 
         [BindProperty]
         public FacultyRole FacultyRole { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var facultyrole =  _context.GetFacultyRole((int)id);
-            if (facultyrole == null)
-            {
-                return NotFound();
-            }
-            FacultyRole = facultyrole;
-            return Page();
-        }
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (facultyrole == null) {
+                        return NotFound();
+                    }
+                    
+                    FacultyRole = facultyrole;
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
+        }
+        
+        
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid) {
                 return Page();
             }
 
             _context.Attach(FacultyRole).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FacultyRoleExists(FacultyRole.Id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!FacultyRoleExists(FacultyRole.Id)) {
                     return NotFound();
-                }
-                else
-                {
+                } else {
                     throw;
                 }
             }
@@ -69,8 +73,7 @@ namespace FacilitiesRequisition.Pages.FacultyRoles
             return RedirectToPage("./Index");
         }
 
-        private bool FacultyRoleExists(int id)
-        {
+        private bool FacultyRoleExists(int id) {
           return _context.GetFacultyRole(id) != null;
         }
     }

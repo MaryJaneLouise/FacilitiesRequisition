@@ -62,14 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showModal(event) {
-    // Create the modal HTML content
     let modalContent = `
         <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn-close close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -77,31 +76,30 @@ function showModal(event) {
                         <p><strong>Name:</strong> ${event.text}</p>
                         <p><strong>Start Date:</strong> ${event.start.toString()}</p>
                         <p><strong>End Date:</strong> ${event.end.toString()}</p>
-                        <!-- Add more details as needed -->
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
     `;
-
-    // Append the modal HTML content to the document body
+    
     $('body').append(modalContent);
-
-    // Show the modal
+    
     let modalElement = $('#eventModal');
     modalElement.modal('show');
-
-    // Set focus to the modal
+    
     modalElement.on('shown.bs.modal', function () {
         modalElement.focus();
     });
-
-    // Remove the modal from the DOM when it's closed
+    
     modalElement.on('hidden.bs.modal', function () {
         modalElement.remove();
+    });
+    
+    modalElement.find('.close').on('click', function () {
+        modalElement.modal('hide');
     });
 }
 
@@ -121,4 +119,37 @@ function updateClock() {
 }
 updateClock();
 setInterval(updateClock, 1000);
+
+function updateMonthYear(startDate) {
+    // Get the current date
+    var currentDate = new Date(startDate);
+
+    // Extract the month and year from the current date
+    var currentMonth = currentDate.toLocaleString('default', { month: 'long' });
+    var currentYear = currentDate.getFullYear();
+
+    // Set the current month and year in the HTML
+    document.getElementById('current-month-year').textContent = currentMonth + ' ' + currentYear;
+}
+
+// Function to change the month
+function changeMonth(offset) {
+    dp.startDate = dp.startDate.addMonths(offset);
+    dp.update();
+    updateMonthYear(dp.startDate);
+}
+
+// Initial update of the current month and year
+updateMonthYear(dp.startDate);
+
+function previewImage(event) {
+    var input = event.target;
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('signaturePreview').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 

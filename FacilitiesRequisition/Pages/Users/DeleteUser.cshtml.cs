@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using FacilitiesRequisition.Models.Administrators;
 
 namespace FacilitiesRequisition.Pages.Users {
     public class DeleteModel : PageModel {
@@ -18,6 +19,8 @@ namespace FacilitiesRequisition.Pages.Users {
 
         [BindProperty]
         public User User { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetUsers() == null) {
@@ -25,13 +28,26 @@ namespace FacilitiesRequisition.Pages.Users {
             }
 
             var user = _context.GetUser((int)id);
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            if (user == null) {
-                return NotFound();
-            } else {
-                User = user;
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (user == null) {
+                        return NotFound();
+                    } 
+                    
+                    User = user;
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
             }
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id) {

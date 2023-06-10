@@ -21,6 +21,8 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
 
         [BindProperty]
         public AdministratorRole AdministratorRole { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)  {
             if (id == null) {
@@ -29,15 +31,27 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
 
             var adminRole = _context.GetAdministratorRole((int)id);
             var user = _context.GetUser(id ?? -1);
-            
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            if (adminRole == null) {
-                return NotFound();
-            } else  {
-                AdministratorRole = adminRole;
-                Administrator = user;
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (adminRole == null) {
+                        return NotFound();
+                    }  
+                    
+                    AdministratorRole = adminRole;
+                    Administrator = user;
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
             }
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id) {

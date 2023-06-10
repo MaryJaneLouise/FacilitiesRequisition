@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.Organizations {
@@ -26,27 +27,41 @@ namespace FacilitiesRequisition.Pages.Organizations {
 
         [BindProperty] 
         public string AdviserId { get; set; } = default!;
-
+        
+        public string UserInfo { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetOrganizations() == null) {
                 return NotFound();
             }
-            
-            Administrators = _context.GetAdministrators().Select(adminstrator =>
-                new SelectListItem {
-                    Value = adminstrator.Id.ToString(),
-                    Text = $"{adminstrator.FirstName} {adminstrator.LastName}"
-                });
-
             var organization =  _context.GetOrganization((int)id);
-            
-            if (organization == null) {
-                return NotFound();
+            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                user.Type == Models.UserType.Administrator ? "Administrator" :
+                user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
+
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    Administrators = _context.GetAdministrators().Select(adminstrator =>
+                        new SelectListItem {
+                            Value = adminstrator.Id.ToString(),
+                            Text = $"{adminstrator.FirstName} {adminstrator.LastName}"
+                        });
+                    
+                    if (organization == null) {
+                        return NotFound();
+                    }
+                    Organization = organization;
+                    PageTitle = "Update organization details";
+                    return Page();
+                    
+                default:
+                    PageTitle = "Update organization details";
+                    return RedirectToPage("/Dashboard/Index");
             }
-            Organization = organization;
-            return Page();
-            
-            PageTitle = "Update organization details";
         }
         
         public async Task<IActionResult> OnPostAsync() {

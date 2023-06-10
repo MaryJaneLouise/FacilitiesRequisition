@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.Organizations {
@@ -20,6 +21,8 @@ namespace FacilitiesRequisition.Pages.Organizations {
         
         [BindProperty]
         public Organization Organization { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetOrganizations() == null) {
@@ -27,15 +30,29 @@ namespace FacilitiesRequisition.Pages.Organizations {
             }
 
             var organization = _context.GetOrganization((int)id);
+            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                user.Type == Models.UserType.Administrator ? "Administrator" :
+                user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            if (organization == null) {
-                return NotFound();
-            } else {
-                Organization = organization;
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (organization == null) {
+                        return NotFound();
+                    } else {
+                        Organization = organization;
+                    }
+
+                    PageTitle = "Delete organization";
+                    return Page();
+                default:
+                    PageTitle = "Delete organization";
+                    return RedirectToPage("/Dashboard/Index");
             }
-
-            PageTitle = "Delete organization";
-            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id) {

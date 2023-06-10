@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.OfficerRoles {
@@ -25,22 +26,37 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
         
         [BindProperty]
         public OrganizationPosition Position { get; set; }
-
+        
+        public string UserInfo { get; set; }
 
         public IActionResult OnGet(int? id) {
             var user = _context.GetUser(id ?? -1);
-            if (user == null) {
-                return NotFound();
-            }
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            Officer = user;
-            Organizations = _context.GetOrganizations().Select(organization =>
-                new SelectListItem
-                {
-                    Value = organization.Id.ToString(),
-                    Text = organization.Name
-                });
-            return Page();
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (user == null) {
+                        return NotFound();
+                    }
+
+                    Officer = user;
+                    Organizations = _context.GetOrganizations().Select(organization =>
+                        new SelectListItem
+                        {
+                            Value = organization.Id.ToString(),
+                            Text = organization.Name
+                        });
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
         }
         
         public IActionResult OnPost(int? id) {

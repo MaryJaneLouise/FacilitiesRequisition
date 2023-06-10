@@ -1,11 +1,20 @@
 @page
 @using FacilitiesRequisition.Models.FacilityRequests
+@using Microsoft.AspNetCore.Mvc.RazorPages
 @using FacilitiesRequisition.Pages.Organizations
 @model FacilitiesRequisition.Pages.RequestFacility.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
 }
+
+@if (Model.Signatories.StudentAffairsDirector.Id < -1)
+{
+    
+    RedirectToPage("/RequestFacility/Index", new { noAdviser = true });
+}
+
+
 
 <html>
 <head>

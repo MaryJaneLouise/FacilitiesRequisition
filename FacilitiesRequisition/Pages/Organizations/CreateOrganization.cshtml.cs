@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.Organizations {
@@ -26,14 +27,32 @@ namespace FacilitiesRequisition.Pages.Organizations {
         [BindProperty] 
         public string AdviserId { get; set; } = default!;
         
+        public string UserInfo { get; set; }
+        
         public IActionResult OnGet() {
-            Administrators = _context.GetAdministrators().Select(adminstrator =>
-                new SelectListItem {
-                    Value = adminstrator.Id.ToString(),
-                    Text = $"{adminstrator.FirstName} {adminstrator.LastName}"
-                });
-            PageTitle = "Create Organization";
-            return Page();
+            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                user.Type == Models.UserType.Administrator ? "Administrator" :
+                user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
+
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    Administrators = _context.GetAdministrators().Select(adminstrator =>
+                        new SelectListItem {
+                            Value = adminstrator.Id.ToString(),
+                            Text = $"{adminstrator.FirstName} {adminstrator.LastName}"
+                        });
+                    PageTitle = "Create Organization";
+                    return Page();
+                
+                default:
+                    PageTitle = "Create Organization";
+                    return RedirectToPage("/Dashboard/Index");
+            }
         }
         
         

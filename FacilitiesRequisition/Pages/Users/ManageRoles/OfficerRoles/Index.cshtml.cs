@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.OfficerRoles {
@@ -24,6 +25,8 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
         
         [BindProperty]
         public OfficerRole OfficerRole { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (id == null || _context.GetUsers() == null) {
@@ -31,14 +34,28 @@ namespace FacilitiesRequisition.Pages.OfficerRoles {
             }
 
             var user = _context.GetUser((int)id);
-            if (user == null) {
-                return NotFound();
-            }
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            Officer = user;
-            OfficerRoles = _context.GetOfficerRoles(Officer);
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (user == null) {
+                        return NotFound();
+                    }
+
+                    Officer = user;
+                    OfficerRoles = _context.GetOfficerRoles(Officer);
             
-            return Page();
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
         }
 
         public IActionResult OnPostBackToUserIndex() {

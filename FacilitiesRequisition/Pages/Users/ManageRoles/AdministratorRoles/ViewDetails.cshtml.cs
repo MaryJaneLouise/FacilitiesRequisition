@@ -8,34 +8,44 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Administrators;
 
-namespace FacilitiesRequisition.Pages.AdministratorRoles
-{
-    public class DetailsModel : PageModel
-    {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+namespace FacilitiesRequisition.Pages.AdministratorRoles {
+    public class DetailsModel : PageModel {
+        private readonly DatabaseContext _context;
 
-        public DetailsModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public DetailsModel(DatabaseContext context) {
             _context = context;
         }
 
-      public AdministratorRole AdministratorRole { get; set; } = default!; 
+        public AdministratorRole AdministratorRole { get; set; } = default!; 
+        
+        public string UserInfo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var adminRole = _context.GetAdministratorRole((int)id);
-            if (adminRole == null)
-            {
-                return NotFound();
-            }
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+                userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
 
-            AdministratorRole = adminRole;
-            return Page();
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    if (adminRole == null) {
+                        return NotFound();
+                    }
+
+                    AdministratorRole = adminRole;
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
         }
     }
 }

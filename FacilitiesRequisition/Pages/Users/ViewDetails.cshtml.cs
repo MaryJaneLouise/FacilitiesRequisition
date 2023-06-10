@@ -8,36 +8,41 @@ using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
 
-namespace FacilitiesRequisition.Pages.Users
-{
+namespace FacilitiesRequisition.Pages.Users {
     public class DetailsModel : PageModel
     {
-        private readonly FacilitiesRequisition.Data.DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
-        public DetailsModel(FacilitiesRequisition.Data.DatabaseContext context)
-        {
+        public DetailsModel(DatabaseContext context) {
             _context = context;
         }
 
-      public User User { get; set; } = default!; 
+        public User User { get; set; } = default!; 
+        
+        public string UserInfo { get; set; }
+        
+        public string? SignaturePath { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.GetUsers() == null)
-            {
+        public async Task<IActionResult> OnGetAsync(int? id) {
+            if (id == null || _context.GetUsers() == null) {
                 return NotFound();
             }
 
             var user = _context.GetUser((int)id);
-            if (user == null)
-            {
+            if (user == null) {
                 return NotFound();
-            }
-            else 
-            {
+            } else {
                 User = user;
+                UserInfo = $"{user.Id}";
+                if (user.SignatureFilename != null) {
+                    SignaturePath = Path.Combine("\\images", user.SignatureFilename);
+                }
             }
             return Page();
+        }
+        
+        public IActionResult OnPostBackToIndex() {
+            return RedirectToPage("/Dashboard/Index");
         }
     }
 }

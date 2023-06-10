@@ -15,105 +15,113 @@
 </head>
 
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
-<nav class="navbar navbar-expand-md fixed-top w-100">
-  <div class="well d-flex justify-content-between">
-    <div class="rounded-rectangle" style="height: 70px; padding-top: 20px; padding-bottom: 20px; margin-right: 5px; margin-left: 5px">
-      <h4 align="center" style="font-weight: bold; margin-bottom: 0px; vertical-align: center; horiz-align: center">
-        Facilities Requisition
-      </h4>
-    </div>
-        
-    <div class="flex-grow-1 d-flex">
-      <div class="rounded-rectangle align-items-center justify-content-end" style="height: 70px;padding: 10px;">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-                
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-family: 'DM Sans', sans-serif">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px; color: #275382; font-family: 'DM Sans', sans-serif">
-            <li class="nav-item">
-              <form method="post">
-                <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                        asp-page-handler="Home">
-                  Home
-                </button>
-              </form>
-            </li>
-        
-            @if (Model.UserType == "Super Administrator") {
-              <li class="nav-item">
-                <form method="post">
-                  <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                          asp-page-handler="ManageFacilityRequest">
-                    Request Papers
-                  </button>
-                </form>
-              </li>
-        
-              <li class="nav-item">
-                <form method="post">
-                  <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                          asp-page-handler="ManageUserAccount">
-                    Users
-                  </button>
-                </form>
-              </li>
-        
-              <li class="nav-item">
-                <form method="post">
-                  <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                          asp-page-handler="ManageOrganization">
-                    Organizations
-                  </button>
-                </form>
-              </li>
-            } else if (Model.UserType == "Administrator" || Model.UserType == "Organization Officer" || Model.UserType == "Faculty") {
-              <li class="nav-item">
-                <form method="post">
-                  <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                          asp-page-handler="ManageFacilityRequest">
-                    Request Papers
-                  </button>
-                </form>
-              </li>
-            }
-          </ul>
-        
-          <form method="post">
-            <div class="form-group">
-              <li class="nav-item dropdown list-unstyled" style="font-size: 20px">
-                <a class="nav-link dropdown-toggle clickable-nav" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  @Model.Name
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item">@Model.UserType</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
-                </ul>
-              </li>
-            </div>
-          </form>
+<nav class="navbar navbar-expand-md fixed-top">
+  <div class="full-width-container">
+    <div class="row">
+      <div class="col-2">
+        <div class="well rounded-rectangle" style="height: 70px; padding: 0 0 0 0; margin-right: 5px; margin-left: 5px; display: flex; justify-content: center; align-items: center;">
+          <h4 style="font-weight: bold; text-align: center;">
+            Facilities Requisition
+          </h4>
         </div>
       </div>
       
-    </div>
-    
-  
-    <div class="rounded-rectangle" style="height: 70px; margin-right: 5px; margin-left: 5px; padding-top: 20px; padding-bottom: 20px; padding-right: 10px; padding-left: 10px; width: 170px">
-      <h4 align="center" class="time" id="time" style="font-weight: bold; margin-bottom: 0px; vertical-align: center; horiz-align: center"></h4>
+      <div class="col-8">
+        <div class="well rounded-rectangle align-items-center justify-content-end" style="height: 70px;padding: 10px;">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-family: 'DM Sans', sans-serif">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 20px; color: #275382; font-family: 'DM Sans', sans-serif">
+              <li class="nav-item">
+                <form method="post">
+                  <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
+                          asp-page-handler="Home">
+                    Home
+                  </button>
+                </form>
+              </li>
+        
+              @if (Model.UserType == "Super Administrator") {
+                <li class="nav-item">
+                  <form method="post">
+                    <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
+                            asp-page-handler="ManageUserAccount">
+                      Users
+                    </button>
+                  </form>
+                </li>
+        
+                <li class="nav-item">
+                  <form method="post">
+                    <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
+                            asp-page-handler="ManageOrganization">
+                      Organizations
+                    </button>
+                  </form>
+                </li>
+              }
+              else if (Model.UserType == "Administrator" || Model.UserType == "Organization Officer" || Model.UserType == "Faculty") {
+                <li class="nav-item">
+                  <form method="post">
+                    <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
+                            asp-page-handler="ManageFacilityRequest">
+                      Request a Facility
+                    </button>
+                  </form>
+                </li>
+                
+                if (Model.UserType == "Organization Officer" || Model.UserType == "Faculty") {
+                  <li class="nav-item">
+                    <form method="post">
+                      <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
+                              asp-page-handler="">
+                        Notifications
+                      </button>
+                    </form>
+                  </li>
+                }
+              }
+            </ul>
+        
+            <form method="post">
+              <div class="form-group">
+                <li class="nav-item dropdown list-unstyled" style="font-size: 20px">
+                  <a class="nav-link dropdown-toggle clickable-nav" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @Model.Name
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item">@Model.UserType</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <a class="dropdown-item" asp-page="/Users/ViewDetails" asp-route-id="@Model.UserInfo">View Profile</a>
+                    <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
+                  </ul>
+                </li>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-2">
+        <div class="well rounded-rectangle" style="height: 70px; margin-right: 5px; margin-left: 5px; padding-top: 20px; padding-bottom: 20px; padding-right: 10px; padding-left: 10px">
+          <h4 align="center" class="time" id="time" style="font-weight: bold"></h4>
+        </div>
+      </div>
     </div>
   </div>
-  
 </nav>
 
-
-<div class="container">
-  @RenderBody()
+<div class="container-fluid">
+  <div class="well flex-grow-1" style="margin: 5px 25px 5px 25px">
+    @RenderBody()
+  </div>
 </div>
-  <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script>
-  @await RenderSectionAsync("Scripts", required: false)
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

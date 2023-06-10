@@ -136,6 +136,28 @@ textarea {
   border-color: #1c3c59; /* Set the border color when checked */
 }
 
+.full-width-container {
+  width: 100vw;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.month_default_event_continueright, .month_default_event_inner {
+  
+}
+
+.month-default-main {
+  border-radius: 20px;
+}
+
+.time {
+  width: 100%;
+  text-align: center;
+}
+
+
 .validation-summary-errors ul {
   list-style-type: none;
   padding: 0;

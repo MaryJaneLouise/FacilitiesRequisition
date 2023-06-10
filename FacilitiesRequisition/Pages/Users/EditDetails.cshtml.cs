@@ -27,10 +27,10 @@ namespace FacilitiesRequisition.Pages.Users {
         public string Username { get; set; }
         
         [BindProperty]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         
         [BindProperty]
-        public string RepeatPassword { get; set; }
+        public string? RepeatPassword { get; set; }
         
         public string? SignaturePath { get; set; }
         

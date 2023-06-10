@@ -30,6 +30,7 @@ namespace FacilitiesRequisition.Pages.Shared {
         public string IsSuperAdmin { get; set; }
         public string UserRole { get; set; }
         public string ActivePage { get; set; }
+        public string UserInfo { get; set; }
 
         
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
@@ -57,7 +58,7 @@ namespace FacilitiesRequisition.Pages.Shared {
                 default:
                     Name = $"{user.FirstName} {user.LastName}";
                     UserType = $"{userType}";
-
+                    UserInfo = $"{user.Id}";
                     switch (UserType) {
                         case "Super Administrator" :
                             ActivePage = currentPage;

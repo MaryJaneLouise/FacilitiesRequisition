@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
 namespace FacilitiesRequisition.Pages.Organizations {
@@ -23,10 +24,26 @@ namespace FacilitiesRequisition.Pages.Organizations {
         
         [BindProperty]
         public Organization Organization { get; set; } = default!;
+        
+        public string UserInfo { get; set; }
 
         public IActionResult OnGet() {
-            Organizations = _context.GetOrganizations();
-            return Page();
+            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
+                                        _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+            var userType = isSuperAdministrator ? "Super Administrator" :
+                user.Type == Models.UserType.Administrator ? "Administrator" :
+                user.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
+
+            UserInfo = $"{userType}";
+
+            switch (UserInfo) {
+                case "Super Administrator":
+                    Organizations = _context.GetOrganizations();
+                    return Page();
+                default:
+                    return RedirectToPage("/Dashboard/Index");
+            }
         }
 
         public IActionResult OnPostBackToDashboard() {
