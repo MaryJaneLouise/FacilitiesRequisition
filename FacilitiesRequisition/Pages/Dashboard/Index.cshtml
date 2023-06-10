@@ -109,14 +109,40 @@
                                         venue = "Unknown Venue";
                                 }
                         
-                                let startDate = new Date(request.StartDateRequested).toISOString();
-                                let endDate = new Date(request.EndDateRequested).toISOString();
+                                let startDate = new Date(request.StartDateRequested);
+                                let endDate = new Date(request.EndDateRequested);
+                                
+                                // Adjust the time for the endDate
+                                endDate.setHours(endDate.getHours() + 1); // Add 1 hour
+                                endDate.setMinutes(endDate.getMinutes() - 30); // Subtract 30 minutes
+                                
+                                // Construct the ISO-like date strings
+                                let startDateString = startDate.getFullYear() + '-' +
+                                                      padZero(startDate.getMonth() + 1) + '-' +
+                                                      padZero(startDate.getDate()) + 'T' +
+                                                      padZero(startDate.getHours()) + ':' +
+                                                      padZero(startDate.getMinutes()) + ':' +
+                                                      padZero(startDate.getSeconds());
+                                
+                                let endDateString = endDate.getFullYear() + '-' +
+                                                    padZero(endDate.getMonth() + 1) + '-' +
+                                                    padZero(endDate.getDate()) + 'T' +
+                                                    padZero(endDate.getHours()) + ':' +
+                                                    padZero(endDate.getMinutes()) + ':' +
+                                                    padZero(endDate.getSeconds());
+                                
+                                // Function to pad single digits with leading zeros
+                                function padZero(number) {
+                                  return number.toString().padStart(2, '0');
+                                }
+                                
                                 dp.events.add({
-                                    start: new DayPilot.Date(startDate),
-                                    end: new DayPilot.Date(endDate),
-                                    id: DayPilot.guid(),
-                                    text: request.NameActivity + " - " + venue
+                                  start: new DayPilot.Date(startDateString),
+                                  end: new DayPilot.Date(endDateString),
+                                  id: DayPilot.guid(),
+                                  text: request.NameActivity + " - " + venue
                                 });
+
                             }
                             
                             dp.init();
