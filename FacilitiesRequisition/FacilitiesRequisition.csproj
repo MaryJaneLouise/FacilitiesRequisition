@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\FacilityRequests\PrintPapers\" />
       <Folder Include="Pages\Organizations\" />
       <Folder Include="Pages\Users\" />
       <Folder Include="Pages\_RecycleFiles\" />
