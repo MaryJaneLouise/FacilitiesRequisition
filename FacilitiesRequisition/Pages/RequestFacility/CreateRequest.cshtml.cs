@@ -31,6 +31,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         
         [BindProperty] public Venues VenueRequested { get; set; }
         
+        [BindProperty] public string? Comments { get; set; }
+        
         [BindProperty] public string OrganizationId { get; set; }
         
         public string UserInfo { get; set; }

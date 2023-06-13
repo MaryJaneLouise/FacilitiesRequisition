@@ -96,6 +96,10 @@
                                             <i class="bi bi-pencil-square"></i>
                                             Edit
                                         </a>
+                                        <a class="btn btn-outline-primary" asp-page="/PrintRequest/Index" asp-route-id="@request.Id">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Print Request Paper
+                                        </a>
                                         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@request.Id">
                                             <i class="bi bi-trash-fill"></i>
                                             Delete
@@ -165,6 +169,10 @@
                                         <a class="btn btn-outline-primary" asp-page="./EditDetails" asp-route-id="@request.Id">
                                             <i class="bi bi-pencil-square"></i>
                                             Edit
+                                        </a>
+                                        <a class="btn btn-outline-primary" asp-page="/PrintRequest/Index" asp-route-id="@request.Id">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Print Request Paper
                                         </a>
                                         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@request.Id">
                                             <i class="bi bi-trash-fill"></i>

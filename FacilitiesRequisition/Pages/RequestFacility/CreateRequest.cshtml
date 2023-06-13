@@ -18,60 +18,69 @@
             <div class="col-md-6 rounded-rectangle">
                 <h2 style="font-weight: bold">Add a facility request</h2>
                 
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
-                    <div class="form-group">
-                        <input asp-for="DateFiled" class="form-control" hidden/>
-                    </div>
-                            
-                    <div class="form-group mt-2">
-                        <label class="control-label">Requester</label>
-                        <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control mt-1"></select>
-                        <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
-                        <br/>
-                    </div>
-
-                
-                    <div class="form-group">
-                        <label asp-for="NameActivity" class="control-label">Activity Name</label>
-                        <input asp-for="NameActivity" class="form-control" />
-                        <span asp-validation-for="NameActivity" class="text-danger"></span>
-                        <br/>
-                    </div>
+                <div style="" >
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
+                        <div class="form-group">
+                            <input asp-for="DateFiled" class="form-control" hidden/>
+                        </div>
+                                                
+                        <div class="form-group mt-2">
+                            <label class="control-label">Requester</label>
+                            <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control mt-1"></select>
+                            <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
+                            <br/>
+                        </div>
                     
-                    <div class="form-group">
-                        <label asp-for="ContactNumber" class="control-label">Contact Number</label>
-                        <input asp-for="ContactNumber" type="number" class="form-control" />
-                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
-                        <br/>
-                    </div>
-                            
-                    <div class="form-group">
-                        <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
-                        <input asp-for="StartDateRequested" type="date" class="form-control" />
-                        <span asp-validation-for="StartDateRequested" class="text-danger"></span>
-                        <br/>
-                    </div>
-                            
-                    <div class="form-group">
-                        <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
-                        <input asp-for="EndDateRequested" type="date" class="form-control" />
-                        <span asp-validation-for="EndDateRequested" class="text-danger"></span>
-                        <br/>
-                    </div>
-                            
-                    <div class="form-group">
-                        <label asp-for="VenueRequested" class="control-label">Venue Requested</label>
-                        <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
-                        <span asp-validation-for="VenueRequested" class="text-danger"></span>
-                        <br/>
-                    </div>
-                            
-                    <div class="form-group" style="float: right">
-                        <a class="btn btn-outline-primary" asp-page="Index">Go back</a>
-                        <input type="submit" value="Add request" class="btn btn-primary"/>
-                    </div>
-                </form>
+                                    
+                        <div class="form-group">
+                            <label asp-for="NameActivity" class="control-label">Activity Name</label>
+                            <input asp-for="NameActivity" class="form-control" />
+                            <span asp-validation-for="NameActivity" class="text-danger"></span>
+                            <br/>
+                        </div>
+                                        
+                        <div class="form-group">
+                            <label asp-for="ContactNumber" class="control-label">Contact Number</label>
+                            <input asp-for="ContactNumber" type="number" class="form-control" />
+                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                            <br/>
+                        </div>
+                                                
+                        <div class="form-group">
+                            <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
+                            <input asp-for="StartDateRequested" type="date" class="form-control" />
+                            <span asp-validation-for="StartDateRequested" class="text-danger"></span>
+                            <br/>
+                        </div>
+                                                
+                        <div class="form-group">
+                            <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
+                            <input asp-for="EndDateRequested" type="date" class="form-control" />
+                            <span asp-validation-for="EndDateRequested" class="text-danger"></span>
+                            <br/>
+                        </div>
+                                                
+                        <div class="form-group">
+                            <label asp-for="VenueRequested" class="control-label">Venue Requested</label>
+                            <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
+                            <span asp-validation-for="VenueRequested" class="text-danger"></span>
+                            <br/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label asp-for="Comments" class="control-label">Additional Comments</label>
+                            <textarea asp-for="Comments" class="form-control"></textarea>
+                            <span asp-validation-for="Comments" class="text-danger"></span>
+                            <br/>
+                        </div>
+
+                        <div class="form-group" style="float: right">
+                            <a class="btn btn-outline-primary" asp-page="Index">Go back</a>
+                            <input type="submit" value="Add request" class="btn btn-primary"/>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>   
     </div>

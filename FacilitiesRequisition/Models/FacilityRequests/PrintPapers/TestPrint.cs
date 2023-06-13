@@ -1,12 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
+using SelectPdf;
+using System.Net.Mime;
+using System.Collections.Generic;
+using System.Linq;
 using FacilitiesRequisition.Models.Officers;
-using FacilitiesRequisition.Models.Faculties;
 
-namespace FacilitiesRequisition.Models.FacilityRequests; 
+namespace FacilitiesRequisition.Models.FacilityRequests.PrintPapers; 
 
-public class FacilityRequest {
-    public int Id { get; set; }
-    
+public class TestPrint {
     public string DateFiled { get; set; }
     public Organization Requester { get; set; }
     
@@ -22,7 +25,4 @@ public class FacilityRequest {
     
     [EnumDataType(typeof(Venues))]
     public Venues VenueRequested { get; set; }
-    
-    public string? AdditionalComments { get; set; }
-    
 }
