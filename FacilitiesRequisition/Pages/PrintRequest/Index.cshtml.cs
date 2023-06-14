@@ -18,16 +18,19 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FacilitiesRequisition.Helpers;
 
 namespace FacilitiesRequisition.Pages.PrintRequest; 
 
 public class IndexModel : PageModel {
     private readonly DatabaseContext _context;
     private readonly IServiceProvider _serviceProvider;
+    private readonly IViewRenderService _viewRenderService;
 
-    public IndexModel(DatabaseContext context, IServiceProvider serviceProvider) {
+    public IndexModel(DatabaseContext context, IServiceProvider serviceProvider, IViewRenderService viewRenderService) {
         _context = context;
         _serviceProvider = serviceProvider;
+        _viewRenderService = viewRenderService;
     }
     
     public User User { get; set; } = default!;
@@ -50,10 +53,12 @@ public class IndexModel : PageModel {
         Signatories = _context.GetSignatures(facilityrequest);
     }
 
-    /*[HttpPost]
-    public async Task<IActionResult> Test() {
-        var htmlHelper = GetHtmlHelper();
-        //string _HTML = await RenderViewToStringAsync(htmlHelper, "_pdfView", sampleModel);
+
+    public async Task<IActionResult> OnPostDownloadFile(int? requestId)
+    {
+        var facilityrequest = _context.GetFacilityRequest(requestId ?? -1);
+        string _HTML = _viewRenderService.RenderToString("Pages/PrintRequest/_pdfView.cshtml", facilityrequest).Result;
+
 
         PdfPageSize pageSize = (PdfPageSize)Enum.Parse(typeof(PdfPageSize),
             "A4", true);
@@ -75,7 +80,7 @@ public class IndexModel : PageModel {
         converter.Options.WebPageHeight = webPageHeight;
 
         // create a new pdf document converting an url
-        PdfDocument doc = converter.ConvertHtmlString(_HTML, "https://localhost:43311/");
+        PdfDocument doc = converter.ConvertHtmlString(_HTML, "https://localhost:7086/");
 
         // save pdf document
         byte[] pdf = doc.Save();
@@ -88,25 +93,4 @@ public class IndexModel : PageModel {
 
         return fileResult;
     }
-    
-    private IHtmlHelper GetHtmlHelper() {
-        var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
-        var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
-        var actionContext = new ActionContext(httpContext, new Microsoft.AspNetCore.Routing.RouteData(), new PageActionDescriptor(), viewData);
-
-        return new HtmlHelper(actionContext, new ViewDataContainer(viewData));
-    }
-
-    private static async Task<string> RenderViewToStringAsync(IHtmlHelper htmlHelper, string viewName, object model) {
-        var viewData = new ViewDataDictionary(htmlHelper.ViewData);
-        viewData.Model = model;
-
-        using var sw = new StringWriter();
-        var viewResult = htmlHelper.ViewEngine.GetView(htmlHelper.ActionContext, viewName, false);
-        var viewContext = new ViewContext(htmlHelper.ActionContext, viewResult.View, viewData, htmlHelper.ViewContext.TempData, sw, new HtmlHelperOptions());
-
-        await viewResult.View.RenderAsync(viewContext);
-
-        return sw.ToString();
-    }*/
 }

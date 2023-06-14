@@ -46,21 +46,43 @@
 
 <div id="buttons">
     <button type="button" onclick="printPreview()">Print</button>
-    <button type="button" id="exportButton" onclick="exportToPDF()">Export as PDF</button>
+        <form method="post">
+            <input type="submit" id="exportButton" asp-route-requestId="4" asp-page-handler="DownloadFile" value="Export as PDF">
+        </form>
+
 </div>
 
 <script>
         function exportToPDF() {
-            const previewSection = document.getElementById('previewSection');
+            //const previewSection = document.getElementById('previewSection');
             
-            // Options for PDF generation
-            const options = {
-                filename: 'document.pdf',
-                jsPDF: { format: 'letter' }
-            };
+            //// Options for PDF generation
+            //const options = {
+            //    filename: 'document.pdf',
+            //    jsPDF: { format: 'letter' }
+            //};
             
-            // Generate the PDF
-            html2pdf().set(options).from(previewSection).save();
+            //// Generate the PDF
+            //html2pdf().set(options).from(previewSection).save();
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: 'http://localhost:5100/PrintRequest?handler=Test&id=4',
+            //    success: function () {
+            //    },
+            //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //    }
+            //});
+           
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Page("Index","Test",new {requestId = 4})",
+                success: function () {
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
         }
         
         function printPreview() {
