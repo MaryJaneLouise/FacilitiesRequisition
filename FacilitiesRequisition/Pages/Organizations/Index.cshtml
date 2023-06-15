@@ -16,22 +16,25 @@
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
         <div class="col-md-6 rounded-rectangle">
-            <h2 style="font-weight: bold">Organization List</h2>
+            <h2 style="font-weight: bold; margin-bottom: 0.25in">Organization List</h2>
+            <input class="form-control" type="text" id="search-org" placeholder="Search organization"/>
             <br/>
+            
             @if (Model.Organizations.Count == 0) {
                 <div align="center">
-                    <text>There's no organizations present in this system. Please add organization first</text>
+                    <text>There's no organizations present in this system. Please add organization first.</text>
                 </div>
             } else {
                 <div class="user-container">
+                    <div class="no-results-org" style="display: none; justify-content: center; align-items: center; text-align: center">No results in this list of organizations.</div>
                     @foreach (var organization in Model.Organizations) {
                         <div class="hover-item">
                             <div style="display: flex; align-items: center;">
                                 <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
                                     <span>@organization.Name.Substring(0, 1)</span>
                                 </div>
-                                
-                                <div style="font-size: large; horiz-align: center">
+
+                                <div class="org-details" style="font-size: large; horiz-align: center">
                                     @organization.Name
                                     <div style="font-size: small">
                                         @if (organization.IsStudentCouncil) {
@@ -42,13 +45,13 @@
                                         }
                                     </div>
                                 </div>
-                                
+
                                 <div style="margin-left: auto; margin-right: 10px;justify-content: end">
                                     <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id">
                                         <i class="bi bi-pencil-square"></i>
                                         Edit
                                     </a>
-                                    
+
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@organization.Id">
                                         <i class="bi bi-trash-fill"></i>
                                         Delete

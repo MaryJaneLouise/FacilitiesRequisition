@@ -188,6 +188,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRSZXF1ZXN0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/PrintRequest/_pdfView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRSZXF1ZXN0XF9wZGZWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -230,6 +234,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditSignature.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdFNpZ25hdHVyZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditUsername.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdFVzZXJuYW1lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/Index.cshtml]

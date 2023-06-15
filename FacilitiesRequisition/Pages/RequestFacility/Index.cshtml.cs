@@ -33,6 +33,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility
         public string ForSuperAdmins { get; set; }
         
         public Signatures Signatories { get; set; } = default!;
+        
+        public string StatusRequest { get; set; }
 
         public IActionResult OnGet() {
             var user = HttpContext.Session.GetLoggedInUser(_context);
@@ -54,6 +56,13 @@ namespace FacilitiesRequisition.Pages.RequestFacility
                 case "Administrator" :
                     FacilityRequest = _context.GetFacilityRequests(user);
                     Organizations = _context.GetOrganizations();
+                    if (Signatories.President.IsSigned == false ||
+                        Signatories.AssistantDean.IsSigned == false ||
+                        Signatories.Dean.IsSigned == false) {
+                        StatusRequest = "Pending";
+                    } else {
+                        StatusRequest = "Approved";
+                    }
                     
                     break;
                 default:

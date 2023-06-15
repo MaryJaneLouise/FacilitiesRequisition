@@ -95,7 +95,7 @@
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item">@Model.UserType</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <a class="dropdown-item" asp-page="/Users/ViewDetails" asp-route-id="@Model.UserInfo">View Profile</a>
+                    <a class="dropdown-item" href="/Users/ViewDetails?id=@Model.UserInfo">View Profile</a>
                     <button type="submit" class="dropdown-item" asp-page-handler="Logout">Logout</button>
                   </ul>
                 </li>

@@ -15,10 +15,12 @@
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
         <div class="col-md-8 rounded-rectangle">
-            <h2 style="font-weight: bold">User List</h2>
+            <h2 style="font-weight: bold; margin-bottom: 0.25in">User List</h2>
+            <input class="form-control" type="text" id="search-user" placeholder="Search user"/>
             <br/>
             
             <div class="user-container">
+                <div class="no-results" style="display: none; justify-content: center; align-items: center; text-align: center">No results in this list of users.</div>
                 @foreach (var user in Model.User.Where(user => user.Type == UserType.Administrator)
                     .Concat(Model.User.Where(user => user.Type == UserType.Faculty).OrderBy(user => user.FirstName))
                     .Concat(Model.User.Where(user => user.Type == UserType.Officer).OrderBy(user => user.FirstName))) {
@@ -28,13 +30,13 @@
                                 <span>@user.FirstName.Substring(0, 1)</span>
                             </div>
 
-                            <div style="font-size: medium; horiz-align: center">
+                            <div class="user-details" style="font-size: medium; horiz-align: center">
                                 @user.FirstName @user.LastName
                                 <div style="font-size: small">
                                     <text>&#64;</text>@user.Username | @user.Type
                                 </div>
                             </div>
-                            
+
                             <div style="margin-left: auto; margin-right: 10px; justify-content: end">
                                 @if (user.Type == UserType.Officer) {
                                     <a class="btn btn-outline-success"
@@ -44,16 +46,17 @@
                                         Roles
                                     </a>
 
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
-                                        Edit
+                                        View details
                                     </a>
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
                                         <i class="bi bi-trash-fill"></i>
                                         Delete
                                     </button>
-                                } else if (user.Type == UserType.Administrator) {
+                                }
+                                else if (user.Type == UserType.Administrator) {
                                     <a class="btn btn-outline-success"
                                        asp-page="../Users/ManageRoles/AdministratorRoles/Index"
                                        asp-route-id="@user.Id">
@@ -61,16 +64,17 @@
                                         Roles
                                     </a>
 
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
-                                        Edit
+                                        View details
                                     </a>
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
                                         <i class="bi bi-trash-fill"></i>
                                         Delete
                                     </button>
-                                } else {
+                                }
+                                else {
                                     <a class="btn btn-outline-success"
                                        asp-page="../Users/ManageRoles/FacultyRoles/Index"
                                        asp-route-id="@user.Id">
@@ -78,9 +82,9 @@
                                         Roles
                                     </a>
 
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@user.Id">
+                                    <a class="btn btn-outline-secondary" href="/Users/ViewDetails?id=@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
-                                        Edit
+                                        View details
                                     </a>
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
@@ -89,10 +93,10 @@
                                     </button>
                                 }
                             </div>
-                            
+
                         </div>
                     </div>
-
+                    
                     <div class="modal fade" id="deleteModal_@user.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@user.Id" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">

@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Helpers;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Users;
 using FacilitiesRequisition.Models.FacilityRequests;
+using FacilitiesRequisition.Models.FacilityRequests.PrintPapers;
 using SelectPdf;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -24,10 +26,12 @@ namespace FacilitiesRequisition.Pages.PrintRequest;
 public class IndexModel : PageModel {
     private readonly DatabaseContext _context;
     private readonly IServiceProvider _serviceProvider;
+    private readonly IViewRenderService _viewRenderService;
 
-    public IndexModel(DatabaseContext context, IServiceProvider serviceProvider) {
+    public IndexModel(DatabaseContext context, IServiceProvider serviceProvider, IViewRenderService viewRenderService) {
         _context = context;
         _serviceProvider = serviceProvider;
+        _viewRenderService = viewRenderService;
     }
     
     public User User { get; set; } = default!;
@@ -37,6 +41,14 @@ public class IndexModel : PageModel {
         
     public string Status { get; set; }
     
+    public TestPrint DateFiled { get; set; }
+    public TestPrint Requester { get; set; }
+    public TestPrint NameActivity { get; set; }
+    public TestPrint ContactNumber { get; set; }
+    public TestPrint StartDateRequested { get; set; }
+    public TestPrint EndDateRequested { get; set; }
+    public TestPrint VenueRequested { get; set; }
+
     public void OnGet(int? id) {
         var user = HttpContext.Session.GetLoggedInUser(_context);
         var facilityrequest = _context.GetFacilityRequest(id ?? -1);
@@ -48,12 +60,14 @@ public class IndexModel : PageModel {
         User = user;    
         FacilityRequest = facilityrequest;
         Signatories = _context.GetSignatures(facilityrequest);
+        
+        
     }
 
-    /*[HttpPost]
-    public async Task<IActionResult> Test() {
-        var htmlHelper = GetHtmlHelper();
-        //string _HTML = await RenderViewToStringAsync(htmlHelper, "_pdfView", sampleModel);
+    public async Task<IActionResult> OnPostDownloadFile(int? requestId) {
+        var facilityrequest = _context.GetFacilityRequest(requestId ?? -1);
+        string _HTML = _viewRenderService.RenderToString("Pages/PrintRequest/_pdfView.cshtml", facilityrequest.Id).Result;
+
 
         PdfPageSize pageSize = (PdfPageSize)Enum.Parse(typeof(PdfPageSize),
             "A4", true);
@@ -75,7 +89,7 @@ public class IndexModel : PageModel {
         converter.Options.WebPageHeight = webPageHeight;
 
         // create a new pdf document converting an url
-        PdfDocument doc = converter.ConvertHtmlString(_HTML, "https://localhost:43311/");
+        PdfDocument doc = converter.ConvertHtmlString(_HTML, "https://localhost:43368/");
 
         // save pdf document
         byte[] pdf = doc.Save();
@@ -88,25 +102,4 @@ public class IndexModel : PageModel {
 
         return fileResult;
     }
-    
-    private IHtmlHelper GetHtmlHelper() {
-        var viewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());
-        var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
-        var actionContext = new ActionContext(httpContext, new Microsoft.AspNetCore.Routing.RouteData(), new PageActionDescriptor(), viewData);
-
-        return new HtmlHelper(actionContext, new ViewDataContainer(viewData));
-    }
-
-    private static async Task<string> RenderViewToStringAsync(IHtmlHelper htmlHelper, string viewName, object model) {
-        var viewData = new ViewDataDictionary(htmlHelper.ViewData);
-        viewData.Model = model;
-
-        using var sw = new StringWriter();
-        var viewResult = htmlHelper.ViewEngine.GetView(htmlHelper.ActionContext, viewName, false);
-        var viewContext = new ViewContext(htmlHelper.ActionContext, viewResult.View, viewData, htmlHelper.ViewContext.TempData, sw, new HtmlHelperOptions());
-
-        await viewResult.View.RenderAsync(viewContext);
-
-        return sw.ToString();
-    }*/
 }

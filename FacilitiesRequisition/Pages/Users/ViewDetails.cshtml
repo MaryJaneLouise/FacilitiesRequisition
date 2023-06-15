@@ -9,6 +9,8 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
@@ -63,12 +65,74 @@
 
                     <div class="form-group" style="float: right">
                         <br/>
-                        <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex"/>
-                        <a class="btn btn-primary" asp-page="/Users/EditDetails" asp-route-id="@Model.UserInfo">Edit details</a>
+                        <a class="btn btn-outline-primary" onclick="goBack()">Go back</a>
+                        
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal_@Model.User.Id">
+                            Edit details
+                        </button>
                     </div>
-                    
                 </form>
-            </div>            
+                
+                <script>
+                    function goBack() {
+                        var referringPage = getQueryParam('ref');
+                
+                        if (referringPage) {
+                            if (referringPage.includes('/Dashboard')) {
+                                window.location.href = referringPage;
+                            } else {
+                                window.history.go(-1);
+                            }
+                        } else {
+                            // Fallback to default page if referringPage is not set
+                            window.location.href = '/Dashboard'; // Replace with the actual URL of the Dashboard page
+                        }
+                    }
+                
+                    function getQueryParam(param) {
+                        var urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(param);
+                    }
+                </script>
+            </div> 
+            
+            <div class="modal fade" id="editModal_@Model.User.Id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel_@Model.User.Id" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel_@Model.User.Id">Edit details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="btn-column">
+                                <div>
+                                    <a class="btn btn-outline-secondary" href="/Users/EditUsername?id=@Model.User.Id&ref=@Request.Path">
+                                        <i class="bi bi-person-fill-down" style="font-size: 25px"></i>
+                                        Edit username
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-secondary" href="/Users/EditPassword?id=@Model.User.Id&ref=@Request.Path">
+                                        <i class="bi bi-chat-right-quote" style="font-size: 25px"></i>
+                                        Edit password
+                                    </a>
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-secondary" href="/Users/EditSignature?id=@Model.User.Id&ref=@Request.Path">
+                                        <i class="bi bi-person-vcard" style="font-size: 25px"></i>
+                                        Edit signature
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

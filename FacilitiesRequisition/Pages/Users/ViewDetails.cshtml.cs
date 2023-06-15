@@ -40,9 +40,7 @@ namespace FacilitiesRequisition.Pages.Users {
             }
             return Page();
         }
+
         
-        public IActionResult OnPostBackToIndex() {
-            return RedirectToPage("/Dashboard/Index");
-        }
     }
 }
