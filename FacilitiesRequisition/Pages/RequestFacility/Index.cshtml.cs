@@ -23,13 +23,12 @@ namespace FacilitiesRequisition.Pages.RequestFacility
         }
         
         public IList<Organization> Organizations { get; set; } = default!;
-
         public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
-        
-        [BindProperty]
-        public FacilityRequest FacilityRequests { get; set; } = default!;
+        [BindProperty] public FacilityRequest FacilityRequests { get; set; } = default!;
+        public List<bool> IsApproved { get; set; } = new();
 
         public string UserInfo { get; set; } = default!;
+        public User User { get; set; } = default!;
         public string ForSuperAdmins { get; set; }
         
         public Signatures Signatories { get; set; } = default!;
@@ -56,18 +55,18 @@ namespace FacilitiesRequisition.Pages.RequestFacility
                 case "Administrator" :
                     FacilityRequest = _context.GetFacilityRequests(user);
                     Organizations = _context.GetOrganizations();
-                    if (Signatories.President.IsSigned == false ||
-                        Signatories.AssistantDean.IsSigned == false ||
-                        Signatories.Dean.IsSigned == false) {
-                        StatusRequest = "Pending";
-                    } else {
-                        StatusRequest = "Approved";
+                    User = user;
+                    foreach (var request in FacilityRequest) {
+                        IsApproved.Add(_context.IsApproved(request));
                     }
-                    
                     break;
                 default:
                     Organizations = _context.GetOfficerOrganizations(user).ToList();
                     FacilityRequest = _context.GetFacilityRequestsRequested(user).ToList();
+                    User = user;
+                    foreach (var request in FacilityRequest) {
+                        IsApproved.Add(_context.IsApproved(request));
+                    }
                     break;
             }
             return Page();

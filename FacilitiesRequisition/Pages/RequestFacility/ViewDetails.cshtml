@@ -119,10 +119,16 @@
                                         <form method="post">
                                             @if (signatory.User == Model.User) {
                                                 if (!signatory.IsSigned) {
-                                                    <input type="submit" value="Sign" class="btn btn-secondary mb-2" asp-page-handler="Sign" asp-route-id="@Model.FacilityRequest.Id"/>
+                                                    <input type="submit" value="Sign" class="btn btn-secondary mb-2" asp-page-handler="Sign" 
+                                                           asp-route-facilityRequestId="@Model.FacilityRequest.Id"
+                                                           asp-route-signatoryId="@signatory.Id"
+                                                           asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
                                                 }
                                                 else {
-                                                    <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Unsign" asp-route-id="@Model.FacilityRequest.Id"/>
+                                                    <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Unsign" 
+                                                           asp-route-facilityRequestId="@Model.FacilityRequest.Id"
+                                                           asp-route-signatoryId="@signatory.Id"
+                                                           asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
                                                 }
                                             } else {
                                                 if (signatory.IsSigned) {

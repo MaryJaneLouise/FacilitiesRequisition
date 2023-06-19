@@ -41,6 +41,24 @@
         matchedItems.show();
     });
 
+    $("#search-request").keyup(function () {
+        var value = $(this).val().toLowerCase();
+        var matchedItems = $('.user-container .hover-item').filter(function () {
+            var isFound = $(this).find(".profile-icon span").text().toLowerCase().indexOf(value) > -1
+                || $(this).find(".request-details").text().toLowerCase().indexOf(value) > -1;
+            return isFound;
+        });
+
+        if (matchedItems.length === 0) {
+            $('.no-results-request').show();
+        } else {
+            $('.no-results-request').hide();
+        }
+
+        $('.user-container .hover-item').hide();
+        matchedItems.show();
+    });
+
 
     var startDateInput = document.getElementById("StartDateRequested");
     var endDateInput = document.getElementById("EndDateRequested");

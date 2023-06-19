@@ -1,0 +1,101 @@
+@page
+@model FacilitiesRequisition.Pages.Users.Administrators.UpdateAdministratorsModel
+
+@{
+    ViewData["Title"] = "Create Organization";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+</head>
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
+    <div>
+        <div class="row d-flex justify-content-md-center align-items-center vh-100">
+            <div class="col-md-8 rounded-rectangle">
+                <h2 style="font-weight: bold">Update college administrators</h2>
+                <form method="post">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="control-label">Assistant Dean</label>
+                                <select asp-for="AssistantDeanId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="AssistantDeanId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Dean</label>
+                                <select asp-for="DeanId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="DeanId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Building Manager</label>
+                                <select asp-for="BuildingManagerId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="BuildingManagerId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Admin Services Director</label>
+                                <select asp-for="AdminServicesDirectorId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="AdminServicesDirectorId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Student Affairs Director</label>
+                                <select asp-for="StudentAffairsDirectorId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="StudentAffairsDirectorId" class="text-danger"></span>
+                                <br/>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="control-label">Campus Facilities Development Director</label>
+                                <select asp-for="CampusFacilitiesDirectorId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="CampusFacilitiesDirectorId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Accounting Office Director</label>
+                                <select asp-for="AccountingOfficeDirectorId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="AccountingOfficeDirectorId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Vice President Academic Affairs</label>
+                                <select asp-for="VicePresidentAAId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="VicePresidentAAId" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Vice President for Administration</label>
+                                <select asp-for="VicePresidentAdminId" asp-items="Model.Admins" class="form-control"></select>
+                                <span asp-validation-for="VicePresidentAdminId" class="text-danger"></span>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="float: right">
+                        <br/>
+                        <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToIndex"/>
+                        <input type="submit" value="Update college administrators" class="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+</body>
+</html>

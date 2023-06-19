@@ -20,4 +20,6 @@ public class Organization {
     [Display(Name = "Organization's Budget")]
     [Column(TypeName = "decimal(18, 2)")]
     public decimal TotalBudget { get; set; }
+
+    //public bool IsActive { get; set; } = true;
 }

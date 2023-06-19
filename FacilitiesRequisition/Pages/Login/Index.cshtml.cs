@@ -25,6 +25,10 @@ public class IndexModel : PageModel {
     [BindProperty]
     [Display(Name = "Password")]
     public string Password { get; set; }
+
+    public void OnGet() {
+        HttpContext.Session.Logout();
+    }
     
     public IActionResult OnPostAsync() {
         if (!ModelState.IsValid) {

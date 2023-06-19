@@ -70,8 +70,11 @@ public class DatabaseContext : DbContext {
         return AdministratorRoles.Any(x => x.Position == AdministratorPosition.SuperAdmin);
     }
 
-    public AdministratorRole? GetAdministratorRole(int id) {
-        return AdministratorRoles.FirstOrDefault(x => x.Id == id);
+    public AdministratorRole? GetAdministratorRole(AdministratorPosition position) {
+        return AdministratorRoles
+            .Where(adminRole => adminRole.Position == position)
+            .Include(adminRole => adminRole.Administrator)
+            .FirstOrDefault();
     }
 
     public bool AddAdministratorRole(AdministratorRole administratorRole) {
@@ -86,6 +89,10 @@ public class DatabaseContext : DbContext {
         return changesSaved > 0;
     }
 
+    public User? GetOfficer(int id) {
+        return Users.FirstOrDefault(user => user.Id == id);
+    }
+    
     public List<User> GetOfficers() {
         return Users.Where(x => x.Type == UserType.Officer).ToList();
     }
@@ -184,7 +191,12 @@ public class DatabaseContext : DbContext {
     }
     
     public User? GetAdministrator(AdministratorPosition position) {
-        return AdministratorRoles.FirstOrDefault(x => x.Position == position)?.Administrator;
+        return AdministratorRoles
+            .Where(x => x.Position == position)
+            .Include(x => x.Administrator)
+            .OrderBy(x => x.Id)
+            .LastOrDefault()?
+            .Administrator;
     }
 
     public FacilityRequest? GetFacilityRequest(int id) {
@@ -365,6 +377,23 @@ public class DatabaseContext : DbContext {
             .ToList();
     }
 
+    public Signature? GetSignatory(int id, bool isAdmin) {
+        return isAdmin
+            ? AdministratorSignatories
+                .Where(adminSignatory => adminSignatory.Id == id)
+                .Include(adminSignatory => adminSignatory.Role)
+                .FirstOrDefault()
+            : OfficerSignatories
+                .Where(officerSignatory => officerSignatory.Id == id)
+                .Include(officerSignatory => officerSignatory.Role)
+                .FirstOrDefault();
+    }
+    
+    public bool IsApproved(FacilityRequest facilityRequest) {
+        var signatories = GetSignatures(facilityRequest);
+        return signatories.ToList().All(signatory => signatory.IsSigned);
+    }
+    
     public Signatures GetSignatures(FacilityRequest facilityRequest) {
         var officerSignatories = GetOfficerSignatories(facilityRequest);
         var adminSignatories = GetAdministratorSignatories(facilityRequest);

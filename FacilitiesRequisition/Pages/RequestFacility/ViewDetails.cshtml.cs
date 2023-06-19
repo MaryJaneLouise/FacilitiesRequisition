@@ -39,12 +39,12 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             return Page();
         }
 
-        public IActionResult OnPostSign(int? id) {
+        public IActionResult OnPostSign(int? facilityRequestId, int? signatoryId, bool isAdmin) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
-            var facilityRequest = _context.GetFacilityRequest(id ?? -1);
+            var facilityRequest = _context.GetFacilityRequest(facilityRequestId ?? -1);
+            var signatory = _context.GetSignatory(signatoryId ?? -1, isAdmin);
 
-            if (user == null || facilityRequest == null)
-            {
+            if (user == null || facilityRequest == null || signatory == null) {
                 return NotFound();
             }
 
@@ -52,18 +52,18 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             FacilityRequest = facilityRequest;
             Signatories = _context.GetSignatures(facilityRequest);
             
-            var signatory = Signatories.ToList().First(signatory => signatory.User == User);
             signatory.IsSigned = true;
             _context.SaveChanges();
             
             return Page();
         }
         
-        public IActionResult OnPostUnsign(int? id) {
+        public IActionResult OnPostUnsign(int? facilityRequestId, int? signatoryId, bool isAdmin) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
-            var facilityRequest = _context.GetFacilityRequest(id ?? -1);
+            var facilityRequest = _context.GetFacilityRequest(facilityRequestId ?? -1);
+            var signatory = _context.GetSignatory(signatoryId ?? -1, isAdmin);
 
-            if (user == null || facilityRequest == null) {
+            if (user == null || facilityRequest == null || signatory == null) {
                 return NotFound();
             }
 
@@ -71,7 +71,6 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             FacilityRequest = facilityRequest;
             Signatories = _context.GetSignatures(facilityRequest);
             
-            var signatory = Signatories.ToList().First(signatory => signatory.User == User);
             signatory.IsSigned = false;
             _context.SaveChanges();
             

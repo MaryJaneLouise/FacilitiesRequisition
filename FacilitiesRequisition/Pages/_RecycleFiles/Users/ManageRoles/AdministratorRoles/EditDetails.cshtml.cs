@@ -4,33 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
-using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
 
-namespace FacilitiesRequisition.Pages.AdministratorRoles {
-    public class DeleteModel : PageModel {
+namespace FacilitiesRequisition.Pages.AdministratorRoles
+{
+    public class EditModel : PageModel
+    {
         private readonly DatabaseContext _context;
 
-        public DeleteModel(DatabaseContext context) {
+        public EditModel(DatabaseContext context) {
             _context = context;
         }
-        
-        public User Administrator { get; set; }
 
         [BindProperty]
         public AdministratorRole AdministratorRole { get; set; } = default!;
         
         public string UserInfo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)  {
-            if (id == null) {
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
                 return NotFound();
             }
 
-            var adminRole = _context.GetAdministratorRole((int)id);
-            var user = _context.GetUser(id ?? -1);
+            // var adminRole =  _context.GetAdministratorRole((int)id);
             var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
             bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
@@ -42,35 +43,39 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
 
             switch (UserInfo) {
                 case "Super Administrator":
-                    if (adminRole == null) {
-                        return NotFound();
-                    }  
-                    
-                    AdministratorRole = adminRole;
-                    Administrator = user;
+                    // if (adminRole == null) {
+                    //     return NotFound();
+                    // }
+                    //
+                    // AdministratorRole = adminRole;
                     return Page();
                 default:
                     return RedirectToPage("/Dashboard/Index");
             }
         }
-
-        public async Task<IActionResult> OnPostAsync(int? id) {
-            if (id == null) {
-                return NotFound();
-            }
-            var adminRole = _context.GetAdministratorRole((int)id);
-
-            if (adminRole != null) {
-                AdministratorRole = adminRole;
-                _context.RemoveAdministratorRole(AdministratorRole);
+        
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid) {
+                return Page();
             }
 
-            return RedirectToPage("./Index", new {id = Administrator.Id});
-            return Page();
+            _context.Attach(AdministratorRole).State = EntityState.Modified;
+
+            try {
+                await _context.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException) {
+                // if (!AdministratorRoleExists(AdministratorRole.Id)) {
+                //     return NotFound();
+                // } else {
+                //     throw;
+                // }
+            }
+
+            return RedirectToPage("./Index");
         }
 
-        public IActionResult OnPostBackToIndex() {
-            return RedirectToPage("/Users/Index");
-        }
+        // private bool AdministratorRoleExists(int id) {
+        //   return _context.GetAdministratorRole(id) != null;
+        // }
     }
 }

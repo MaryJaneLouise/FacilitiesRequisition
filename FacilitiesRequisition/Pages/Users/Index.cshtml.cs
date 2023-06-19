@@ -51,6 +51,10 @@ namespace FacilitiesRequisition.Pages.Users {
         public IActionResult OnPostCreateUser() {
             return RedirectToPage("./CreateUser");
         }
+        
+        public IActionResult OnPostManageAdmins() {
+            return RedirectToPage("/Users/Administrators/Index");
+        }
 
         public IActionResult OnPostDeleteUser(int? id) {
             if (id == null || _context.GetUsers() == null) {

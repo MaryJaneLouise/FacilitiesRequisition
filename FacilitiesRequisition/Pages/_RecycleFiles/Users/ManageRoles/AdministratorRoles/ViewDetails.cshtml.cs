@@ -25,7 +25,7 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
                 return NotFound();
             }
 
-            var adminRole = _context.GetAdministratorRole((int)id);
+            // var adminRole = _context.GetAdministratorRole((int)id);
             var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
             bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
@@ -37,11 +37,11 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
 
             switch (UserInfo) {
                 case "Super Administrator":
-                    if (adminRole == null) {
-                        return NotFound();
-                    }
-
-                    AdministratorRole = adminRole;
+                    // if (adminRole == null) {
+                    //     return NotFound();
+                    // }
+                    //
+                    // AdministratorRole = adminRole;
                     return Page();
                 default:
                     return RedirectToPage("/Dashboard/Index");

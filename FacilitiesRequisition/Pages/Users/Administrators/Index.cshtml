@@ -1,0 +1,185 @@
+@page
+@model FacilitiesRequisition.Pages.Users.Administrators.IndexModel
+
+@{
+    ViewData["Title"] = "Manage administrators";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        <div class="col-md-10 rounded-rectangle">
+            <h2 style="font-weight: bold; margin-bottom: 0.25in">Manage college admininistrators</h2>
+            
+            <div class="user-container" style="overflow-x: hidden; height: 400px">
+                <div class="row">
+                    <div class="col">
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>AD</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Assistant Dean
+
+                                    <div style="font-size: medium">
+                                        @(Model.AssistantDean != null ? Model.AssistantDean.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>D</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Dean
+
+                                    <div style="font-size: medium">
+                                        @(Model.Dean != null ? Model.Dean.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>BM</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Building Manager
+
+                                    <div style="font-size: medium">
+                                        @(Model.BuildingManager != null ? Model.BuildingManager.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>AS</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Administration Services Director
+
+                                    <div style="font-size: medium">
+                                        @(Model.AdminServicesDirector != null ? Model.AdminServicesDirector.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>SA</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Student Affairs Director
+
+                                    <div style="font-size: medium">
+                                        @(Model.StudentAffairsDirector != null ? Model.StudentAffairsDirector.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>CF</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Campus Facilities Development Director
+
+                                    <div style="font-size: medium">
+                                        @(Model.CampusFacilitiesDirector != null ? Model.CampusFacilitiesDirector.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>AF</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Accounting Office Director
+
+                                    <div style="font-size: medium">
+                                        @(Model.AccountingOfficeDirector != null ? Model.AccountingOfficeDirector.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>VP</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Vice President for Academic Affairs
+
+                                    <div style="font-size: medium">
+                                        @(Model.VicePresidentAA != null ? Model.VicePresidentAA.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hover-item">
+                            <div style="display: flex; align-items: center">
+                                <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                    <span>VP</span>
+                                </div>
+
+                                <div class="user-details" style="font-size: large; horiz-align: center">
+                                    Vice President for Administration
+
+                                    <div style="font-size: medium">
+                                        @(Model.VicePresidentAdmin != null ? Model.VicePresidentAdmin.FullName : "Unassigned")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="post">
+                <div class="form-group mt-4 mb-2">
+                    <div class="col-md-auto" style="float: right">
+                        <input type="submit" value="Go back" class="btn btn-outline-primary" asp-page-handler="BackToUsers" />
+                        <input type="submit" value="Update administrators" class="btn btn-primary mr-2" asp-page-handler="UpdateAdministrators" />
+                    </div>
+                </div>
+            </form>
+            
+        </div>        
+    </div>
+</body>
+</html>

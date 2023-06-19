@@ -67,12 +67,12 @@ namespace FacilitiesRequisition.Pages.AdministratorRoles {
                 if (id == null) {
                     return NotFound();
                 }
-                var adminRole = _context.GetAdministratorRole((int)id);
-
-                if (adminRole != null) {
-                    AdministratorRoles = adminRole;
-                    _context.RemoveAdministratorRole(AdministratorRoles);
-                }
+                // var adminRole = _context.GetAdministratorRole((int)id);
+                //
+                // if (adminRole != null) {
+                //     AdministratorRoles = adminRole;
+                //     _context.RemoveAdministratorRole(AdministratorRoles);
+                // }
                 
                 return RedirectToPage("/Users/Index");
             }

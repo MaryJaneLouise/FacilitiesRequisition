@@ -88,8 +88,6 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                 return Page();
             }
             
-            
-
             var facilityRequest = new FacilityRequest {
                 DateFiled = DateFiled,
                 Requester = _context.GetOrganization(Convert.ToInt32(OrganizationId))!,
@@ -97,7 +95,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                 ContactNumber = ContactNumber,
                 StartDateRequested = StartDateRequested,
                 EndDateRequested = EndDateRequested,
-                VenueRequested = VenueRequested
+                VenueRequested = VenueRequested,
+                AdditionalComments = Comments
             };
 
             _context.AddFacilityRequest(facilityRequest, new List<Expense>());

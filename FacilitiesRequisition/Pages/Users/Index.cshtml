@@ -18,7 +18,14 @@
             <h2 style="font-weight: bold; margin-bottom: 0.25in">User List</h2>
             <input class="form-control" type="text" id="search-user" placeholder="Search user"/>
             <br/>
-            
+            <form method="post">
+                <div class="button-container2">
+                    <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" style="width: 100%"/>
+                    <input type="submit" value="Create user" class="btn btn-primary" asp-page-handler="CreateUser" style="width: 100%; margin-left: 5px; margin-right: 5px" />
+                    <input type="submit" value="Manage administrators" class="btn btn-primary" asp-page-handler="ManageAdmins" style="width: 100%"/>
+                </div>
+            </form>
+
             <div class="user-container">
                 <div class="no-results" style="display: none; justify-content: center; align-items: center; text-align: center">No results in this list of users.</div>
                 @foreach (var user in Model.User.Where(user => user.Type == UserType.Administrator)
@@ -39,12 +46,12 @@
 
                             <div style="margin-left: auto; margin-right: 10px; justify-content: end">
                                 @if (user.Type == UserType.Officer) {
-                                    <a class="btn btn-outline-success"
-                                       asp-page="../Users/ManageRoles/OfficerRoles/Index"
-                                       asp-route-id="@user.Id">
-                                        <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
-                                        Roles
-                                    </a>
+                                    @* <a class="btn btn-outline-success" *@
+                                    @*    asp-page="../Users/ManageRoles/OfficerRoles/Index" *@
+                                    @*    asp-route-id="@user.Id"> *@
+                                    @*     <i class="bi bi-person-fill-gear" style="font-size: 15px"></i> *@
+                                    @*     Roles *@
+                                    @* </a> *@
 
                                     <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
@@ -53,16 +60,16 @@
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
                                         <i class="bi bi-trash-fill"></i>
-                                        Delete
+                                        Delete user
                                     </button>
                                 }
                                 else if (user.Type == UserType.Administrator) {
-                                    <a class="btn btn-outline-success"
-                                       asp-page="../Users/ManageRoles/AdministratorRoles/Index"
-                                       asp-route-id="@user.Id">
-                                        <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
-                                        Roles
-                                    </a>
+                                    @* <a class="btn btn-outline-success" *@
+                                    @*    asp-page="../Users/ManageRoles/AdministratorRoles/Index" *@
+                                    @*    asp-route-id="@user.Id"> *@
+                                    @*     <i class="bi bi-person-fill-gear" style="font-size: 15px"></i> *@
+                                    @*     Roles *@
+                                    @* </a> *@
 
                                     <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
@@ -71,16 +78,16 @@
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
                                         <i class="bi bi-trash-fill"></i>
-                                        Delete
+                                        Delete user
                                     </button>
                                 }
                                 else {
-                                    <a class="btn btn-outline-success"
-                                       asp-page="../Users/ManageRoles/FacultyRoles/Index"
-                                       asp-route-id="@user.Id">
-                                        <i class="bi bi-person-fill-gear" style="font-size: 15px"></i>
-                                        Roles
-                                    </a>
+                                    @* <a class="btn btn-outline-success" *@
+                                    @*    asp-page="../Users/ManageRoles/FacultyRoles/Index" *@
+                                    @*    asp-route-id="@user.Id"> *@
+                                    @*     <i class="bi bi-person-fill-gear" style="font-size: 15px"></i> *@
+                                    @*     Roles *@
+                                    @* </a> *@
 
                                     <a class="btn btn-outline-secondary" href="/Users/ViewDetails?id=@user.Id">
                                         <i class="bi bi-pencil-fill"></i>
@@ -89,7 +96,7 @@
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@user.Id">
                                         <i class="bi bi-trash-fill"></i>
-                                        Delete
+                                        Delete user
                                     </button>
                                 }
                             </div>
@@ -118,15 +125,6 @@
                     </div>
                 }
             </div>
-
-            <form method="post">
-                <div class="form-group mt-4 mb-2">
-                    <div class="col-md-auto" style="float: right">
-                        <input type="submit" value="Back to Dashboard" class="btn btn-outline-primary" asp-page-handler="BackToDashboard" />
-                        <input type="submit" value="Create user" class="btn btn-primary mr-2" asp-page-handler="CreateUser" />
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </body>

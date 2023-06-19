@@ -16,84 +16,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\MarieJuana\RiderProjects\FacilitiesRequisition\FacilitiesRequisition
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/AdministratorRoles/CreateAdminRoles.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcQWRtaW5pc3RyYXRvclJvbGVzXENyZWF0ZUFkbWluUm9sZXMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/AdministratorRoles/DeleteAdminRoles.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcQWRtaW5pc3RyYXRvclJvbGVzXERlbGV0ZUFkbWluUm9sZXMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/AdministratorRoles/EditDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcQWRtaW5pc3RyYXRvclJvbGVzXEVkaXREZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/AdministratorRoles/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcQWRtaW5pc3RyYXRvclJvbGVzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/AdministratorRoles/ViewDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcQWRtaW5pc3RyYXRvclJvbGVzXFZpZXdEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/FacultyRoles/CreateFacultyRole.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcRmFjdWx0eVJvbGVzXENyZWF0ZUZhY3VsdHlSb2xlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/FacultyRoles/DeleteFacultyRole.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcRmFjdWx0eVJvbGVzXERlbGV0ZUZhY3VsdHlSb2xlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/FacultyRoles/EditDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcRmFjdWx0eVJvbGVzXEVkaXREZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/FacultyRoles/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcRmFjdWx0eVJvbGVzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/FacultyRoles/ViewDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcRmFjdWx0eVJvbGVzXFZpZXdEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/OfficerRoles/EditDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcT2ZmaWNlclJvbGVzXEVkaXREZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/OfficerRoles/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcT2ZmaWNlclJvbGVzXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/OfficerRoles/ViewDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = 
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcT2ZmaWNlclJvbGVzXFZpZXdEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/CreateOrganizations/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = 
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xDcmVhdGVPcmdhbml6YXRpb25zXEluZGV4LmNzaHRtbA==
@@ -148,6 +70,18 @@ build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xNYW5hZ2VV
 build_metadata.AdditionalFiles.CssScope = 
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/OfficerRoles/CreateOfficerRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xPZmZpY2VyUm9sZXNcQ3JlYXRlT2ZmaWNlclJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/OfficerRoles/DeleteOfficerRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xPZmZpY2VyUm9sZXNcRGVsZXRlT2ZmaWNlclJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -166,10 +100,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/CreateOrganization.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xDcmVhdGVPcmdhbml6YXRpb24uY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/DeleteOrganization.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xEZWxldGVPcmdhbml6YXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/EditDetails.cshtml]
@@ -200,10 +130,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdEZhY2lsaXR5XENyZWF0ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/RequestFacility/DeleteRequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdEZhY2lsaXR5XERlbGV0ZVJlcXVlc3QuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/RequestFacility/EditDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdEZhY2lsaXR5XEVkaXREZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -224,16 +150,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/Administrators/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQWRtaW5pc3RyYXRvcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/Administrators/UpdateAdministrators.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQWRtaW5pc3RyYXRvcnNcVXBkYXRlQWRtaW5pc3RyYXRvcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/CreateUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQ3JlYXRlVXNlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/DeleteUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRGVsZXRlVXNlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcRWRpdERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/EditPassword.cshtml]
@@ -252,16 +178,76 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/OfficerRoles/CreateOfficerRole.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcT2ZmaWNlclJvbGVzXENyZWF0ZU9mZmljZXJSb2xlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ManageRoles/OfficerRoles/DeleteOfficerRole.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlUm9sZXNcT2ZmaWNlclJvbGVzXERlbGV0ZU9mZmljZXJSb2xlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Users/ViewDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcVmlld0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Organizations/DeleteOrganization.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xPcmdhbml6YXRpb25zXERlbGV0ZU9yZ2FuaXphdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/RequestFacility/DeleteRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xSZXF1ZXN0RmFjaWxpdHlcRGVsZXRlUmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/DeleteUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xEZWxldGVVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xFZGl0RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/AdministratorRoles/CreateAdminRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xBZG1pbmlzdHJhdG9yUm9sZXNcQ3JlYXRlQWRtaW5Sb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/AdministratorRoles/DeleteAdminRoles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xBZG1pbmlzdHJhdG9yUm9sZXNcRGVsZXRlQWRtaW5Sb2xlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/AdministratorRoles/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xBZG1pbmlzdHJhdG9yUm9sZXNcRWRpdERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/AdministratorRoles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xBZG1pbmlzdHJhdG9yUm9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/AdministratorRoles/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xBZG1pbmlzdHJhdG9yUm9sZXNcVmlld0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/FacultyRoles/CreateFacultyRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xGYWN1bHR5Um9sZXNcQ3JlYXRlRmFjdWx0eVJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/FacultyRoles/DeleteFacultyRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xGYWN1bHR5Um9sZXNcRGVsZXRlRmFjdWx0eVJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/FacultyRoles/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xGYWN1bHR5Um9sZXNcRWRpdERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/FacultyRoles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xGYWN1bHR5Um9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/FacultyRoles/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xGYWN1bHR5Um9sZXNcVmlld0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/OfficerRoles/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xPZmZpY2VyUm9sZXNcRWRpdERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/OfficerRoles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xPZmZpY2VyUm9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Users/ManageRoles/OfficerRoles/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xVc2Vyc1xNYW5hZ2VSb2xlc1xPZmZpY2VyUm9sZXNcVmlld0RldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_ViewImports.cshtml]

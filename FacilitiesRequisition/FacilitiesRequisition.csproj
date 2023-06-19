@@ -25,23 +25,9 @@
 
     <ItemGroup>
       <Folder Include="Pages\Organizations\" />
-      <Folder Include="Pages\_RecycleFiles\" />
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\CreateAdminRoles.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\DeleteAdminRoles.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\EditDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\Index.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\AdministratorRoles\ViewDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\CreateFacultyRole.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\DeleteFacultyRole.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\EditDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\Index.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\FacultyRoles\ViewDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\EditDetails.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\Index.cshtml" />
-      <AdditionalFiles Include="Pages\Users\ManageRoles\OfficerRoles\ViewDetails.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateOrganizations\Index.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateRequestPaper\Index.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateUsers\Index.cshtml" />
@@ -51,6 +37,8 @@
       <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\EditDetails.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\Index.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\ManageUsers\ViewDetails.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\Users\ManageRoles\OfficerRoles\CreateOfficerRole.cshtml" />
+      <AdditionalFiles Include="Pages\_RecycleFiles\Users\ManageRoles\OfficerRoles\DeleteOfficerRole.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

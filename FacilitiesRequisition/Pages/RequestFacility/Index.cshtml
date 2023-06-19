@@ -35,7 +35,7 @@
                         <text>There's no recent facility request. Please add first so it will be shown here.</text>
                     </div>
 
-                    <div style="float: right">
+                    <div style="float: right; margin-bottom: 5px">
                         <br/>
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
                         @if (Model.UserInfo != "Administrator") {
@@ -43,163 +43,117 @@
                         }
                     </div>
                 </div>
-            }
-            else {
+            } else {
                 <div class="col-md-12 rounded-rectangle">
                     <h2 style="font-weight: bold">Manage facility request</h2>
+                    <input class="form-control" type="text" id="search-request" placeholder="Search facility request"/>
                     <br/>
 
-                    <div style="float: right">
+                    <div class="button-container">
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
                         @if (Model.UserInfo != "Administrator") {
                             <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
                         }
+                        <br/>
                     </div>
-
-                    @if (Model.UserInfo == "Administrator") {
-                        <table class="table" style="font-size: 18px">
-                            <thead>
-                            <tr>
-                                <th>Requester</th>
-                                <th>Activity</th>
-                                <th>Venue Requested</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
-                                <tr>
-                                    <td>
-                                        <text>@request.Requester.Name</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.NameActivity</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.VenueRequested.GetDisplayName()</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.StartDateRequested.Value.ToShortDateString()</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.EndDateRequested.Value.ToShortDateString()</text>
-                                    </td>
-                                    <td>
-                                        <text>@Model.StatusRequest</text>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@request.Id">
-                                            <i class="bi bi-box-arrow-up-left"></i>
-                                            See Details
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@request.Id">
-                                            <i class="bi bi-trash-fill"></i>
-                                            Delete Request
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <div class="modal fade" id="deleteModal_@request.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@request.Id" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel_@request.Id">Delete Facility Request</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    
+                    <div class="user-container">
+                        <div class="no-results-request" style="display: none; justify-content: center; align-items: center; text-align: center">
+                            No results in this list of request.
+                        </div>
+                        @for (var index = 0; index < Model.FacilityRequest.Count; index++) {
+                            var facilityRequest = Model.FacilityRequest[index];
+                            var isApproved = Model.IsApproved[index];
+                            <div class="hover-item">
+                                <div style="display: flex; align-items: center">
+                                    <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                        <span>@facilityRequest.NameActivity.Substring(0, 1)</span>
+                                    </div>
+                                                        
+                                    <div class="request-details" style="font-size: large; horiz-align: center">
+                                        @facilityRequest.NameActivity
+                                        <div style="font-size: small">
+                                            <div>
+                                                <text>Dates requested: @facilityRequest.StartDateRequested.Value.ToShortDateString() to @facilityRequest.EndDateRequested.Value.ToShortDateString()</text>
                                             </div>
-                                            <div class="modal-body">
-                                                <text>Are you sure you want to delete the facility request "@request.NameActivity" made by @request.Requester.Name? This cannot be undone.</text>
+                                            <div>
+                                                <text>Venue requested: @facilityRequest.VenueRequested.GetDisplayName()</text>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@request.Id">
-                                                    <button type="submit" class="btn btn-danger">Delete Request</button>
-                                                </form>
+                                            <div style="font-size: 15px">
+                                               <text>Status: <span style="color: @(isApproved ? "green" : "#C51E3A"); font-weight: bold;"> @(isApproved ? "Approved" : "Pending")</span></text>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                            </tbody>
-                        </table>
-                    }
-                    else {
-                        <table class="table" style="font-size: 18px">
-                            <thead>
-                            <tr>
-                                <th>Date Filed</th>
-                                <th>Activity</th>
-                                <th>Venue Requested</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            @foreach (var request in Model.FacilityRequest.OrderBy(x => x.StartDateRequested)) {
-                                <tr>
-                                    <td>
-                                        <text>@request.DateFiled</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.NameActivity</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.VenueRequested.GetDisplayName()</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.StartDateRequested.Value.ToShortDateString()</text>
-                                    </td>
-                                    <td>
-                                        <text>@request.EndDateRequested.Value.ToShortDateString()</text>
-                                    </td>
-                                    <td>
-                                        <text>@Model.StatusRequest</text>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@request.Id">
-                                            <i class="bi bi-box-arrow-up-left"></i>
-                                            See Details
-                                        </a>
-                                        <a class="btn btn-outline-primary" asp-page="./EditDetails" asp-route-id="@request.Id">
-                                            <i class="bi bi-pencil-square"></i>
-                                            Edit Details
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@request.Id">
-                                            <i class="bi bi-trash-fill"></i>
-                                            Cancel Request
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <div class="modal fade" id="deleteModal_@request.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@request.Id" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel_@request.Id">Cancel Facility Request</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        
+                                    <div style="margin-left: auto; margin-right: 10px; justify-content: end">
+                                        @if (Model.UserInfo == "Administrator") {
+                                            <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@facilityRequest.Id">
+                                                <i class="bi bi-box-arrow-up-left"></i>
+                                                See Details
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@facilityRequest.Id">
+                                                <i class="bi bi-trash-fill"></i>
+                                                Delete Request
+                                            </button>
+                                            
+                                            <div class="modal fade" id="deleteModal_@facilityRequest.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@facilityRequest.Id" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel_@facilityRequest.Id">Delete Facility Request</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <text>Are you sure you want to delete the facility request "@facilityRequest.NameActivity" made by @facilityRequest.Requester.Name? This cannot be undone.</text>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@facilityRequest.Id">
+                                                                <button type="submit" class="btn btn-danger">Delete Request</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                                <p>Are you sure you want to cancel the facility request "@request.NameActivity"? This cannot be undone.</p>
+                                        } else {
+                                            <a class="btn btn-outline-success" asp-page="./ViewDetails" asp-route-id="@facilityRequest.Id">
+                                                <i class="bi bi-box-arrow-up-left"></i>
+                                                See Details
+                                            </a>
+                                            @* <a class="btn btn-outline-primary" asp-page="./EditDetails" asp-route-id="@facilityRequest.Id"> *@
+                                            @*     <i class="bi bi-pencil-square"></i> *@
+                                            @*     Edit Details *@
+                                            @* </a> *@
+                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@facilityRequest.Id">
+                                                <i class="bi bi-trash-fill"></i>
+                                                Cancel Request
+                                            </button>
+                                            
+                                            <div class="modal fade" id="deleteModal_@facilityRequest.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel_@facilityRequest.Id" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel_@facilityRequest.Id">Cancel Facility Request</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to cancel the facility request "@facilityRequest.NameActivity"? This cannot be undone.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@facilityRequest.Id">
+                                                                <button type="submit" class="btn btn-danger">Delete request</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@request.Id">
-                                                    <button type="submit" class="btn btn-danger">Delete request</button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
-                            }
-                            </tbody>
-                        </table>
-                    }
+                            </div>
+                        }
+                    </div>
                 </div>
             }
         }
