@@ -245,6 +245,7 @@ public class DatabaseContext : DbContext {
                 (signingStage >= SignatureStage.BuildingManager && user == signatories.BuildingManager.User) ||
                 (signingStage >= SignatureStage.Directors && (user == signatories.AdminServicesDirector.User ||
                                                               user == signatories.StudentAffairsDirector.User ||
+                                                              user == signatories.CampusFacilitiesDevelopmentDirector.User ||
                                                               user == signatories.AccountingOfficeDirector.User)) ||
                 (signingStage >= SignatureStage.VicePresidents && (user == signatories.VicePresidentAdministration.User ||
                                                                    user == signatories.VicePresidentAcademicAffairs.User))) {

@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+            document.addEventListener('keydown', function (event) {
+                if (event.ctrlKey && (event.key === 'p' || event.keyCode === 80)) {
+                    event.preventDefault();
+                    alert('Printing is disabled.');
+                }
+    
+                if (event.ctrlKey && (event.key === 's' || event.keyCode === 83)) {
+                    event.preventDefault();
+                    alert('Saving the html will not work.');
+                }
+            });
+    </script>
 </head>
 <body>
 <div id="previewSection" style="margin: 0.5in 0.5in 0.5in 0.5in">
@@ -103,12 +117,27 @@
     </div>
 </div>
 
-<div id="buttons">
-    <button type="button" onclick="printPreview()">Print</button>
-    <button type="button" onclick="exportToPDF()">ExportPDF</button>
+<div id="buttons" style="margin-bottom: 5px; margin-left: 20px">
+    <a class="btn btn-outline-primary" asp-page="/RequestFacility/ViewDetails" asp-route-id="@Model.FacilityRequest.Id">
+        Go back to the details page
+    </a>
 </div>
 
-<script>
+@if (Model.Signatories.AssistantDean.User.SignatureFilename != null &&
+     Model.Signatories.Dean.User.SignatureFilename != null &&
+     Model.Signatories.AdminServicesDirector.User.SignatureFilename != null &&
+     Model.Signatories.StudentAffairsDirector.User.SignatureFilename != null ||
+     Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename != null &&
+     Model.Signatories.AccountingOfficeDirector.User.SignatureFilename != null &&
+     Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename != null &&
+     Model.Signatories.VicePresidentAdministration.User.SignatureFilename != null) {
+        
+    <div id="buttons" style="margin-bottom: 20px; margin-left: 20px">
+        <button type="button" class="btn btn-outline-primary" onclick="printPreview()">Print paper</button>
+        <button type="button" class="btn btn-outline-primary" onclick="exportToPDF()">Export to PDF</button>
+    </div>
+
+    <script>
         function exportToPDF() {
                     const previewSection = document.getElementById('previewSection');
                     
@@ -147,5 +176,7 @@
             buttonSection.style.display = 'block';
         }
     </script>
+}
+
 </body>
 </html>

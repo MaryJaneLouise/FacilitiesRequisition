@@ -32,7 +32,11 @@
                         <div style="margin-bottom: 10px;">
                             <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
                             <a class="btn btn-primary" asp-page="./EditDetails" asp-route-id="@Model.FacilityRequest?.Id">Edit details</a>
-                            <a class="btn btn-success" asp-page="/PrintRequest/Index" asp-route-id="@Model.FacilityRequest?.Id">Print Request</a>
+                            @if (Model.Signatories.GetSignatureStage() == SignatureStage.Approved) {
+                                <a class="btn btn-success" asp-page="/PrintRequest/Index" asp-route-id="@Model.FacilityRequest?.Id">Print Request</a>
+                            } else {
+                                <a class="btn btn-success disabled" asp-page="/PrintRequest/Index" asp-route-id="@Model.FacilityRequest?.Id" tabindex="-1" aria-disabled="True">Print Request</a>
+                            }
                         </div>
                     </div>
                     
@@ -82,7 +86,11 @@
                         <div>
                             <br/>
                             <label>Additional Comments</label>
-                            <textarea asp-for="FacilityRequest.AdditionalComments" class="form-control" disabled></textarea>
+                            @if (Model.FacilityRequest.AdditionalComments != null) {
+                                <textarea asp-for="FacilityRequest.AdditionalComments" class="form-control" disabled></textarea>
+                            } else {
+                                <textarea class="form-control" disabled>No additional comments.</textarea>
+                            }
                             <br/>
                         </div>
                     </div>
