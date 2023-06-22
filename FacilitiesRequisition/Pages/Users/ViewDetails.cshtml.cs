@@ -24,6 +24,12 @@ namespace FacilitiesRequisition.Pages.Users {
         public string? SignaturePath { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (userLoggedIn == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             if (id == null || _context.GetUsers() == null) {
                 return NotFound();
             }

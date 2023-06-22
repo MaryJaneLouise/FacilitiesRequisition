@@ -5,6 +5,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var sortedFacilityRequests = Model.FacilityRequest.OrderBy(fr => fr.StartDateRequested).ToList();
 }
 
 <html>
@@ -39,8 +40,34 @@
                         <br/>
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
                         @if (Model.UserInfo != "Administrator") {
-                            <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
+                            if (Model.CanCreateRequests) {
+                                if (Model.AreCollegeAdminsSet) {
+                                    <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
+                                }
+                                else {
+                                    <a class="btn btn-primary" asp-page="CreateRequest" onclick="$('#errorAdmins').modal('show');">Add facility request</a>
+                                }
+                            } else {
+                                <a class="btn btn-primary disabled" asp-page="CreateRequest">Add facility request</a>
+                            }
                         }
+                    </div>
+                    
+                    <div class="modal fade" id="errorAdmins" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" >Incomplete College Administrators</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Your college administrators are not yet set. Ask your administrators to set them before you can make facility requests. Thank you!
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
             } else {
@@ -61,9 +88,10 @@
                         <div class="no-results-request" style="display: none; justify-content: center; align-items: center; text-align: center">
                             No results in this list of request.
                         </div>
-                        @for (var index = 0; index < Model.FacilityRequest.Count; index++) {
-                            var facilityRequest = Model.FacilityRequest[index];
-                            var isApproved = Model.IsApproved[index];
+                        @for (var index = 0; index < sortedFacilityRequests.Count; index++) {
+                            var facilityRequest = sortedFacilityRequests[index];
+                            var originalIndex = Model.FacilityRequest.IndexOf(facilityRequest);
+                            var isApproved = Model.IsApproved[originalIndex];
                             var endDate = facilityRequest.EndDateRequested?.Date;
                             var today = DateTime.Today;
                             var isEndDatePassed = endDate.HasValue && today >= endDate;
@@ -79,18 +107,24 @@
                                         <div class="request-details" style="font-size: large; horiz-align: center">
                                             @facilityRequest.NameActivity
                                             <div style="font-size: small">
-                                                <div>
-                                                    <text>Dates requested: @facilityRequest.StartDateRequested.Value.ToShortDateString() to @facilityRequest.EndDateRequested.Value.ToShortDateString()</text>
-                                                </div>
-                                                <div>
-                                                    <text>Venue requested: @facilityRequest.VenueRequested.GetDisplayName()</text>
-                                                </div>
                                                 <div style="font-size: 15px">
                                                     @if (isPending) {
                                                         <text>Status: <span style="color: #C51E3A; font-weight: bold;">This request cannot proceed anymore. Please create a new request if you wish to continue.</span></text>
                                                     } else {
                                                         <text>Status: <span style="color: @(isApproved ? "green" : "#C51E3A"); font-weight: bold;">@(isApproved ? "Approved" : "Pending")</span></text>
                                                     }
+                                                </div>
+                                                <div>
+                                                    @if (facilityRequest.StartDateRequested.Value.ToShortDateString() == facilityRequest.EndDateRequested.Value.ToShortDateString()) {
+                                                        <text>Date requested: @facilityRequest.StartDateRequested.Value.ToShortDateString()</text>
+                                                    }
+                                                    else {
+                                                        <text>Dates requested: @facilityRequest.StartDateRequested.Value.ToShortDateString() to @facilityRequest.EndDateRequested.Value.ToShortDateString()</text>
+                                                    }
+
+                                                </div>
+                                                <div>
+                                                    <text>Venue requested: @facilityRequest.VenueRequested.GetDisplayName()</text>
                                                 </div>
                                             </div>
                                         </div>
@@ -159,6 +193,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            
                                         }
                                     </div>
                                 </div>

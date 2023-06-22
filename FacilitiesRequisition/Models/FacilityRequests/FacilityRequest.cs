@@ -17,6 +17,33 @@ public class FacilityRequest {
     [DataType(DataType.Date)]
     public DateTime? StartDateRequested { get; set; }
     
+    // [DataType(DataType.Date)]
+    // public DateTime? RequestedDayOne { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayOneStartTime { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayOneEndTime { get; set; }
+    //
+    // [DataType(DataType.Date)]
+    // public DateTime? RequestedDayTwo { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayTwoStartTime { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayTwoEndTime { get; set; }
+    //
+    // [DataType(DataType.Date)]
+    // public DateTime? RequestedDayThree { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayThreeStartTime { get; set; }
+    //
+    // [DataType(DataType.Time)]
+    // public DateTime? RequestedDayThreeEndTime { get; set; }
+    
     [DataType(DataType.Date)]
     public DateTime? EndDateRequested { get; set; }
     

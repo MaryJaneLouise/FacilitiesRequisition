@@ -23,7 +23,12 @@ namespace FacilitiesRequisition.Pages.Users {
         public string UserInfo { get; set; }
 
         public IActionResult OnGet() {
-            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context)!;
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (userLoggedIn == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
             var userType = isSuperAdministrator ? "Super Administrator" :

@@ -36,9 +36,17 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         [BindProperty] public string OrganizationId { get; set; }
         
         public string UserInfo { get; set; }
+        
+        public bool CanCreateRequests { get; set; }
+        public bool AreCollegeAdminsSet { get; set; }
 
         public IActionResult OnGet() {
-            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            var user = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (user == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
             var userType = isSuperAdministrator ? "Super Administrator" :
@@ -53,17 +61,31 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                 case "Administrator" :
                     return RedirectToPage("/Dashboard/Index");
                 default:
-                    Organizations = _context.GetOfficerOrganizations(user).Select(organization =>
-                        new SelectListItem {
-                            Value = organization.Id.ToString(),
-                            Text = organization.Name,
-                            Selected = OrganizationId == organization.Id.ToString()
-                        });
-                    return Page();
+                    CanCreateRequests = _context.CanCreateRequests(user);
+                    AreCollegeAdminsSet = _context.AreCollegeAdminsSet();
+                    
+                    switch (CanCreateRequests) {
+                        case true:
+                            switch (AreCollegeAdminsSet) {
+                                case true:
+                                    Organizations = _context.GetOfficerOrganizations(user).Select(organization =>
+                                        new SelectListItem {
+                                            Value = organization.Id.ToString(),
+                                            Text = organization.Name,
+                                            Selected = OrganizationId == organization.Id.ToString()
+                                        });
+                                    return Page();
+                                default:
+                                    return RedirectToPage("/RequestFacility/Index");
+                            }
+                        default:
+                            return RedirectToPage("/RequestFacility/Index");
+                    }
             }
         }
         
         public IActionResult OnPost() {
+            OnGet();
             var overlappingRequest = _context.GetFacilityRequests().FirstOrDefault(x =>
                 x.VenueRequested == VenueRequested &&
                 ((x.StartDateRequested <= StartDateRequested && x.EndDateRequested >= StartDateRequested) ||
@@ -96,7 +118,7 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                 StartDateRequested = StartDateRequested,
                 EndDateRequested = EndDateRequested,
                 VenueRequested = VenueRequested,
-                AdditionalComments = Comments
+                AdditionalComments = Comments   
             };
 
             _context.AddFacilityRequest(facilityRequest, new List<Expense>());

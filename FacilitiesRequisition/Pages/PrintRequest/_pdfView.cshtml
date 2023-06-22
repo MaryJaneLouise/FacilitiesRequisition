@@ -33,7 +33,14 @@
                 <p>Date Filed: @Model.DateFiled</p>
                 <p>Name of the Requester: @Model.Requester.Name</p>
                 <p>Venue Requested: @Model.VenueRequested</p>
-                <p>Date Requested: @Model.StartDateRequested.Value.ToShortDateString() to @Model.EndDateRequested.Value.ToShortDateString()</p>
+                @* @if (!Model.RequestedDayTwo.HasValue && !Model.RequestedDayThree.HasValue) { *@
+                @*     <p>Date Requested: @Model.RequestedDayOne.Value.ToShortDateString()</p> *@
+                @* } else if (Model.RequestedDayOne.HasValue && Model.RequestedDayTwo.HasValue && !Model.RequestedDayThree.HasValue) { *@
+                @*     <p>Date Requested: @Model.RequestedDayOne.Value.ToShortDateString() to @Model.RequestedDayTwo.Value.ToShortDateString()</p>    *@
+                @* } else if (Model.RequestedDayOne.HasValue && !Model.RequestedDayTwo.HasValue && Model.RequestedDayThree.HasValue) { *@
+                @*     <p>Date Requested: @Model.RequestedDayOne.Value.ToShortDateString() to @Model.RequestedDayThree.Value.ToShortDateString()</p>    *@
+                @* } *@
+                
                 <p>Additional Comments from Requester: @Model.AdditionalComments</p>
                 <p>Estimated Budget total: @Model.Requester.TotalBudget</p>
 

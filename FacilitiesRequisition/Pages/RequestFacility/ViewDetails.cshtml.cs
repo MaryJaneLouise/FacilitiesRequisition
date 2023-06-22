@@ -27,6 +27,11 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (user == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             var facilityrequest = _context.GetFacilityRequest(id ?? -1);
 
             if (facilityrequest == null || user == null) {
@@ -36,6 +41,7 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
             User = user;
             FacilityRequest = facilityrequest;
             Signatories = _context.GetSignatures(facilityrequest);
+            
             return Page();
         }
 

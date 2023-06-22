@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Organizations {
     public class CreateModel : PageModel {
@@ -33,8 +34,16 @@ namespace FacilitiesRequisition.Pages.Organizations {
         
         public string UserInfo { get; set; }
         
+        public string NullOrganizationName { get; set; }
+        public string NullOrganizationBudget { get; set; }
+
         public IActionResult OnGet() {
-            var user = HttpContext.Session.GetLoggedInUser(_context)!;
+            var user = HttpContext.Session.GetLoggedInUser(_context);
+
+            if (user == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
             var userType = isSuperAdministrator ? "Super Administrator" :
@@ -67,6 +76,19 @@ namespace FacilitiesRequisition.Pages.Organizations {
         
         
         public async Task<IActionResult> OnPostAsync() {
+            if (Organization.Name.IsNullOrEmpty()) {
+                OnGet();
+                NullOrganizationName = "This field cannot be empty";
+                return Page();
+            }
+
+            if (Organization.TotalBudget == null || Organization.TotalBudget == decimal.Zero || Organization.TotalBudget < -1) {
+                OnGet();
+                NullOrganizationBudget = "The organization must have an allotted budget.";
+                return Page();
+            }
+
+            
             if (!ModelState.IsValid) {
                 return Page();
             }

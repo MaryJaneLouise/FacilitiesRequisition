@@ -31,9 +31,40 @@ public class UpdateAdministratorsModel : PageModel {
     [BindProperty] public string AccountingOfficeDirectorId { get; set; } = default!;
     [BindProperty] public string VicePresidentAAId { get; set; } = default!;
     [BindProperty] public string VicePresidentAdminId { get; set; } = default!;
+    
+    public string UserInfo { get; set; }
 
     public IActionResult OnGet() {
-        return Page();
+        var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context);
+
+        if (userLoggedIn == null) {
+            return RedirectToPage("/Login/Index");
+        }
+        
+        bool isSuperAdministrator = userLoggedIn.Type == Models.UserType.Administrator &&
+                                    _context.GetAdministratorRoles(userLoggedIn).Any(x => x.Position == AdministratorPosition.SuperAdmin);
+        var userType = isSuperAdministrator ? "Super Administrator" :
+            userLoggedIn.Type == Models.UserType.Administrator ? "Administrator" :
+            userLoggedIn.Type == Models.UserType.Faculty ? "Faculty" : "Organization Officer";
+        
+        UserInfo = $"{userType}";
+
+        switch (UserInfo) {
+            case "Super Administrator":
+                AssistantDeanId = _context.GetAdministrator(AdministratorPosition.AssistantDean).Id.ToString();
+                DeanId = _context.GetAdministrator(AdministratorPosition.Dean).Id.ToString();
+                BuildingManagerId = _context.GetAdministrator(AdministratorPosition.BuildingManager).Id.ToString();
+                AdminServicesDirectorId = _context.GetAdministrator(AdministratorPosition.AdminServicesDirector).Id.ToString();
+                StudentAffairsDirectorId = _context.GetAdministrator(AdministratorPosition.StudentAffairsDirector).Id.ToString();
+                CampusFacilitiesDirectorId = _context.GetAdministrator(AdministratorPosition.CampusFacilitiesDevelopmentDirector).Id.ToString();
+                AccountingOfficeDirectorId = _context.GetAdministrator(AdministratorPosition.AccountingOfficeDirector).Id.ToString();
+                VicePresidentAAId = _context.GetAdministrator(AdministratorPosition.VicePresidentAcademicAffairs).Id.ToString();
+                VicePresidentAdminId = _context.GetAdministrator(AdministratorPosition.VicePresidentAdministration).Id.ToString();
+                
+                return Page();
+            default:
+                return RedirectToPage("/Dashboard/Index");
+        }
     }
 
     public IActionResult OnPost() {

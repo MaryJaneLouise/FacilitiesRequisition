@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Users {
     public class EditSignatureModel : PageModel {
@@ -28,6 +29,8 @@ namespace FacilitiesRequisition.Pages.Users {
         
         [BindProperty]
         public IFormFile? Signature { get; set; }
+        
+        public string NullSignature { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
             var user = _context.GetUser((int)id);
@@ -43,9 +46,10 @@ namespace FacilitiesRequisition.Pages.Users {
             return Page();
         }
         
-        public async Task<IActionResult> OnPostAsync(int? id, string userId) {
+        public async Task<IActionResult> OnPostAsync(int? id, string userId)
+        {
             var user = _context.GetUser((int)id);
-            
+
             if (id == null || user == null) {
                 return NotFound();
             }
@@ -54,20 +58,25 @@ namespace FacilitiesRequisition.Pages.Users {
             if (!ModelState.IsValid) {
                 return Page();
             }
-            
+
             var imageDirectory = Path.Combine(webHostEnvironment.WebRootPath, "images");
 
             if (!Directory.Exists(imageDirectory)) {
                 Directory.CreateDirectory(imageDirectory);
             }
 
-            var extension = Signature?.FileName.Split(".").Last() ?? "jpg";
-            var fileName = $"{Guid.NewGuid().ToString()}.{extension}";
-            var filePath = Path.Combine(imageDirectory, fileName);
+            string? fileName = User.SignatureFilename;
 
-            var stream = new FileStream(filePath, FileMode.Create);
-            Signature?.CopyToAsync(stream);
-            
+            if (Signature != null) {
+                var extension = Signature.FileName.Split(".").LastOrDefault() ?? "jpg";
+                fileName = $"{Guid.NewGuid().ToString()}.{extension}";
+                var filePath = Path.Combine(imageDirectory, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create)) {
+                    await Signature.CopyToAsync(stream);
+                }
+            }
+
             User.SignatureFilename = fileName;
 
             _context.Attach(User).State = EntityState.Modified;
@@ -82,10 +91,9 @@ namespace FacilitiesRequisition.Pages.Users {
                 }
             }
 
-            return RedirectToPage("/Users/ViewDetails", new { id = userId }); 
-
+            return RedirectToPage("/Users/ViewDetails", new { id = userId });
         }
-
+        
         private bool UserExists(int id) {
           return _context.GetUsers().Any(e => e.Id == id);
         }

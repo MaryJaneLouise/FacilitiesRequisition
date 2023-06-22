@@ -102,16 +102,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xDcmVhdGVPcmdhbml6YXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/EditDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xFZGl0RGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/Organizations/ViewDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JnYW5pemF0aW9uc1xWaWV3RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/PrintRequest/Index.cshtml]
@@ -184,6 +176,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Organizations/DeleteOrganization.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xPcmdhbml6YXRpb25zXERlbGV0ZU9yZ2FuaXphdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Organizations/EditDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xPcmdhbml6YXRpb25zXEVkaXREZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/Organizations/ViewDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1JlY3ljbGVGaWxlc1xPcmdhbml6YXRpb25zXFZpZXdEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/MarieJuana/RiderProjects/FacilitiesRequisition/FacilitiesRequisition/Pages/_RecycleFiles/RequestFacility/DeleteRequest.cshtml]

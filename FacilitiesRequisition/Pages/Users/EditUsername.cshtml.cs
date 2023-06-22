@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Users {
     public class EditUsernameModel : PageModel {
@@ -26,8 +27,16 @@ namespace FacilitiesRequisition.Pages.Users {
         [BindProperty]
         public string Username { get; set; }
         
+        public string UsernameDuplicateError { get; set; }
+        public string NullUsername { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
+            var userLoggedIn = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (userLoggedIn == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             var user = _context.GetUser((int)id);
             
             if (id == null || user == null) {
@@ -46,10 +55,21 @@ namespace FacilitiesRequisition.Pages.Users {
                 return NotFound();
             }
             User = user;
+
+            if (Username.IsNullOrEmpty()) {
+                NullUsername = "This field cannot be empty.";
+                return Page();
+            }
             
             var isUsernameDuplicate = _context.GetUsers().Any(x => x.Username == Username && Username != user.Username);
-            
-            if (!ModelState.IsValid || isUsernameDuplicate) {
+
+            if (isUsernameDuplicate) {
+                UsernameDuplicateError =
+                    "It seems to have error in your written new username. Please try other possible usernames.";
+                return Page();
+            }
+            if (!ModelState.IsValid) {
+                
                 return Page();
             }
 

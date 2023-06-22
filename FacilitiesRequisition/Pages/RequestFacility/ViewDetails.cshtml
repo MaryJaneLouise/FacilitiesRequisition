@@ -6,15 +6,42 @@
 
 @{
     ViewData["Title"] = "Details";
-}
-
-@if (Model.Signatories.StudentAffairsDirector.Id < -1)
-{
     
-    RedirectToPage("/RequestFacility/Index", new { noAdviser = true });
+    string venueName;
+    switch (Model.FacilityRequest.VenueRequested)
+    {
+        case Venues.TheStruggleSquare:
+            venueName = "The Struggle Square";
+            break;
+        case Venues.StCeciliaAuditorium:
+            venueName = "St. Cecilia Auditorium";
+            break;
+        case Venues.Silungan:
+            venueName = "Silungan";
+            break;
+        case Venues.Quadrangle:
+            venueName = "Quadrangle";
+            break;
+        case Venues.Classrooms:
+            venueName = "Classrooms";
+            break;
+        case Venues.BoardRoom:
+            venueName = "Board Room";
+            break;
+        case Venues.CabalenHall:
+            venueName = "Cabalen Hall";
+            break;
+        case Venues.StJohnPaulActRoom1:
+            venueName = "St. John Paul Activity Room 1";
+            break;
+        case Venues.StJohnPaulActRoom2:
+            venueName = "St. John Paul Activity Room 2";
+            break;
+        default:
+            venueName = string.Empty;
+            break;
+    }
 }
-
-
 
 <html>
 <head>
@@ -71,7 +98,7 @@
                                 <div class="col">
                                     <br/>
                                     <label>Venue Requested</label>
-                                    <input asp-for="FacilityRequest.VenueRequested" class="form-control" disabled/>
+                                    <input asp-for="FacilityRequest.VenueRequested" class="form-control" disabled value="@venueName"/>
                                 </div>
                             </div>
                         </div>

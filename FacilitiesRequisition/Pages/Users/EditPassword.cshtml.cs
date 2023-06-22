@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Users {
     public class EditPasswordModel : PageModel {
@@ -28,7 +29,11 @@ namespace FacilitiesRequisition.Pages.Users {
         
         [BindProperty]
         public string? RepeatPassword { get; set; }
-
+        
+        
+        public string NullPassword { get; set; }
+        public string NotSamePassword { get; set; }
+        
         public async Task<IActionResult> OnGetAsync(int? id) {
             var user = _context.GetUser((int)id);
             
@@ -47,6 +52,16 @@ namespace FacilitiesRequisition.Pages.Users {
                 return NotFound();
             }
             User = user;
+
+            if (Password.IsNullOrEmpty() || RepeatPassword.IsNullOrEmpty()) {
+                NullPassword = "This field cannot be empty.";
+                return Page();
+            }
+
+            if (Password != RepeatPassword) {
+                NotSamePassword = "The written passwords are not the same. Please try again.";
+                return Page();
+            }
             
             if (!ModelState.IsValid) {
                 return Page();

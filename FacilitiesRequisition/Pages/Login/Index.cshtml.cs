@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Login; 
 
@@ -25,23 +26,50 @@ public class IndexModel : PageModel {
     [BindProperty]
     [Display(Name = "Password")]
     public string Password { get; set; }
+    
+    
+    public string ErrorUsernamePassword { get; set; }
+    
+    public string UsernameBlankError { get; set; }
+    public string PasswordBlankError { get; set; }
 
     public void OnGet() {
         HttpContext.Session.Logout();
     }
     
-    public IActionResult OnPostAsync() {
-        if (!ModelState.IsValid) {
-            return Page();
+    public IActionResult OnPost() {
+        var isError = false;
+
+        if (Username.IsNullOrEmpty()) {
+            UsernameBlankError = $"Username required";
+            isError = true;
         }
 
+        if (Password.IsNullOrEmpty()) {
+            PasswordBlankError = $"Password required";
+            isError = true;
+        }
+        
+        if (isError) {
+            return Page();
+            
+        }
+        
         var user = _databaseContext.GetUsers().FirstOrDefault(x => x.Username == Username);
         var passwordHash = Password.ComputeHash(Convert.FromBase64String(user?.PasswordSalt ?? ""));
-
-        if (user == null || user.PasswordHash != passwordHash) return Page();
         
-        HttpContext.Session.Login(user);
+        if (user == null || user.PasswordHash != passwordHash) {
+            ErrorUsernamePassword = $"Incorrect username or password";
+            isError = true;
+        }
         
-        return RedirectToPage("../Dashboard/Index");
+        if (isError) {
+            return Page();
+            
+        } else {
+            HttpContext.Session.Login(user);
+        
+            return RedirectToPage("../Dashboard/Index");   
+        }
     }
 }

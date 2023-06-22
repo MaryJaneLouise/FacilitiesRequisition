@@ -49,19 +49,28 @@ public class IndexModel : PageModel {
     public TestPrint EndDateRequested { get; set; }
     public TestPrint VenueRequested { get; set; }
 
-    public void OnGet(int? id) {
+    public IActionResult OnGet(int? id) {
         var user = HttpContext.Session.GetLoggedInUser(_context);
+            
+        if (user == null) {
+            RedirectToPage("/Login/Index");
+        }
+
         var facilityrequest = _context.GetFacilityRequest(id ?? -1);
 
         if (facilityrequest == null || user == null) {
-            return ;
+            return RedirectToPage("/Login/Index");
         }
 
         User = user;    
         FacilityRequest = facilityrequest;
         Signatories = _context.GetSignatures(facilityrequest);
-        
-        
+
+        if (Signatories.GetSignatureStage() != SignatureStage.Approved) {
+            return RedirectToPage("/RequestFacility/ViewDetails", new {id = FacilityRequest.Id});
+        }
+
+        return Page();
     }
 
     public async Task<IActionResult> OnPostDownloadFile(int? requestId) {

@@ -88,7 +88,10 @@
 });
 
 document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'p') {
+    if (event.ctrlKey && event.key === 'p' || 
+        event.ctrlKey && event.key === 's' || 
+        event.key === 'F1' || event.key === 'F6' || 
+        event.key === 'F7' || event.key === 'F10') {
         event.preventDefault();
     }
 });
@@ -119,42 +122,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showModal(event) {
+    const startDate = new Date(event.start);
+    const endDate = new Date(event.end);
+
+    const startYear = startDate.getFullYear();
+    const startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0');
+    const startDay = startDate.getDate().toString().padStart(2, '0');
+
+    const endYear = endDate.getFullYear();
+    const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0');
+    const endDay = endDate.getDate().toString().padStart(2, '0');
+
+    const formattedStartDate = `${startYear}-${startMonth}-${startDay}`;
+    const formattedEndDate = `${endYear}-${endMonth}-${endDay}`;
+
     let modalContent = `
-        <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
-                        <button type="button" class="btn-close close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p><strong>Name:</strong> ${event.text}</p>
-                        <p><strong>Start Date:</strong> ${event.start.toString()}</p>
-                        <p><strong>End Date:</strong> ${event.end.toString()}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+            <button type="button" class="btn-close close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Name:</strong> ${event.text}</p>
+            <p><strong>Start Date:</strong> ${formattedStartDate}</p>
+            <p><strong>End Date:</strong> ${formattedEndDate}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+          </div>
         </div>
-    `;
-    
+      </div>
+    </div>
+  `;
+
     $('body').append(modalContent);
-    
+
     let modalElement = $('#eventModal');
     modalElement.modal('show');
-    
+
     modalElement.on('shown.bs.modal', function () {
         modalElement.focus();
     });
-    
+
     modalElement.on('hidden.bs.modal', function () {
         modalElement.remove();
     });
-    
+
     modalElement.find('.close').on('click', function () {
         modalElement.modal('hide');
     });

@@ -35,6 +35,24 @@ public class DatabaseContext : DbContext {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         optionsBuilder.UseSqlServer(CONNECTION_STRING);
     }
+    
+    public bool IsSuperAdmin(User user) {
+        return AdministratorRoles.Any(adminRole => adminRole.Administrator == user);
+    }
+
+    public bool CanCreateRequests(User user) {
+        var organizations = GetOfficerOrganizations(user);
+        return user.Type == UserType.Officer && organizations.Count > 0;
+    }
+
+    public bool AreCollegeAdminsSet() {
+        var collegeAdmins = GetCollegeAdmins();
+        return collegeAdmins.ToList().All(admin => admin != null);
+    }
+
+    public User? GetUser(string username) {
+        return Users.FirstOrDefault(user => user.Username == username);
+    }
 
     public List<User> GetUsers() {
         var users = Users.ToList();
@@ -69,12 +87,158 @@ public class DatabaseContext : DbContext {
     public bool HasSuperAdministrator() {
         return AdministratorRoles.Any(x => x.Position == AdministratorPosition.SuperAdmin);
     }
+    
+    public CollegeAdministrators GetCollegeAdmins() {
+        var assistantDean = AdministratorRoles
+    .Where(adminRole => adminRole.Position == AdministratorPosition.AssistantDean)
+    .Include(adminRole => adminRole.Administrator)
+    .OrderBy(adminRole => adminRole.Id)
+    .LastOrDefault()
+    ?.Administrator;
+
+    var dean = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.Dean)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var buildingManager = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.BuildingManager)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var adminServicesDirector = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.AdminServicesDirector)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var studentAffairsDirector = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.StudentAffairsDirector)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var campusFacilitiesDevelopmentDirector = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.CampusFacilitiesDevelopmentDirector)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var accountingOfficeDirector = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.AccountingOfficeDirector)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var vicePresidentAcademicAffairs = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.VicePresidentAcademicAffairs)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+    var vicePresidentAdministration = AdministratorRoles
+        .Where(adminRole => adminRole.Position == AdministratorPosition.VicePresidentAdministration)
+        .Include(adminRole => adminRole.Administrator)
+        .OrderBy(adminRole => adminRole.Id)
+        .LastOrDefault()
+        ?.Administrator;
+
+        return new CollegeAdministrators(
+            assistantDean,
+            dean,
+            buildingManager,
+            adminServicesDirector,
+            studentAffairsDirector,
+            campusFacilitiesDevelopmentDirector,
+            accountingOfficeDirector,
+            vicePresidentAcademicAffairs,
+            vicePresidentAdministration);
+    }
+
+    public void SetCollegeAdmins(CollegeAdministrators collegeAdmins) {
+        var oldCollegeAdmins = GetCollegeAdmins();
+
+        if (collegeAdmins.AssistantDean != null && collegeAdmins.AssistantDean != oldCollegeAdmins.AssistantDean) {
+            AdministratorRoles.Add(new AdministratorRole {
+                Administrator = collegeAdmins.AssistantDean,
+                Position = AdministratorPosition.AssistantDean,
+            });
+        }
+
+    if (collegeAdmins.Dean != null && collegeAdmins.Dean != oldCollegeAdmins.Dean) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.Dean,
+            Position = AdministratorPosition.Dean,
+        });
+    }
+
+    if (collegeAdmins.BuildingManager != null && collegeAdmins.BuildingManager != oldCollegeAdmins.BuildingManager) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.BuildingManager,
+            Position = AdministratorPosition.BuildingManager,
+        });
+    }
+
+    if (collegeAdmins.AdminServicesDirector != null && collegeAdmins.AdminServicesDirector != oldCollegeAdmins.AdminServicesDirector) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.AdminServicesDirector,
+            Position = AdministratorPosition.AdminServicesDirector,
+        });
+    }
+
+    if (collegeAdmins.StudentAffairsDirector != null && collegeAdmins.StudentAffairsDirector != oldCollegeAdmins.StudentAffairsDirector) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.StudentAffairsDirector,
+            Position = AdministratorPosition.StudentAffairsDirector,
+        });
+    }
+
+    if (collegeAdmins.CampusFacilitiesDevelopmentDirector != null && collegeAdmins.CampusFacilitiesDevelopmentDirector != oldCollegeAdmins.CampusFacilitiesDevelopmentDirector) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.CampusFacilitiesDevelopmentDirector,
+            Position = AdministratorPosition.CampusFacilitiesDevelopmentDirector,
+        });
+    }
+
+    if (collegeAdmins.AccountingOfficeDirector != null && collegeAdmins.AccountingOfficeDirector != oldCollegeAdmins.AccountingOfficeDirector) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.AccountingOfficeDirector,
+            Position = AdministratorPosition.AccountingOfficeDirector,
+        });
+    }
+
+    if (collegeAdmins.VicePresidentAcademicAffairs != null && collegeAdmins.VicePresidentAcademicAffairs != oldCollegeAdmins.VicePresidentAcademicAffairs) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.VicePresidentAcademicAffairs,
+            Position = AdministratorPosition.VicePresidentAcademicAffairs,
+        });
+    }
+
+    if (collegeAdmins.VicePresidentAdministration != null && collegeAdmins.VicePresidentAdministration != oldCollegeAdmins.VicePresidentAdministration) {
+        AdministratorRoles.Add(new AdministratorRole {
+            Administrator = collegeAdmins.VicePresidentAdministration,
+            Position = AdministratorPosition.VicePresidentAdministration,
+        });
+    }
+
+    SaveChanges();
+    }
 
     public AdministratorRole? GetAdministratorRole(AdministratorPosition position) {
         return AdministratorRoles
             .Where(adminRole => adminRole.Position == position)
             .Include(adminRole => adminRole.Administrator)
-            .FirstOrDefault();
+            .OrderBy(adminRole => adminRole.Id)
+            .LastOrDefault();
     }
 
     public bool AddAdministratorRole(AdministratorRole administratorRole) {
@@ -130,15 +294,20 @@ public class DatabaseContext : DbContext {
 
     public List<Organization> GetOrganizations(User user) {
         return user.Type == UserType.Administrator
-            ? Organizations.Where(organization => organization.Adviser == user).ToList()
-            : OfficerRoles.Where(officerRole => officerRole.Officer == user).Select(x => x.Organization).ToList();
-            //? FacultyRoles.Where(facultyRole => facultyRole.Faculty == user).Select(x => x.Organization).ToList();
+            ? Organizations
+                .Where(organization => organization.Adviser == user)
+                .Include(organization => organization.Adviser)
+                .Distinct()
+                .ToList()
+            : GetOfficerOrganizations(user);
     }
 
     public List<Organization> GetOfficerOrganizations(User officer) {
         return OfficerRoles
             .Where(officerRole => officerRole.Officer == officer)
-            .Select(officerRole => officerRole.Organization)
+            .Include(officerRole => officerRole.Organization.Adviser)
+            .Select(x => x.Organization)
+            .Distinct()
             .ToList();
     }
 

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace FacilitiesRequisition.Pages.Users;
@@ -50,6 +51,15 @@ public class CreateModel : PageModel {
 
     [BindProperty] 
     public string? UserType { get; set; }
+    
+    public string NullFirstName { get; set; }
+    public string NullLastName { get; set; }
+    public string NullUsername { get; set; }
+    public string NullPassword { get; set; }
+    public string NullRepeatPass { get; set; }
+    
+    public string DuplicateUsername { get; set; }
+    public string NotSamePassword { get; set; }
 
 
     public IActionResult OnGet() {
@@ -71,8 +81,50 @@ public class CreateModel : PageModel {
     public IActionResult OnPost() {
         var isUsernameDuplicate = _databaseContext.GetUsers().Any(x => x.Username == Username);
         HasSuperAdmin = _databaseContext.HasSuperAdministrator();
+
+        if (FirstName.IsNullOrEmpty()) {
+            OnGet();
+            NullFirstName = "First name is required.";
+            return Page();
+        }
+
+        if (LastName.IsNullOrEmpty()) {
+            OnGet();
+            NullLastName = "Last name is required.";
+            return Page();
+        }
+
+        if (Username.IsNullOrEmpty()) {
+            OnGet();
+            NullUsername = "Username is required.";
+            return Page();
+        }
+
+        if (isUsernameDuplicate) {
+            OnGet();
+            DuplicateUsername = "This username cannot be used. Please try other usernames.";
+            return Page();
+        }
+
+        if (Password.IsNullOrEmpty()) {
+            OnGet();
+            NullPassword = "Password field is required.";
+            return Page();
+        }
+
+        if (RepeatPassword.IsNullOrEmpty()) {
+            OnGet();
+            NullRepeatPass = "Repeat password field is required.";
+            return Page();
+        }
+
+        if (Password != RepeatPassword) {
+            OnGet();
+            NotSamePassword = "The passwords are not the same.";
+            return Page();
+        }
         
-        if (!ModelState.IsValid || isUsernameDuplicate || Password != RepeatPassword) {
+        if (!ModelState.IsValid) {
             return Page();
         }
 

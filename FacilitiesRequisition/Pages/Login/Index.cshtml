@@ -24,19 +24,20 @@
             <h2 class="mb-4" style="font-weight: bold">Facility Request</h2>
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <span class="text-danger mt-1">@Model.ErrorUsernamePassword</span>
                 <div class="form-group mt-2">
                     <label asp-for="Username" class="control-label"></label>
                     <input asp-for="Username" class="form-control mt-1"/>
-                    <span asp-validation-for="Username" class="text-danger mt-1"></span>
+                    <span class="text-danger mt-1">@Model.UsernameBlankError</span>
                 </div>
                 <div class="form-group mt-2">
                     <label asp-for="Password" class="control-label"></label>
                     <input asp-for="Password" class="form-control mt-1" type="password" id="passwordField"/>
-                    <span asp-validation-for="Password" class="text-danger mt-1"></span>
-                    
                     <label>
-                      <input type="checkbox" onclick="togglePassword()"> Show Password
+                        <input type="checkbox" onclick="togglePassword()"> Show Password
                     </label>
+                    <br/>
+                    <span class="text-danger mt-1">@Model.PasswordBlankError</span>
                 </div>
                 <div class="form-group mt-4 mb-2">
                     <input type="submit" value="Login" class="btn btn-primary" style="width: 100%;"/>

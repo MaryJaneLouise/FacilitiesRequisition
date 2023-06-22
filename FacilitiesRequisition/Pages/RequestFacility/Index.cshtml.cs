@@ -28,17 +28,19 @@ namespace FacilitiesRequisition.Pages.RequestFacility
         public List<bool> IsApproved { get; set; } = new();
 
         public string UserInfo { get; set; } = default!;
-        public User User { get; set; } = default!;
+        public new User User { get; set; } = default!;
         public string ForSuperAdmins { get; set; }
         
-        public Signatures Signatories { get; set; } = default!;
-        
-        public string StatusRequest { get; set; }
+        public bool CanCreateRequests { get; set; }
+        public bool AreCollegeAdminsSet { get; set; }
 
         public IActionResult OnGet() {
             var user = HttpContext.Session.GetLoggedInUser(_context);
-            var userRole = _context.GetUsers().ToList();
-           
+            
+            if (user == null) {
+                return RedirectToPage("/Login/Index");
+            }
+
             bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
             var userType = isSuperAdministrator ? "Super Administrator" :
@@ -63,6 +65,8 @@ namespace FacilitiesRequisition.Pages.RequestFacility
                 default:
                     Organizations = _context.GetOfficerOrganizations(user).ToList();
                     FacilityRequest = _context.GetFacilityRequestsRequested(user).ToList();
+                    CanCreateRequests = _context.CanCreateRequests(user);
+                    AreCollegeAdminsSet = _context.AreCollegeAdminsSet();
                     User = user;
                     foreach (var request in FacilityRequest) {
                         IsApproved.Add(_context.IsApproved(request));

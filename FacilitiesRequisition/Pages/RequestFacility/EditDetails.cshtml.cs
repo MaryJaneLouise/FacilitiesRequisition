@@ -26,9 +26,14 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         public string UserInfo { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id) {
+            var user = HttpContext.Session.GetLoggedInUser(_context);
+            
+            if (user == null) {
+                return RedirectToPage("/Login/Index");
+            }
+            
             var facilityrequest =  _context.GetFacilityRequest(id ?? -1);
             
-            var user = HttpContext.Session.GetLoggedInUser(_context)!;
             bool isSuperAdministrator = user.Type == Models.UserType.Administrator &&
                                         _context.GetAdministratorRoles(user).Any(x => x.Position == AdministratorPosition.SuperAdmin);
             var userType = isSuperAdministrator ? "Super Administrator" :

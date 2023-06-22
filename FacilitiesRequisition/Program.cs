@@ -1,9 +1,12 @@
 using System;
 using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Data;
-using FacilitiesRequisition.Helpers;    
+using FacilitiesRequisition.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +47,8 @@ if (!app.Environment.IsDevelopment()) {
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Error/{0}"); // Add this line for handling status codes
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -56,5 +61,13 @@ app.UseSession();
 
 app.MapRazorPages();
 app.MapDefaultControllerRoute();
+
+app.Use(async (context, next) => {
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted) {
+        context.Response.Redirect("/Dashboard");
+    }
+});
 
 app.Run();

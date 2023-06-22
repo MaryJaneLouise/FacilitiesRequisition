@@ -1,6 +1,7 @@
 @page
 @using FacilitiesRequisition.Models.FacilityRequests
 @using FacilitiesRequisition.Models.FacilityRequests.PrintPapers
+@using Microsoft.EntityFrameworkCore
 @model FacilitiesRequisition.Pages.PrintRequest.IndexModel
 
 @{
@@ -30,153 +31,170 @@
             });
     </script>
 </head>
-<body>
-<div id="previewSection" style="margin: 0.5in 0.5in 0.5in 0.5in">
-    <div style="display: flex; align-items: center; justify-content: center;">
-        <div style="flex: 0 0 8%; margin-right: 20px;">
-            <img src="~/images/AUF_Logo.png" style="width: 100%; height: auto;">
-        </div>
-        <div style="text-align: center; margin-right: 40px">
-            <h2 style="font-family: 'Garamond';">Angeles University Foundation</h2>
-            <h4 style="font-family: 'Garamond';">Facility Request Form</h4>
-        </div>
-    </div>
-    
-    <div style="font-family: Arial, sans-serif; margin-top: 0.25in">
-        <div style="text-align: center; font-weight: bold">
-            <text>REQUEST FOR USE OF FACILITIES OR EQUIPMENT SERVICES</text>
-        </div>
-        <p><text style="font-weight: bold">Date Filed:</text> @Model.FacilityRequest.DateFiled</p>
-        <p><text style="font-weight: bold">Name of Activity:</text> @Model.FacilityRequest.NameActivity</p>
-        <p><text style="font-weight: bold">Name of the Requester:</text> @Model.FacilityRequest.Requester.Name (@Model.User.FullName)</p>
-        <p><text style="font-weight: bold">Venue Requested:</text> @Model.FacilityRequest.VenueRequested</p>
-        <p><text style="font-weight: bold">Date Requested:</text> @Model.FacilityRequest.StartDateRequested.Value.ToShortDateString() to @Model.FacilityRequest.EndDateRequested.Value.ToShortDateString()</p>
-        
-        @if (Model.FacilityRequest.AdditionalComments == null) {
-            <p><text style="font-weight: bold">Additional Comments from Requester:</text> No additional comments</p>
-        } else {
-            <p><text style="font-weight: bold">Additional Comments from Requester:</text> @Model.FacilityRequest.AdditionalComments</p>
-        }
-        
-        <p><text style="font-weight: bold">Estimated total of expenses:</text> @Model.FacilityRequest.Requester.TotalBudget.ToString("c")</p>
-        
-        <div style="margin-bottom: 0.25in"></div>
-        
-        <div class="row">
-            <div class="col">
-                <p>1.) Requested by:</p>
-                @if (Model.Signatories.President.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.President.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.President.User.FullName</p>
-                
-                <p>2.) Endorsed by: </p>
-                @if (Model.Signatories.Dean.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.Dean.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.Dean.User.FullName</p>
-                
-                <p>3.) Request cleared by:</p>
-                @if (Model.Signatories.AdminServicesDirector.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.AdminServicesDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.AdminServicesDirector.User.FullName</p>
-                
-                <p>4.) Activity cleared by:</p>
-                @if (Model.Signatories.StudentAffairsDirector.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.StudentAffairsDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.StudentAffairsDirector.User.FullName</p>
-                
-                <p>5.) Request for Admin Support cleared by:</p>
-                @if (Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.CampusFacilitiesDevelopmentDirector.User.FullName</p>
+
+@if (Model.Signatories.GetSignatureStage() == SignatureStage.Approved){
+    <body>
+    <div id="previewSection" style="margin: 0.5in 0.5in 0.5in 0.5in">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <div style="flex: 0 0 8%; margin-right: 20px;">
+                <img src="~/images/AUF_Logo.png" style="width: 100%; height: auto;">
             </div>
+            <div style="text-align: center; margin-right: 40px">
+                <h2 style="font-family: 'Garamond';">Angeles University Foundation</h2>
+                <h4 style="font-family: 'Garamond';">Facility Request Form</h4>
+            </div>
+        </div>
+        
+        <div style="font-family: Arial, sans-serif; margin-top: 0.25in">
+            <div style="text-align: center; font-weight: bold">
+                <text>REQUEST FOR USE OF FACILITIES OR EQUIPMENT SERVICES</text>
+            </div>
+            <p><text style="font-weight: bold">Date Filed:</text> @Model.FacilityRequest.DateFiled</p>
+            <p><text style="font-weight: bold">Name of Activity:</text> @Model.FacilityRequest.NameActivity</p>
+            <p><text style="font-weight: bold">Name of the Requester:</text> @Model.FacilityRequest.Requester.Name (@Model.User.FullName)</p>
+            <p><text style="font-weight: bold">Venue Requested:</text> @Model.FacilityRequest.VenueRequested</p>
+            @if (!Model.FacilityRequest.EndDateRequested.HasValue) {
+                <p><text style="font-weight: bold">Date Requested:</text> @Model.FacilityRequest.StartDateRequested.Value.ToShortDateString()</p>
+            } else {
+                <p><text style="font-weight: bold">Date Requested:</text> @Model.FacilityRequest.StartDateRequested.Value.ToShortDateString() to @Model.FacilityRequest.EndDateRequested.Value.ToShortDateString()</p>
+            }
+            @* @if (!Model.FacilityRequest.RequestedDayTwo.HasValue && !Model.FacilityRequest.RequestedDayThree.HasValue) { *@
+            @*                     <p>Date Requested: @Model.FacilityRequest.RequestedDayOne.Value.ToShortDateString()</p> *@
+            @*                 } else if (Model.FacilityRequest.RequestedDayOne.HasValue && Model.FacilityRequest.RequestedDayTwo.HasValue && !Model.FacilityRequest.RequestedDayThree.HasValue) { *@
+            @*                     <p>Date Requested: @Model.FacilityRequest.RequestedDayOne.Value.ToShortDateString() to @Model.FacilityRequest.RequestedDayTwo.Value.ToShortDateString()</p>    *@
+            @*                 } else if (Model.FacilityRequest.RequestedDayOne.HasValue && !Model.FacilityRequest.RequestedDayTwo.HasValue && Model.FacilityRequest.RequestedDayThree.HasValue) { *@
+            @*                     <p>Date Requested: @Model.FacilityRequest.RequestedDayOne.Value.ToShortDateString() to @Model.FacilityRequest.RequestedDayThree.Value.ToShortDateString()</p>    *@
+            @*                 } *@
             
-            <div class="col">
-                <p>6.) Accounting Support cleared by:</p> 
-                @if (Model.Signatories.AccountingOfficeDirector.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.AccountingOfficeDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.AccountingOfficeDirector.User.FullName</p>
+            @if (Model.FacilityRequest.AdditionalComments == null) {
+                <p><text style="font-weight: bold">Additional Comments from Requester:</text> No additional comments</p>
+            } else {
+                <p><text style="font-weight: bold">Additional Comments from Requester:</text> @Model.FacilityRequest.AdditionalComments</p>
+            }
+            
+            <p><text style="font-weight: bold">Estimated total of expenses:</text> @Model.FacilityRequest.Requester.TotalBudget.ToString("c")</p>
+            
+            <div style="margin-bottom: 0.25in"></div>
+            
+            <div class="row">
+                <div class="col">
+                    <p>1.) Requested by:</p>
+                    @if (Model.Signatories.President.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.President.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.President.User.FullName</p>
+                    
+                    <p>2.) Endorsed by: </p>
+                    @if (Model.Signatories.Dean.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.Dean.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.Dean.User.FullName</p>
+                    
+                    <p>3.) Request cleared by:</p>
+                    @if (Model.Signatories.AdminServicesDirector.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.AdminServicesDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.AdminServicesDirector.User.FullName</p>
+                    
+                    <p>4.) Activity cleared by:</p>
+                    @if (Model.Signatories.StudentAffairsDirector.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.StudentAffairsDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>   
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.StudentAffairsDirector.User.FullName</p>
+                    
+                    <p>5.) Request for Admin Support cleared by:</p>
+                    @if (Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.CampusFacilitiesDevelopmentDirector.User.FullName</p>
+                </div>
                 
-                <p>7.) Approved by:</p>
-                @if (Model.Signatories.VicePresidentAdministration.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.VicePresidentAdministration.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
-                }
-                <p style="margin-bottom: 0.25in">@Model.Signatories.VicePresidentAdministration.User.FullName</p>
-                
-                @if (Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename != null) {
-                    <img src="~/images/@Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
-                }
-                <p>@Model.Signatories.VicePresidentAcademicAffairs.User.FullName</p>
+                <div class="col">
+                    <p>6.) Accounting Support cleared by:</p> 
+                    @if (Model.Signatories.AccountingOfficeDirector.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.AccountingOfficeDirector.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.AccountingOfficeDirector.User.FullName</p>
+                    
+                    <p>7.) Approved by:</p>
+                    @if (Model.Signatories.VicePresidentAdministration.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.VicePresidentAdministration.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
+                    }
+                    <p style="margin-bottom: 0.25in">@Model.Signatories.VicePresidentAdministration.User.FullName</p>
+                    
+                    @if (Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename != null) {
+                        <img src="~/images/@Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename" alt="Signature" style="max-width: 1.25in; max-height: 1.25in;"/>
+                    }
+                    <p>@Model.Signatories.VicePresidentAcademicAffairs.User.FullName</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="buttons" style="margin-bottom: 5px; margin-left: 20px">
-    <a class="btn btn-outline-primary" asp-page="/RequestFacility/ViewDetails" asp-route-id="@Model.FacilityRequest.Id">
-        Go back to the details page
-    </a>
-</div>
-
-@if (Model.Signatories.AssistantDean.User.SignatureFilename != null &&
-     Model.Signatories.Dean.User.SignatureFilename != null &&
-     Model.Signatories.AdminServicesDirector.User.SignatureFilename != null &&
-     Model.Signatories.StudentAffairsDirector.User.SignatureFilename != null ||
-     Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename != null &&
-     Model.Signatories.AccountingOfficeDirector.User.SignatureFilename != null &&
-     Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename != null &&
-     Model.Signatories.VicePresidentAdministration.User.SignatureFilename != null) {
-        
-    <div id="buttons" style="margin-bottom: 20px; margin-left: 20px">
-        <button type="button" class="btn btn-outline-primary" onclick="printPreview()">Print paper</button>
-        <button type="button" class="btn btn-outline-primary" onclick="exportToPDF()">Export to PDF</button>
+    <div id="buttons" style="margin-bottom: 5px; margin-left: 20px">
+        <a class="btn btn-outline-primary" asp-page="/RequestFacility/ViewDetails" asp-route-id="@Model.FacilityRequest.Id">
+            Go back to the details page
+        </a>
     </div>
 
-    <script>
-        function exportToPDF() {
-                    const previewSection = document.getElementById('previewSection');
-                    
-                    const options = {
-                       filename: 'FacilityRequest.pdf',
-                       jsPDF: { unit: 'in', format: [8.5, 13] }
-                    };
-                    
-                    html2pdf().set(options).from(previewSection).save();
-        
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: 'http://localhost:5100/PrintRequest?handler=Test&id=4',
-                    //    success: function () {
-                    //    },
-                    //    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //    }
-                    //});
-                   
-        
-                    // $.ajax({
-                    //     type: "GET",
-                    //     url: "@Url.Page("Index","DownloadFile",new {requestId = 2})",
-                    //     success: function () {
-                    //     },
-                    //     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //     }
-                    // });
-                }
-        
-        function printPreview() {
-            const buttonSection = document.getElementById('buttons');
-            buttonSection.style.display = 'none';
-                        
-            window.print();
-            buttonSection.style.display = 'block';
-        }
-    </script>
-}
+    @if (Model.Signatories.AssistantDean.User.SignatureFilename != null &&
+         Model.Signatories.Dean.User.SignatureFilename != null &&
+         Model.Signatories.AdminServicesDirector.User.SignatureFilename != null &&
+         Model.Signatories.StudentAffairsDirector.User.SignatureFilename != null ||
+         Model.Signatories.CampusFacilitiesDevelopmentDirector.User.SignatureFilename != null &&
+         Model.Signatories.AccountingOfficeDirector.User.SignatureFilename != null &&
+         Model.Signatories.VicePresidentAcademicAffairs.User.SignatureFilename != null &&
+         Model.Signatories.VicePresidentAdministration.User.SignatureFilename != null) {
+            
+        <div id="buttons" style="margin-bottom: 20px; margin-left: 20px">
+            <button type="button" class="btn btn-outline-primary" onclick="printPreview()">Print paper</button>
+            <button type="button" class="btn btn-outline-primary" onclick="exportToPDF()">Export to PDF</button>
+        </div>
 
-</body>
+        <script>
+            function exportToPDF() {
+                        const previewSection = document.getElementById('previewSection');
+                        
+                        const options = {
+                           filename: 'FacilityRequest.pdf',
+                           jsPDF: { unit: 'in', format: [8.5, 13] }
+                        };
+                        
+                        html2pdf().set(options).from(previewSection).save();
+            
+                        //$.ajax({
+                        //    type: "POST",
+                        //    url: 'http://localhost:5100/PrintRequest?handler=Test&id=4',
+                        //    success: function () {
+                        //    },
+                        //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //    }
+                        //});
+                       
+            
+                        // $.ajax({
+                        //     type: "GET",
+                        //     url: "@Url.Page("Index","DownloadFile",new {requestId = 2})",
+                        //     success: function () {
+                        //     },
+                        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //     }
+                        // });
+                    }
+            
+            function printPreview() {
+                const buttonSection = document.getElementById('buttons');
+                buttonSection.style.display = 'none';
+                            
+                window.print();
+                buttonSection.style.display = 'block';
+            }
+        </script>
+    }
+
+    </body>
+    } else {
+    RedirectToPage("/RequestFacility/ViewDetails", new {id = Model.FacilityRequest.Id});
+    }
+
 </html>

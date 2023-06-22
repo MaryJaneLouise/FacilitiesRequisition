@@ -47,10 +47,10 @@
                                 </div>
 
                                 <div style="margin-left: auto; margin-right: 10px;justify-content: end">
-                                    <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id">
-                                        <i class="bi bi-pencil-square"></i>
-                                        Edit
-                                    </a>
+                                    @* <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id"> *@
+                                    @*     <i class="bi bi-pencil-square"></i> *@
+                                    @*     Edit *@
+                                    @* </a> *@
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@organization.Id">
                                         <i class="bi bi-trash-fill"></i>
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <form method="post" asp-page-handler="DeleteRequest" asp-route-id="@organization.Id">
+                                        <form method="post" asp-page-handler="DeleteOrganization" asp-route-id="@organization.Id">
                                             <button type="submit" class="btn btn-danger">Delete organization</button>
                                         </form>
                                     </div>
