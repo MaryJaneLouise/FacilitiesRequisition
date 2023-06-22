@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
 
         [BindProperty] public string NameActivity { get; set; }
         
-        [BindProperty] public string ContactNumber { get; set; }
+        [BindProperty] [RegularExpression(@"^\d{11}$", ErrorMessage = "Please enter a valid 11-digit number.")] public string ContactNumber { get; set; }
         
         [BindProperty] public DateTime? StartDateRequested { get; set; }
         

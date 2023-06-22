@@ -55,7 +55,7 @@
                 <div class="rounded-rectangle" style="margin-right: 10px; height: 750px">
                     <h2 style="font-weight: bold">View @Model.FacilityRequest.NameActivity details</h2>
                     
-                    <div style="display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 20px;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-end">
                         <div style="margin-bottom: 10px;">
                             <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
                             @* <a class="btn btn-primary" asp-page="./EditDetails" asp-route-id="@Model.FacilityRequest?.Id">Edit details</a> *@
@@ -124,7 +124,7 @@
                             @if (Model.FacilityRequest.AdditionalComments != null) {
                                 <textarea asp-for="FacilityRequest.AdditionalComments" class="form-control" disabled style="height: 225px"></textarea>
                             } else {
-                                <textarea class="form-control" disabled style="height: 225px">No additional comments.</textarea>
+                                <textarea class="form-control" disabled style="height: 250px">No additional comments.</textarea>
                             }
                             <br/>
                         </div>

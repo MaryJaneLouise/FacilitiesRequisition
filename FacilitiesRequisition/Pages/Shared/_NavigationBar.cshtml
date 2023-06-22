@@ -49,6 +49,7 @@
                   <form method="post">
                     <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
                             asp-page-handler="ManageUserAccount">
+                      <i class="bi bi-people" style="font-size: 23px"></i>
                       Users
                     </button>
                   </form>
@@ -58,6 +59,7 @@
                   <form method="post">
                     <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
                             asp-page-handler="ManageOrganization">
+                      <i class="bi bi-person-gear" style="font-size: 23px"></i>
                       Organizations
                     </button>
                   </form>
@@ -68,21 +70,22 @@
                   <form method="post">
                     <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
                             asp-page-handler="ManageFacilityRequest">
+                      <i class="bi bi-database-gear" style="font-size: 23px"></i>
                       Request a Facility
                     </button>
                   </form>
                 </li>
                 
-                if (Model.UserType == "Organization Officer" || Model.UserType == "Faculty") {
-                  <li class="nav-item">
-                    <form method="post">
-                      <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px"
-                              asp-page-handler="">
-                        Notifications
-                      </button>
-                    </form>
-                  </li>
-                }
+                @* if (Model.UserType == "Organization Officer" || Model.UserType == "Faculty") { *@
+                @*   <li class="nav-item"> *@
+                @*     <form method="post"> *@
+                @*       <button type="submit" class="nav-link border-0 clickable-nav" role="link" style="margin-right: 5px" *@
+                @*               asp-page-handler=""> *@
+                @*         Notifications *@
+                @*       </button> *@
+                @*     </form> *@
+                @*   </li> *@
+                @* } *@
               }
             </ul>
         
@@ -90,6 +93,7 @@
               <div class="form-group">
                 <li class="nav-item dropdown list-unstyled" style="font-size: 20px">
                   <a class="nav-link dropdown-toggle clickable-nav" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-fill" style="font-size: 23px"></i>
                     @Model.Name
                   </a>
                   <ul class="dropdown-menu">

@@ -26,10 +26,20 @@
                         </div>
                                                 
                         <div class="form-group mt-2">
-                            <label class="control-label">Requester</label>
-                            <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control mt-1"></select>
-                            <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
-                            <br/>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="control-label">Requester</label>
+                                    <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control"></select>
+                                    <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <label asp-for="ContactNumber" class="control-label">Contact Number</label>
+                                    <input asp-for="ContactNumber" type="number" class="form-control"/>
+                                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                    <br/>
+                                </div>
+                            </div>
                         </div>
                     
                                     
@@ -39,28 +49,24 @@
                             <span asp-validation-for="NameActivity" class="text-danger"></span>
                             <br/>
                         </div>
-                                        
+
                         <div class="form-group">
-                            <label asp-for="ContactNumber" class="control-label">Contact Number</label>
-                            <input asp-for="ContactNumber" type="number" class="form-control" />
-                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
-                            <br/>
+                            <div class="row">
+                                <div class="col">
+                                    <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
+                                    <input asp-for="StartDateRequested" type="date" class="form-control"/>
+                                    <span asp-validation-for="StartDateRequested" class="text-danger"></span>
+                                    <br/>
+                                </div>
+                                <div class="col">
+                                    <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
+                                    <input asp-for="EndDateRequested" type="date" class="form-control"/>
+                                    <span asp-validation-for="EndDateRequested" class="text-danger"></span>
+                                    <br/>                                  
+                                </div>
+                            </div>
                         </div>
-                                                
-                        <div class="form-group">
-                            <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
-                            <input asp-for="StartDateRequested" type="date" class="form-control" />
-                            <span asp-validation-for="StartDateRequested" class="text-danger"></span>
-                            <br/>
-                        </div>
-                                                
-                        <div class="form-group">
-                            <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
-                            <input asp-for="EndDateRequested" type="date" class="form-control" />
-                            <span asp-validation-for="EndDateRequested" class="text-danger"></span>
-                            <br/>
-                        </div>
-                                                
+
                         <div class="form-group">
                             <label asp-for="VenueRequested" class="control-label">Venue Requested</label>
                             <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
@@ -70,7 +76,8 @@
                         
                         <div class="form-group">
                             <label asp-for="Comments" class="control-label">Additional Comments</label>
-                            <textarea asp-for="Comments" class="form-control"></textarea>
+                            <textarea asp-for="Comments" class="form-control" 
+                                placeholder="Type here your additional comments. If you've selected 'Board Room' or 'Classrooms', please place the room number. "></textarea>
                             <span asp-validation-for="Comments" class="text-danger"></span>
                             <br/>
                         </div>

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FacilitiesRequisition.Pages.Users.Administrators; 
 
@@ -21,7 +22,17 @@ public class UpdateAdministratorsModel : PageModel {
                 Text = $"{admin.FullName}"
             });
     }
-
+    
+    public User? AssistantDean { get; set; } = default!;
+    public User? Dean { get; set; } = default!;
+    public User? BuildingManager { get; set; } = default!;
+    public User? AdminServicesDirector { get; set; } = default!;
+    public User? StudentAffairsDirector { get; set; } = default!;
+    public User? CampusFacilitiesDirector { get; set; } = default!;
+    public User? AccountingOfficeDirector { get; set; } = default!;
+    public User? VicePresidentAA { get; set; } = default!;
+    public User? VicePresidentAdmin { get; set; } = default!;
+    
     [BindProperty] public string AssistantDeanId { get; set; } = default!;
     [BindProperty] public string DeanId { get; set; } = default!;
     [BindProperty] public string BuildingManagerId { get; set; } = default!;
@@ -51,15 +62,35 @@ public class UpdateAdministratorsModel : PageModel {
 
         switch (UserInfo) {
             case "Super Administrator":
-                AssistantDeanId = _context.GetAdministrator(AdministratorPosition.AssistantDean).Id.ToString();
-                DeanId = _context.GetAdministrator(AdministratorPosition.Dean).Id.ToString();
-                BuildingManagerId = _context.GetAdministrator(AdministratorPosition.BuildingManager).Id.ToString();
-                AdminServicesDirectorId = _context.GetAdministrator(AdministratorPosition.AdminServicesDirector).Id.ToString();
-                StudentAffairsDirectorId = _context.GetAdministrator(AdministratorPosition.StudentAffairsDirector).Id.ToString();
-                CampusFacilitiesDirectorId = _context.GetAdministrator(AdministratorPosition.CampusFacilitiesDevelopmentDirector).Id.ToString();
-                AccountingOfficeDirectorId = _context.GetAdministrator(AdministratorPosition.AccountingOfficeDirector).Id.ToString();
-                VicePresidentAAId = _context.GetAdministrator(AdministratorPosition.VicePresidentAcademicAffairs).Id.ToString();
-                VicePresidentAdminId = _context.GetAdministrator(AdministratorPosition.VicePresidentAdministration).Id.ToString();
+                AssistantDean = _context.GetAdministrator(AdministratorPosition.AssistantDean);
+                Dean = _context.GetAdministrator(AdministratorPosition.Dean);
+                BuildingManager = _context.GetAdministrator(AdministratorPosition.BuildingManager);
+                AdminServicesDirector = _context.GetAdministrator(AdministratorPosition.AdminServicesDirector);
+                StudentAffairsDirector = _context.GetAdministrator(AdministratorPosition.StudentAffairsDirector);
+                CampusFacilitiesDirector = _context.GetAdministrator(AdministratorPosition.CampusFacilitiesDevelopmentDirector);
+                AccountingOfficeDirector = _context.GetAdministrator(AdministratorPosition.AccountingOfficeDirector);
+                VicePresidentAA = _context.GetAdministrator(AdministratorPosition.VicePresidentAcademicAffairs);
+                VicePresidentAdmin = _context.GetAdministrator(AdministratorPosition.VicePresidentAdministration);
+
+                if (AssistantDean?.ToString().IsNullOrEmpty() == true ||
+                    !Dean?.ToString().IsNullOrEmpty() == true ||
+                    !BuildingManager?.ToString().IsNullOrEmpty() == true ||
+                    !AdminServicesDirector?.ToString().IsNullOrEmpty() == true ||
+                    !StudentAffairsDirector?.ToString().IsNullOrEmpty() == true ||
+                    !CampusFacilitiesDirector?.ToString().IsNullOrEmpty() == true ||
+                    !AccountingOfficeDirector?.ToString().IsNullOrEmpty() == true ||
+                    !VicePresidentAA?.ToString().IsNullOrEmpty() == true ||
+                    !VicePresidentAdmin?.ToString().IsNullOrEmpty() == true) {
+                    AssistantDeanId = _context.GetAdministrator(AdministratorPosition.AssistantDean)?.Id.ToString();
+                    DeanId = _context.GetAdministrator(AdministratorPosition.Dean)?.Id.ToString();
+                    BuildingManagerId = _context.GetAdministrator(AdministratorPosition.BuildingManager)?.Id.ToString();
+                    AdminServicesDirectorId = _context.GetAdministrator(AdministratorPosition.AdminServicesDirector)?.Id.ToString();
+                    StudentAffairsDirectorId = _context.GetAdministrator(AdministratorPosition.StudentAffairsDirector)?.Id.ToString();
+                    CampusFacilitiesDirectorId = _context.GetAdministrator(AdministratorPosition.CampusFacilitiesDevelopmentDirector)?.Id.ToString();
+                    AccountingOfficeDirectorId = _context.GetAdministrator(AdministratorPosition.AccountingOfficeDirector)?.Id.ToString();
+                    VicePresidentAAId = _context.GetAdministrator(AdministratorPosition.VicePresidentAcademicAffairs)?.Id.ToString();
+                    VicePresidentAdminId = _context.GetAdministrator(AdministratorPosition.VicePresidentAdministration)?.Id.ToString();
+                }
                 
                 return Page();
             default:
