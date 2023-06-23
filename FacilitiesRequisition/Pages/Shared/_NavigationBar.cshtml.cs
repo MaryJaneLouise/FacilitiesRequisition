@@ -120,6 +120,10 @@ namespace FacilitiesRequisition.Pages.Shared {
         public IActionResult OnPostManageFacilityRequest() {
             return RedirectToPage("../RequestFacility/Index");
         }
+        
+        public IActionResult OnPostHistoryFacilityRequest() {
+            return RedirectToPage("../RequestFacility/History");
+        }
     
         public IActionResult OnPostViewProfile() {
             return RedirectToPage("../ManageUsers/ViewDetails");
