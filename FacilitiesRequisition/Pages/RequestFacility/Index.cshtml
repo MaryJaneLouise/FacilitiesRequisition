@@ -64,23 +64,34 @@
                         @for (var index = 0; index < Model.FacilityRequest.Count; index++) {
                             var facilityRequest = Model.FacilityRequest[index];
                             var isApproved = Model.IsApproved[index];
+                            var endDate = facilityRequest.EndDateRequested?.Date;
+                            var today = DateTime.Today;
+                            var isEndDatePassed = endDate.HasValue && today >= endDate;
+                            var isPending = !isApproved && isEndDatePassed;
+                            
                             <div class="hover-item">
                                 <div style="display: flex; align-items: center">
                                     <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
                                         <span>@facilityRequest.NameActivity.Substring(0, 1)</span>
                                     </div>
                                                         
-                                    <div class="request-details" style="font-size: large; horiz-align: center">
-                                        @facilityRequest.NameActivity
-                                        <div style="font-size: small">
-                                            <div>
-                                                <text>Dates requested: @facilityRequest.StartDateRequested.Value.ToShortDateString() to @facilityRequest.EndDateRequested.Value.ToShortDateString()</text>
-                                            </div>
-                                            <div>
-                                                <text>Venue requested: @facilityRequest.VenueRequested.GetDisplayName()</text>
-                                            </div>
-                                            <div style="font-size: 15px">
-                                               <text>Status: <span style="color: @(isApproved ? "green" : "#C51E3A"); font-weight: bold;"> @(isApproved ? "Approved" : "Pending")</span></text>
+                                    <div style="font-size: 15px">
+                                        <div class="request-details" style="font-size: large; horiz-align: center">
+                                            @facilityRequest.NameActivity
+                                            <div style="font-size: small">
+                                                <div>
+                                                    <text>Dates requested: @facilityRequest.StartDateRequested.Value.ToShortDateString() to @facilityRequest.EndDateRequested.Value.ToShortDateString()</text>
+                                                </div>
+                                                <div>
+                                                    <text>Venue requested: @facilityRequest.VenueRequested.GetDisplayName()</text>
+                                                </div>
+                                                <div style="font-size: 15px">
+                                                    @if (isPending) {
+                                                        <text>Status: <span style="color: #C51E3A; font-weight: bold;">This request cannot proceed anymore. Please create a new request if you wish to continue.</span></text>
+                                                    } else {
+                                                        <text>Status: <span style="color: @(isApproved ? "green" : "#C51E3A"); font-weight: bold;">@(isApproved ? "Approved" : "Pending")</span></text>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

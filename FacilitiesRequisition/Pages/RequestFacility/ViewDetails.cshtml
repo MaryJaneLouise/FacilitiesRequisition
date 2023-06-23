@@ -31,7 +31,7 @@
                     <div style="display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 20px;">
                         <div style="margin-bottom: 10px;">
                             <a class="btn btn-outline-primary" asp-page="./Index">Go back</a>
-                            <a class="btn btn-primary" asp-page="./EditDetails" asp-route-id="@Model.FacilityRequest?.Id">Edit details</a>
+                            @* <a class="btn btn-primary" asp-page="./EditDetails" asp-route-id="@Model.FacilityRequest?.Id">Edit details</a> *@
                             @if (Model.Signatories.GetSignatureStage() == SignatureStage.Approved) {
                                 <a class="btn btn-success" asp-page="/PrintRequest/Index" asp-route-id="@Model.FacilityRequest?.Id">Print Request</a>
                             } else {
@@ -40,62 +40,68 @@
                         </div>
                     </div>
                     
-                    <div class="show-request-container">
+                    <div class="show-request-container" style="overflow-x: hidden">
                         <div>
-                            <br/>
-                            <label>Date Filed</label>
-                            <input asp-for="FacilityRequest.DateFiled" class="form-control" disabled/>
+                            <div class="row">
+                                <div class="col">
+                                    <br/>
+                                    <label>Date Filed</label>
+                                    <input asp-for="FacilityRequest.DateFiled" class="form-control" disabled/>
+                                </div>
+                                <div class="col">
+                                    <br/>
+                                    <label>Requester</label>
+                                    <input asp-for="FacilityRequest.Requester.Name" class="form-control" disabled/>
+                                </div>
+                                <div class="col">
+                                    <br/>
+                                    <label>Contact Number</label>
+                                    <input asp-for="FacilityRequest.ContactNumber" class="form-control" disabled/>
+                                </div>
+                            </div>
                         </div>
-                    
+
                         <div>
-                            <br/>
-                            <label>Requester</label>
-                            <input asp-for="FacilityRequest.Requester.Name" class="form-control" disabled/>
+                            <div class="row">
+                                <div class="col">
+                                    <br/>
+                                    <label>Name of Activity</label>
+                                    <input asp-for="FacilityRequest.NameActivity" class="form-control" disabled/>
+                                </div>             
+                                <div class="col">
+                                    <br/>
+                                    <label>Venue Requested</label>
+                                    <input asp-for="FacilityRequest.VenueRequested" class="form-control" disabled/>
+                                </div>
+                            </div>
                         </div>
-                    
+
                         <div>
-                            <br/>
-                            <label>Name of Activity</label>
-                            <input asp-for="FacilityRequest.NameActivity" class="form-control" disabled/>
+                            <div class="row">
+                                <div class="col">
+                                    <br/>
+                                    <label>Start Date</label>
+                                    <input asp-for="FacilityRequest.StartDateRequested" class="form-control" disabled/>
+                                </div>            
+                                <div class="col">
+                                    <br/>
+                                    <label>End Date</label>
+                                    <input asp-for="FacilityRequest.EndDateRequested" class="form-control" disabled/>
+                                </div>
+                            </div>
                         </div>
-                    
-                        <div>
-                            <br/>
-                            <label>Contact Number</label>
-                            <input asp-for="FacilityRequest.ContactNumber" class="form-control" disabled/>
-                        </div>
-                    
-                        <div>
-                            <br/>
-                            <label>Venue Requested</label>
-                            <input asp-for="FacilityRequest.VenueRequested" class="form-control" disabled/>
-                        </div>
-                    
-                        <div>
-                            <br/>
-                            <label>Start Date</label>
-                            <input asp-for="FacilityRequest.StartDateRequested" class="form-control" disabled/>
-                        </div>
-                    
-                        <div>
-                            <br/>
-                            <label>End Date</label>
-                            <input asp-for="FacilityRequest.EndDateRequested" class="form-control" disabled/>
-                        </div>
-                    
+                        
                         <div>
                             <br/>
                             <label>Additional Comments</label>
                             @if (Model.FacilityRequest.AdditionalComments != null) {
-                                <textarea asp-for="FacilityRequest.AdditionalComments" class="form-control" disabled></textarea>
+                                <textarea asp-for="FacilityRequest.AdditionalComments" class="form-control" disabled style="height: 225px"></textarea>
                             } else {
-                                <textarea class="form-control" disabled>No additional comments.</textarea>
+                                <textarea class="form-control" disabled style="height: 225px">No additional comments.</textarea>
                             }
                             <br/>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
             
@@ -126,23 +132,36 @@
                                     <div style="margin-left: auto; margin-right: 10px; justify-content: end">
                                         <form method="post">
                                             @if (signatory.User == Model.User) {
-                                                if (!signatory.IsSigned) {
-                                                    <input type="submit" value="Sign" class="btn btn-secondary mb-2" asp-page-handler="Sign" 
-                                                           asp-route-facilityRequestId="@Model.FacilityRequest.Id"
-                                                           asp-route-signatoryId="@signatory.Id"
-                                                           asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
-                                                }
-                                                else {
-                                                    <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Unsign" 
-                                                           asp-route-facilityRequestId="@Model.FacilityRequest.Id"
-                                                           asp-route-signatoryId="@signatory.Id"
-                                                           asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
+                                                var endDate = Model.FacilityRequest.EndDateRequested.Value.Date;
+                                                var today = DateTime.Today;
+                                                if (endDate >= today) {
+                                                    if (!signatory.IsSigned) {
+                                                        <input type="submit" value="Sign" class="btn btn-secondary mb-2" asp-page-handler="Sign" 
+                                                               asp-route-facilityRequestId="@Model.FacilityRequest.Id"
+                                                               asp-route-signatoryId="@signatory.Id"
+                                                               asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
+                                                    }
+                                                    else {
+                                                        <input type="submit" value="Unsign" class="btn btn-secondary mb-2" asp-page-handler="Unsign" 
+                                                               asp-route-facilityRequestId="@Model.FacilityRequest.Id"
+                                                               asp-route-signatoryId="@signatory.Id"
+                                                               asp-route-isAdmin="@(signatory is AdministratorSignatory)"/>
+                                                    }
+                                                } else {
+                                                    @: <text>N/A</text>
                                                 }
                                             } else {
-                                                if (signatory.IsSigned) {
-                                                    @: <text>Signed</text>
+                                                var endDate = Model.FacilityRequest.EndDateRequested.Value.Date;
+                                                var today = DateTime.Today;
+
+                                                if (endDate >= today) {
+                                                    if (signatory.IsSigned) {
+                                                        @: <text>Signed</text>
+                                                    } else {
+                                                        @: <text>Unsigned</text>
+                                                    }   
                                                 } else {
-                                                    @: <text>Unsigned</text>
+                                                    @: <text>N/A</text>
                                                 }
                                             }
                                         </form>
