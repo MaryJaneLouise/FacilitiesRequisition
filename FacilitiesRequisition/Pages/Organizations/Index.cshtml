@@ -15,7 +15,7 @@
 </head>
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div class="row d-flex justify-content-md-center align-items-center vh-100">
-        <div class="col-md-6 rounded-rectangle">
+        <div class="col-md-8 rounded-rectangle">
             <h2 style="font-weight: bold; margin-bottom: 0.25in">Organization List</h2>
             <input class="form-control" type="text" id="search-org" placeholder="Search organization"/>
             <br/>
@@ -38,19 +38,19 @@
                                     @organization.Name
                                     <div style="font-size: small">
                                         @if (organization.IsStudentCouncil) {
-                                            @: <text>Student Council | @organization.TotalBudget.ToString("c") left</text>
+                                            @: <text>Student Council</text>
                                         }
                                         else {
-                                            @: <text>Non-mandated Organization | @organization.TotalBudget.ToString("c") left</text>
+                                            @: <text>Non-mandated Organization</text>
                                         }
                                     </div>
                                 </div>
 
                                 <div style="margin-left: auto; margin-right: 10px;justify-content: end">
-                                    @* <a class="btn btn-outline-secondary" asp-page="./EditDetails" asp-route-id="@organization.Id"> *@
-                                    @*     <i class="bi bi-pencil-square"></i> *@
-                                    @*     Edit *@
-                                    @* </a> *@
+                                    <a class="btn btn-outline-secondary" asp-page="./ViewDetails" asp-route-id="@organization.Id">
+                                        <i class="bi bi-pencil-square"></i>
+                                        View Details
+                                    </a>
 
                                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal_@organization.Id">
                                         <i class="bi bi-trash-fill"></i>

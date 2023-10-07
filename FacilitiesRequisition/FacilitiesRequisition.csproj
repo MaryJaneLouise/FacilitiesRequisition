@@ -24,10 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\Organizations\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateOrganizations\Index.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateRequestPaper\Index.cshtml" />
       <AdditionalFiles Include="Pages\_RecycleFiles\CreateUsers\Index.cshtml" />

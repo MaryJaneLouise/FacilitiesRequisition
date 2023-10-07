@@ -14,7 +14,7 @@ public class Organization {
     [Display(Name = "Name of Adviser's Organization")]
     public User? Adviser { get; set; }
     
-    [Display(Name = "The organization is a student council.")]
+    [Display(Name = "Type of Organization")]
     public bool IsStudentCouncil { get; set; }
     
     [Display(Name = "Organization's Budget")]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FacilitiesRequisition.Data;
+using FacilitiesRequisition.Models;
 using FacilitiesRequisition.Models.Administrators;
 using FacilitiesRequisition.Models.Officers;
 
@@ -19,9 +20,20 @@ namespace FacilitiesRequisition.Pages.Organizations
         }
 
         public Organization Organization { get; set; } = default!; 
+        
+        public User? President { get; set; } = default!; 
+        
+        public User? VicePresident { get; set; } = default!; 
+        
+        public User? Treasurer { get; set; } = default!; 
+        
+        public User? Secretary { get; set; } = default!; 
+        
+        public User? PublicRelationsOfficer { get; set; } = default!; 
+        
         public string UserInfo { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id) {
+        public IActionResult OnGet(int? id) {
             var user = HttpContext.Session.GetLoggedInUser(_context);
             
             if (user == null) {
@@ -49,6 +61,7 @@ namespace FacilitiesRequisition.Pages.Organizations
                     }
                     
                     Organization = organization;
+                    
                     return Page();
                 default:
                     return RedirectToPage("/Dashboard/Index");
