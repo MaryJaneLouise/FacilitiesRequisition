@@ -137,6 +137,10 @@ namespace FacilitiesRequisition.Pages.Shared {
         public IActionResult OnPostRequestPaper() {
             return RedirectToPage("../CreateRequestPaper/Index");
         }
+
+        public IActionResult OnPostAvailableFacility() {
+            return RedirectToPage("../AvailableFacility/Index");
+        }
     
         public IActionResult OnPostHome() {
             return RedirectToPage("../Dashboard/Index");

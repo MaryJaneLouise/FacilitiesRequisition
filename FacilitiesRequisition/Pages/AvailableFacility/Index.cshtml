@@ -1,0 +1,96 @@
+@page
+@using FacilitiesRequisition.Pages.Organizations
+@using FacilitiesRequisition.Models.FacilityRequests.PrintPapers
+@model FacilitiesRequisition.Pages.AvailableFacility.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    var sortedFacilityRequests = Model.FacilityRequest.OrderBy(fr => fr.StartDateRequested).ToList();
+}
+
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="./css/site.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+</head>
+
+<body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
+<div>
+    <div class="row d-flex justify-content-md-center align-items-center vh-100">
+        @if (Model.UserInfo == "Super Administrator") {
+            <div class="col-md-5 rounded-rectangle">
+                <h2 style="font-weight: bold">Manage facility request</h2>
+                <text>@Model.ForSuperAdmins</text>
+            </div>
+        } else {
+            @if (Model.VenueDetailsList.Count == 0) {
+                <div class="col-md-5 rounded-rectangle">
+                    <h2 style="font-weight: bold">Available facilities</h2>
+                    <br/>
+
+                    <div align="center">
+                        <text>There's no facilities listed for this system. Please contact your administrators to fix this problem. Thank you!</text>
+                    </div>
+
+                    <div style="float: right; margin-bottom: 5px">
+                        <br/>
+                        <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
+                    </div>
+                </div>
+            } else {
+                <div class="col-md-12 rounded-rectangle">
+                    <h2 style="font-weight: bold">Available Facilities</h2>
+                    <input class="form-control" type="text" id="search-facility" placeholder="Search facilities available"/>
+                    <br/>
+
+                    <div class="button-container">
+                        <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
+                        @if (Model.UserInfo != "Administrator") {
+                            <a class="btn btn-primary" asp-page="../RequestFacility/CreateRequest">Add facility request</a>
+                        }
+                        <br/>
+                    </div>
+                    
+                    <div class="user-container">
+                        <div class="no-results-facility" style="display: none; justify-content: center; align-items: center; text-align: center">
+                            No results in this list of request.
+                        </div>
+                       @foreach (var venueDetails in Model.VenueDetailsList) {
+                           <div class="hover-item">
+                               <div style="display: flex; align-items: center">
+                                   <div class="profile-icon" style="margin-right: 10px; margin-left: 10px">
+                                       <span>@venueDetails.VenueName.Substring(0, 1)</span>
+                                   </div>
+                       
+                                   <div style="font-size: 15px">
+                                       <div class="request-details" style="font-size: larger; horiz-align: center">
+                                           @venueDetails.VenueName
+                                           <div style="font-size: medium">
+                                               <div>
+                                                   <text>@venueDetails.VenueDetailExpanded</text>
+                                                   <br/>
+                                                   @foreach (var request in venueDetails.FacilityRequests) {
+                                                       <div>
+                                                           <strong>Date Needed by @request.Requester.Name:</strong>
+                                                           @request.StartDateRequested.Value.ToShortDateString() to @request.EndDateRequested.Value.ToShortDateString()
+                                                       </div>
+                                                   }
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+</body>
+</html>

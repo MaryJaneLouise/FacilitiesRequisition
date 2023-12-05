@@ -43,15 +43,4 @@ public class IndexModel : PageModel {
         var facilityRequestsJson = JsonConvert.SerializeObject(FacilityRequest);
         ViewData["FacilityRequestsJson"] = facilityRequestsJson;
     }
-    
-    public static class EnumExtensions {
-        public static string GetDisplayName(Enum value) {
-            var displayAttribute = value.GetType()
-                .GetField(value.ToString())
-                .GetCustomAttributes(typeof(DisplayAttribute), false)
-                .FirstOrDefault() as DisplayAttribute;
-
-            return displayAttribute?.GetName() ?? value.ToString();
-        }
-    }
 }

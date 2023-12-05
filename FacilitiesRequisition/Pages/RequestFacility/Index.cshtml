@@ -28,7 +28,7 @@
             </div>
         } else {
             @if (Model.FacilityRequest.Count == 0) {
-                <div class="col-md-5 rounded-rectangle">
+                <div class="col-md-7 rounded-rectangle">
                     <h2 style="font-weight: bold">Manage facility request</h2>
                     <br/>
 
@@ -42,12 +42,14 @@
                         @if (Model.UserInfo != "Administrator") {
                             if (Model.CanCreateRequests) {
                                 if (Model.AreCollegeAdminsSet) {
+                                    <a class="btn btn-outline-primary" asp-page="../AvailableFacility/Index">See available facilities</a>
                                     <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
                                 }
                                 else {
                                     <a class="btn btn-primary" asp-page="CreateRequest" onclick="$('#errorAdmins').modal('show');">Add facility request</a>
                                 }
                             } else {
+                                <a class="btn btn-outline-primary" asp-page="../AvailableFacility/Index">See available facilities</a>
                                 <a class="btn btn-primary disabled" asp-page="CreateRequest">Add facility request</a>
                             }
                         }
@@ -79,6 +81,7 @@
                     <div class="button-container">
                         <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
                         @if (Model.UserInfo != "Administrator") {
+                            <a class="btn btn-outline-primary" asp-page="../AvailableFacility/Index">See available facilities</a>
                             <a class="btn btn-primary" asp-page="CreateRequest">Add facility request</a>
                         }
                         <br/>
