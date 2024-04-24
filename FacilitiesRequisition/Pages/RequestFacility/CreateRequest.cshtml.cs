@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FacilitiesRequisition.Data;
 using FacilitiesRequisition.Models.Administrators;
+using FacilitiesRequisition.Models.Facilities;
 using FacilitiesRequisition.Models.FacilityRequests;
+using FacilitiesRequisition.Pages.Organizations;
 
 namespace FacilitiesRequisition.Pages.RequestFacility {
     public class CreateModel : PageModel {
@@ -19,27 +21,25 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
         }
         
         public IEnumerable<SelectListItem> Organizations { get; set; } = default!;
+        [BindProperty] public string OrganizationId { get; set; }
 
         [BindProperty] public string DateFiled { get; set; } = DateTime.Now.ToShortDateString();
-
         [BindProperty] public string NameActivity { get; set; }
-        
         [BindProperty] [RegularExpression(@"^\d{11}$", ErrorMessage = "Please enter a valid 11-digit number.")] public string ContactNumber { get; set; }
-        
         [BindProperty] public DateTime? StartDateRequested { get; set; }
-        
         [BindProperty] public DateTime? EndDateRequested { get; set; }
-        
         [BindProperty] public Venues VenueRequested { get; set; }
-        
         [BindProperty] public string? Comments { get; set; }
-        
-        [BindProperty] public string OrganizationId { get; set; }
-        
+
         public string UserInfo { get; set; }
         
         public bool CanCreateRequests { get; set; }
         public bool AreCollegeAdminsSet { get; set; }
+        
+        public List<VenueDetails> VenueDetailsList { get; set; }
+        public List<bool> IsApproved { get; set; } = new();
+        public IList<FacilityRequest> FacilityRequest { get;set; } = default!;
+        
 
         public IActionResult OnGet() {
             var user = HttpContext.Session.GetLoggedInUser(_context);
@@ -69,6 +69,23 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                         case true:
                             switch (AreCollegeAdminsSet) {
                                 case true:
+                                    VenueDetailsList = new List<VenueDetails>();
+
+                                    VenueDetailsList = Enum.GetValues(typeof(Venues))
+                                        .Cast<Venues>()
+                                        .OrderBy(venue => venue.GetDisplayName())
+                                        .Select(venue => new VenueDetails
+                                        {
+                                            Venue = venue,
+                                            FacilityRequests = GetFacilityRequestsForVenue(venue)
+                                        })
+                                        .ToList();
+                                    
+                                    FacilityRequest = _context.GetFacilityRequestsRequested(user).ToList();
+                                    foreach (var request in FacilityRequest) {
+                                        IsApproved.Add(_context.IsApproved(request));
+                                    }
+                                    
                                     Organizations = _context.GetOfficerOrganizations(user).Select(organization =>
                                         new SelectListItem {
                                             Value = organization.Id.ToString(),
@@ -83,6 +100,13 @@ namespace FacilitiesRequisition.Pages.RequestFacility {
                             return RedirectToPage("/RequestFacility/Index");
                     }
             }
+        }
+        
+        private List<FacilityRequest> GetFacilityRequestsForVenue(Venues venue) {
+           
+            return _context.GetFacilityRequests()
+                .Where(request => request.VenueRequested == venue)
+                .ToList();
         }
         
         public IActionResult OnPost() {

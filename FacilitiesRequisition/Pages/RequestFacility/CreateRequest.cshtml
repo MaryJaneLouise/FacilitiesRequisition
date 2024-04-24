@@ -10,86 +10,142 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="./css/site.css">
+    @* <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'> *@
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+    @* <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> *@
 </head>
 
 <body style="background: #d7d9e5; font-family: 'DM Sans', sans-serif">
     <div>
         <div class="row d-flex justify-content-md-center align-items-center vh-100">
-            <div class="col-md-6 rounded-rectangle">
-                <h2 style="font-weight: bold">Add a facility request</h2>
-                
-                <div style="" >
-                    <form method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
-                        <div class="form-group">
-                            <input asp-for="DateFiled" class="form-control" hidden/>
-                        </div>
-                                                
-                        <div class="form-group mt-2">
-                            <div class="row">
-                                <div class="col">
-                                    <label class="control-label">Requester</label>
-                                    <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control"></select>
-                                    <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
-                                    <br/>
-                                </div>
-                                <div class="col">
-                                    <label asp-for="ContactNumber" class="control-label">Contact Number</label>
-                                    <input asp-for="ContactNumber" type="number" class="form-control"/>
-                                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
-                                    <br/>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-5">
+                <div class="rounded-rectangle" style="margin-right: 10px; height: 750px">
+                    <h2 style="font-weight: bold">Add a facility request</h2>
                     
-                                    
-                        <div class="form-group">
-                            <label asp-for="NameActivity" class="control-label">Activity Name</label>
-                            <input asp-for="NameActivity" class="form-control" />
-                            <span asp-validation-for="NameActivity" class="text-danger"></span>
-                            <br/>
-                        </div>
+                    <div style="">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
+                            <div class="form-group">
+                                <input asp-for="DateFiled" class="form-control" hidden/>
+                            </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
-                                    <input asp-for="StartDateRequested" type="date" class="form-control"/>
-                                    <span asp-validation-for="StartDateRequested" class="text-danger"></span>
-                                    <br/>
-                                </div>
-                                <div class="col">
-                                    <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
-                                    <input asp-for="EndDateRequested" type="date" class="form-control"/>
-                                    <span asp-validation-for="EndDateRequested" class="text-danger"></span>
-                                    <br/>                                  
+                            <div class="form-group mt-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="control-label">Requester</label>
+                                        <select asp-for="OrganizationId" asp-items="Model.Organizations" class="form-control"></select>
+                                        <span asp-validation-for="OrganizationId" class="text-danger mt-1"></span>
+                                        <br/>
+                                    </div>
+                                    <div class="col">
+                                        <label asp-for="ContactNumber" class="control-label">Contact Number</label>
+                                        <input asp-for="ContactNumber" type="number" class="form-control"/>
+                                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                                        <br/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label asp-for="VenueRequested" class="control-label">Venue Requested</label>
-                            <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
-                            <span asp-validation-for="VenueRequested" class="text-danger"></span>
-                            <br/>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label asp-for="Comments" class="control-label">Additional Comments</label>
-                            <textarea asp-for="Comments" class="form-control" 
-                                placeholder="Type here your additional comments. If you've selected 'Board Room' or 'Classrooms', please place the room number. "></textarea>
-                            <span asp-validation-for="Comments" class="text-danger"></span>
-                            <br/>
-                        </div>
 
-                        <div class="form-group" style="float: right">
-                            <a class="btn btn-outline-primary" asp-page="Index">Go back</a>
-                            <input type="submit" value="Add request" class="btn btn-primary"/>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label asp-for="NameActivity" class="control-label">Activity Name</label>
+                                <input asp-for="NameActivity" class="form-control"/>
+                                <span asp-validation-for="NameActivity" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label asp-for="StartDateRequested" class="control-label">Start Date Requisition</label>
+                                        <input asp-for="StartDateRequested" type="date" class="form-control"/>
+                                        <span asp-validation-for="StartDateRequested" class="text-danger"></span>
+                                        <br/>
+                                    </div>
+                                    <div class="col">
+                                        <label asp-for="EndDateRequested" class="control-label">End Date Requisition</label>
+                                        <input asp-for="EndDateRequested" type="date" class="form-control"/>
+                                        <span asp-validation-for="EndDateRequested" class="text-danger"></span>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="VenueRequested" class="control-label">Venue Requested</label>
+                                <select asp-for="VenueRequested" asp-items="Html.GetEnumSelectList<Venues>()"class="form-control mt-1"></select>
+                                <span asp-validation-for="VenueRequested" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Comments" class="control-label">Additional Comments</label>
+                                <textarea asp-for="Comments" class="form-control" 
+                                                    placeholder="Type here your additional comments. If you've selected 'Board Room' or 'Classrooms', please place the room number. "></textarea>
+                                <span asp-validation-for="Comments" class="text-danger"></span>
+                                <br/>
+                            </div>
+
+                            <div class="form-group" style="float: right">
+                                <a class="btn btn-outline-primary" asp-page="Index">Go back</a>
+                                <input type="submit" value="Add request" class="btn btn-primary"/>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>   
+            
+            <div class="col-md-7">
+                <div class="rounded-rectangle" style="margin-left: 10px; height: 750px">
+                    @if (Model.VenueDetailsList.Count == 0) {
+                        <h2 style="font-weight: bold">Available facilities</h2>
+                        <br/>
+                    
+                        <div align="center">
+                            <text>There's no facilities listed for this system. Please contact your administrators to fix this problem. Thank you!</text>
+                        </div>
+                    
+                        <div style="float: right; margin-bottom: 5px">
+                            <br/>
+                            <a class="btn btn-outline-primary" asp-page="../Dashboard/Index">Back to Dashboard</a>
+                        </div>
+                    } else {
+                        <h2 style="font-weight: bold">Available Facilities</h2>
+                        <input class="form-control" type="text" id="search-facility" placeholder="Search facilities available"/>
+                        <br/>
+
+                        <div class="facility-container">
+                            <div class="no-results-facility" style="display: none; justify-content: center; align-items: center; text-align: center">
+                                No results in this list of facilities.
+                            </div>
+                            @foreach (var venueDetails in Model.VenueDetailsList) {
+                                <div class="hover-item">
+                                    <div style="display: flex; align-items: center">
+                                        <div style="font-size: 15px">
+                                            <div class="request-details" style="font-size: larger; horiz-align: center">
+                                                <strong>@venueDetails.VenueName</strong>
+                                                <div style="font-size: medium">
+                                                    <div>
+                                                        <text>@venueDetails.VenueDetailExpanded</text>
+                                                        
+                                                        @foreach (var request in venueDetails.FacilityRequests) {
+                                                            <div>
+                                                                <strong>- @request.Requester.Name:</strong>
+                                                                @request.StartDateRequested.Value.ToShortDateString() to @request.EndDateRequested.Value.ToShortDateString()
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }   
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

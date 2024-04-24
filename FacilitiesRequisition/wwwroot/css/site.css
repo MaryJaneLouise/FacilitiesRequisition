@@ -312,6 +312,11 @@ textarea {
   overflow-y: auto;
 }
 
+.facility-container {
+  height: 550px;
+  overflow-y: auto;
+}
+
 .show-request-container {
   max-height: 600px;
   overflow-y: auto;
